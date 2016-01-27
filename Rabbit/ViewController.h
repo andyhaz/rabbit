@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "preferenceViewContorler.h"
 #import "templateWindowsContorller.h"
 #import "exportViewControler.h"
 #import "myView.h"
@@ -14,8 +15,10 @@
 @interface ViewController : NSViewController {
     templateWindowsContorller *twc;
     exportViewControler *evc;
+    preferenceViewContorler *pvc;
 }
-
+- (IBAction)preference:(id)sender;
+- (IBAction)importItem:(id)sender;
 - (IBAction)exportItem:(id)sender;
 
 - (IBAction)newTemplateButton:(id)sender;

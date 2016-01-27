@@ -20,6 +20,15 @@
     // Update the view, if already loaded.
 }
 
+- (IBAction)preference:(id)sender{
+    pvc = [[preferenceViewContorler alloc] initWithWindowNibName:@"preferenceViewContorler"];
+    [pvc showWindow:nil];
+}
+
+- (IBAction)importItem:(id)sender{
+    NSLog(@"import image");
+}
+
 - (IBAction)exportItem:(id)sender{
     if (!evc) {
         evc = [[exportViewControler alloc] initWithWindowNibName:@"exportViewControler"];

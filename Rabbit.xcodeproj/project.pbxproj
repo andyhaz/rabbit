@@ -21,6 +21,11 @@
 		9744D7D41C5859D60065DBAE /* myView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7D31C5859D60065DBAE /* myView.m */; };
 		9744D7D81C5893090065DBAE /* exportViewControler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7D61C5893090065DBAE /* exportViewControler.m */; };
 		9744D7D91C5893090065DBAE /* exportViewControler.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9744D7D71C5893090065DBAE /* exportViewControler.xib */; };
+		9744D7E01C58B8D30065DBAE /* preferenceViewContorler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7DE1C58B8D30065DBAE /* preferenceViewContorler.m */; };
+		9744D7E11C58B8D30065DBAE /* preferenceViewContorler.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9744D7DF1C58B8D30065DBAE /* preferenceViewContorler.xib */; };
+		9744D7E41C58C1990065DBAE /* sharedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7E31C58C1990065DBAE /* sharedData.m */; };
+		9744D7E71C58C1CC0065DBAE /* LoadSaveInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7E61C58C1CC0065DBAE /* LoadSaveInterface.m */; };
+		9744D7EA1C58C25F0065DBAE /* RBResize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7E91C58C25F0065DBAE /* RBResize.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +72,15 @@
 		9744D7D51C5893090065DBAE /* exportViewControler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exportViewControler.h; sourceTree = "<group>"; };
 		9744D7D61C5893090065DBAE /* exportViewControler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = exportViewControler.m; sourceTree = "<group>"; };
 		9744D7D71C5893090065DBAE /* exportViewControler.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = exportViewControler.xib; sourceTree = "<group>"; };
+		9744D7DD1C58B8D30065DBAE /* preferenceViewContorler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = preferenceViewContorler.h; sourceTree = "<group>"; };
+		9744D7DE1C58B8D30065DBAE /* preferenceViewContorler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = preferenceViewContorler.m; sourceTree = "<group>"; };
+		9744D7DF1C58B8D30065DBAE /* preferenceViewContorler.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = preferenceViewContorler.xib; sourceTree = "<group>"; };
+		9744D7E21C58C1990065DBAE /* sharedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sharedData.h; sourceTree = "<group>"; };
+		9744D7E31C58C1990065DBAE /* sharedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sharedData.m; sourceTree = "<group>"; };
+		9744D7E51C58C1CC0065DBAE /* LoadSaveInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadSaveInterface.h; sourceTree = "<group>"; };
+		9744D7E61C58C1CC0065DBAE /* LoadSaveInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadSaveInterface.m; sourceTree = "<group>"; };
+		9744D7E81C58C25F0065DBAE /* RBResize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBResize.h; sourceTree = "<group>"; };
+		9744D7E91C58C25F0065DBAE /* RBResize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBResize.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,22 +131,12 @@
 		9744D7961C58519B0065DBAE /* Rabbit */ = {
 			isa = PBXGroup;
 			children = (
+				9744D7DA1C58973D0065DBAE /* viewControle */,
+				9744D7DB1C5897570065DBAE /* storeboard */,
+				9744D7DC1C5897700065DBAE /* class */,
 				9744D7971C58519B0065DBAE /* AppDelegate.h */,
 				9744D7981C58519B0065DBAE /* AppDelegate.m */,
-				9744D79D1C58519B0065DBAE /* ViewController.h */,
-				9744D79E1C58519B0065DBAE /* ViewController.m */,
-				9744D7A01C58519B0065DBAE /* Document.h */,
-				9744D7A11C58519B0065DBAE /* Document.m */,
-				9744D7CD1C5858140065DBAE /* templateWindowsContorller.h */,
-				9744D7CE1C5858140065DBAE /* templateWindowsContorller.m */,
-				9744D7D51C5893090065DBAE /* exportViewControler.h */,
-				9744D7D61C5893090065DBAE /* exportViewControler.m */,
-				9744D7D21C5859D60065DBAE /* myView.h */,
-				9744D7D31C5859D60065DBAE /* myView.m */,
 				9744D7A61C58519B0065DBAE /* Assets.xcassets */,
-				9744D7A81C58519B0065DBAE /* Main.storyboard */,
-				9744D7CF1C5858140065DBAE /* templateWindowsContorller.xib */,
-				9744D7D71C5893090065DBAE /* exportViewControler.xib */,
 				9744D7AB1C58519B0065DBAE /* Info.plist */,
 				9744D7A31C58519B0065DBAE /* Document.xcdatamodeld */,
 				9744D79A1C58519B0065DBAE /* Supporting Files */,
@@ -164,6 +168,49 @@
 				9744D7C11C58519B0065DBAE /* Info.plist */,
 			);
 			path = RabbitUITests;
+			sourceTree = "<group>";
+		};
+		9744D7DA1C58973D0065DBAE /* viewControle */ = {
+			isa = PBXGroup;
+			children = (
+				9744D79D1C58519B0065DBAE /* ViewController.h */,
+				9744D79E1C58519B0065DBAE /* ViewController.m */,
+				9744D7A01C58519B0065DBAE /* Document.h */,
+				9744D7A11C58519B0065DBAE /* Document.m */,
+				9744D7DD1C58B8D30065DBAE /* preferenceViewContorler.h */,
+				9744D7DE1C58B8D30065DBAE /* preferenceViewContorler.m */,
+				9744D7CD1C5858140065DBAE /* templateWindowsContorller.h */,
+				9744D7CE1C5858140065DBAE /* templateWindowsContorller.m */,
+				9744D7D51C5893090065DBAE /* exportViewControler.h */,
+				9744D7D61C5893090065DBAE /* exportViewControler.m */,
+				9744D7D21C5859D60065DBAE /* myView.h */,
+				9744D7D31C5859D60065DBAE /* myView.m */,
+			);
+			name = viewControle;
+			sourceTree = "<group>";
+		};
+		9744D7DB1C5897570065DBAE /* storeboard */ = {
+			isa = PBXGroup;
+			children = (
+				9744D7A81C58519B0065DBAE /* Main.storyboard */,
+				9744D7CF1C5858140065DBAE /* templateWindowsContorller.xib */,
+				9744D7D71C5893090065DBAE /* exportViewControler.xib */,
+				9744D7DF1C58B8D30065DBAE /* preferenceViewContorler.xib */,
+			);
+			name = storeboard;
+			sourceTree = "<group>";
+		};
+		9744D7DC1C5897700065DBAE /* class */ = {
+			isa = PBXGroup;
+			children = (
+				9744D7E21C58C1990065DBAE /* sharedData.h */,
+				9744D7E31C58C1990065DBAE /* sharedData.m */,
+				9744D7E51C58C1CC0065DBAE /* LoadSaveInterface.h */,
+				9744D7E61C58C1CC0065DBAE /* LoadSaveInterface.m */,
+				9744D7E81C58C25F0065DBAE /* RBResize.h */,
+				9744D7E91C58C25F0065DBAE /* RBResize.m */,
+			);
+			name = class;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +321,7 @@
 				9744D7D91C5893090065DBAE /* exportViewControler.xib in Resources */,
 				9744D7D11C5858140065DBAE /* templateWindowsContorller.xib in Resources */,
 				9744D7AA1C58519B0065DBAE /* Main.storyboard in Resources */,
+				9744D7E11C58B8D30065DBAE /* preferenceViewContorler.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,11 +349,15 @@
 				9744D7A21C58519B0065DBAE /* Document.m in Sources */,
 				9744D79F1C58519B0065DBAE /* ViewController.m in Sources */,
 				9744D7D41C5859D60065DBAE /* myView.m in Sources */,
+				9744D7EA1C58C25F0065DBAE /* RBResize.m in Sources */,
+				9744D7E01C58B8D30065DBAE /* preferenceViewContorler.m in Sources */,
 				9744D79C1C58519B0065DBAE /* main.m in Sources */,
 				9744D7D01C5858140065DBAE /* templateWindowsContorller.m in Sources */,
+				9744D7E41C58C1990065DBAE /* sharedData.m in Sources */,
 				9744D7D81C5893090065DBAE /* exportViewControler.m in Sources */,
 				9744D7A51C58519B0065DBAE /* Document.xcdatamodeld in Sources */,
 				9744D7991C58519B0065DBAE /* AppDelegate.m in Sources */,
+				9744D7E71C58C1CC0065DBAE /* LoadSaveInterface.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
