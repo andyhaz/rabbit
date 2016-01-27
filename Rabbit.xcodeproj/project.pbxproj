@@ -16,6 +16,11 @@
 		9744D7AA1C58519B0065DBAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9744D7A81C58519B0065DBAE /* Main.storyboard */; };
 		9744D7B51C58519B0065DBAE /* RabbitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7B41C58519B0065DBAE /* RabbitTests.m */; };
 		9744D7C01C58519B0065DBAE /* RabbitUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7BF1C58519B0065DBAE /* RabbitUITests.m */; };
+		9744D7D01C5858140065DBAE /* templateWindowsContorller.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7CE1C5858140065DBAE /* templateWindowsContorller.m */; };
+		9744D7D11C5858140065DBAE /* templateWindowsContorller.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9744D7CF1C5858140065DBAE /* templateWindowsContorller.xib */; };
+		9744D7D41C5859D60065DBAE /* myView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7D31C5859D60065DBAE /* myView.m */; };
+		9744D7D81C5893090065DBAE /* exportViewControler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7D61C5893090065DBAE /* exportViewControler.m */; };
+		9744D7D91C5893090065DBAE /* exportViewControler.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9744D7D71C5893090065DBAE /* exportViewControler.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +59,14 @@
 		9744D7BB1C58519B0065DBAE /* RabbitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RabbitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9744D7BF1C58519B0065DBAE /* RabbitUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RabbitUITests.m; sourceTree = "<group>"; };
 		9744D7C11C58519B0065DBAE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9744D7CD1C5858140065DBAE /* templateWindowsContorller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = templateWindowsContorller.h; sourceTree = "<group>"; };
+		9744D7CE1C5858140065DBAE /* templateWindowsContorller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = templateWindowsContorller.m; sourceTree = "<group>"; };
+		9744D7CF1C5858140065DBAE /* templateWindowsContorller.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = templateWindowsContorller.xib; sourceTree = "<group>"; };
+		9744D7D21C5859D60065DBAE /* myView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myView.h; sourceTree = "<group>"; };
+		9744D7D31C5859D60065DBAE /* myView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myView.m; sourceTree = "<group>"; };
+		9744D7D51C5893090065DBAE /* exportViewControler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = exportViewControler.h; sourceTree = "<group>"; };
+		9744D7D61C5893090065DBAE /* exportViewControler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = exportViewControler.m; sourceTree = "<group>"; };
+		9744D7D71C5893090065DBAE /* exportViewControler.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = exportViewControler.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,8 +123,16 @@
 				9744D79E1C58519B0065DBAE /* ViewController.m */,
 				9744D7A01C58519B0065DBAE /* Document.h */,
 				9744D7A11C58519B0065DBAE /* Document.m */,
+				9744D7CD1C5858140065DBAE /* templateWindowsContorller.h */,
+				9744D7CE1C5858140065DBAE /* templateWindowsContorller.m */,
+				9744D7D51C5893090065DBAE /* exportViewControler.h */,
+				9744D7D61C5893090065DBAE /* exportViewControler.m */,
+				9744D7D21C5859D60065DBAE /* myView.h */,
+				9744D7D31C5859D60065DBAE /* myView.m */,
 				9744D7A61C58519B0065DBAE /* Assets.xcassets */,
 				9744D7A81C58519B0065DBAE /* Main.storyboard */,
+				9744D7CF1C5858140065DBAE /* templateWindowsContorller.xib */,
+				9744D7D71C5893090065DBAE /* exportViewControler.xib */,
 				9744D7AB1C58519B0065DBAE /* Info.plist */,
 				9744D7A31C58519B0065DBAE /* Document.xcdatamodeld */,
 				9744D79A1C58519B0065DBAE /* Supporting Files */,
@@ -212,6 +233,7 @@
 				TargetAttributes = {
 					9744D7931C58519B0065DBAE = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 7QPZTLEJ7L;
 					};
 					9744D7AF1C58519B0065DBAE = {
 						CreatedOnToolsVersion = 7.2;
@@ -249,6 +271,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9744D7A71C58519B0065DBAE /* Assets.xcassets in Resources */,
+				9744D7D91C5893090065DBAE /* exportViewControler.xib in Resources */,
+				9744D7D11C5858140065DBAE /* templateWindowsContorller.xib in Resources */,
 				9744D7AA1C58519B0065DBAE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,7 +300,10 @@
 			files = (
 				9744D7A21C58519B0065DBAE /* Document.m in Sources */,
 				9744D79F1C58519B0065DBAE /* ViewController.m in Sources */,
+				9744D7D41C5859D60065DBAE /* myView.m in Sources */,
 				9744D79C1C58519B0065DBAE /* main.m in Sources */,
+				9744D7D01C5858140065DBAE /* templateWindowsContorller.m in Sources */,
+				9744D7D81C5893090065DBAE /* exportViewControler.m in Sources */,
 				9744D7A51C58519B0065DBAE /* Document.xcdatamodeld in Sources */,
 				9744D7991C58519B0065DBAE /* AppDelegate.m in Sources */,
 			);
@@ -408,6 +435,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Rabbit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -420,6 +448,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Rabbit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";

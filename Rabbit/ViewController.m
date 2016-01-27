@@ -12,14 +12,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     // Do any additional setup after loading the view.
 }
 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
-
     // Update the view, if already loaded.
 }
 
+- (IBAction)exportItem:(id)sender{
+    if (!evc) {
+        evc = [[exportViewControler alloc] initWithWindowNibName:@"exportViewControler"];
+    }
+    [evc showWindow:nil];
+}
+
+- (IBAction)newTemplateButton:(id)sender {
+    [self newTemplate];
+}
+
+- (void)newTemplate{
+    if (!twc) {
+        twc = [[templateWindowsContorller alloc] initWithWindowNibName:@"templateWindowsContorller"];
+    }
+    [twc showWindow:self];
+}
 @end

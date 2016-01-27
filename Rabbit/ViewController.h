@@ -7,9 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "templateWindowsContorller.h"
+#import "exportViewControler.h"
+#import "myView.h"
 
-@interface ViewController : NSViewController
+@interface ViewController : NSViewController {
+    templateWindowsContorller *twc;
+    exportViewControler *evc;
+}
 
+- (IBAction)exportItem:(id)sender;
+
+- (IBAction)newTemplateButton:(id)sender;
 
 @end
-
