@@ -14,6 +14,16 @@
 
 @implementation templateWindowsContorller
 
+- (NSString*)test :(NSString*)myString{
+    NSLog(@"test founction:%@",myString);
+    return myString;
+}
+
+- (IBAction)addAction:(id)sender {
+    NSLog(@"add action");
+  // vc.
+}
+
 - (void)windowDidLoad {
     [super windowDidLoad];
     

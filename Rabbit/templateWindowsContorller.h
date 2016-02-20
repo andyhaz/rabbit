@@ -10,4 +10,8 @@
 
 @interface templateWindowsContorller : NSWindowController
 
+- (NSString*)test :(NSString*)myString;
+
+- (IBAction)addAction:(id)sender;
+
 @end

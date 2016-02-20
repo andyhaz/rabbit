@@ -10,4 +10,7 @@
 
 @interface myView : NSView
 
+-(void)setFrameSize:(NSSize)newSize;
+-(void)importImage :(NSString*)fileName;
+
 @end
