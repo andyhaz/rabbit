@@ -10,11 +10,14 @@
 
 @implementation ViewController
 
-@synthesize rowDataName,rowDataHeight,rowDataWidth;
+@synthesize profileTextFeild,profileSelectionOutlet;
+@synthesize rowDataName,rowDataHeight,rowDataWidth,profileNameArray,profileDataArray;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    profileDataArray = [[NSMutableArray alloc]init];
+    profileNameArray = [[NSMutableArray alloc]init];
     rowDataName = [[NSMutableArray alloc]init];
     rowDataWidth = [[NSMutableArray alloc]init];
     rowDataHeight = [[NSMutableArray alloc]init];
@@ -36,42 +39,24 @@
     // Update the view, if already loaded.
 }
 
-- (IBAction)preference:(id)sender{
-    pvc = [[preferenceViewContorler alloc] initWithWindowNibName:@"preferenceViewContorler"];
-    [pvc showWindow:nil];
-}
-
 - (IBAction)importItem:(id)sender{
     NSLog(@"import image");
 }
 
 - (IBAction)exportItem:(id)sender{
-    if (!evc) {
-        evc = [[exportViewControler alloc] initWithWindowNibName:@"exportViewControler"];
-    }
-    [evc showWindow:nil];
+
 }
 
-- (IBAction)newTemplateButton:(id)sender {
-}
 
-- (IBAction)addImageButtonAction:(id)sender{
-    [self newTemplate];
-}
 
 - (IBAction)importImageAction:(id)sender {
     [self.myView importImage:@"image/name.png"];
 }
 
-- (void)newTemplate{
-    if (!twc) {
-        twc = [[templateWindowsContorller alloc] initWithWindowNibName:@"templateWindowsContorller"];
-    }
-    [twc showWindow:self];
-}
+
 //
 -(void)addDataInfo:(NSString*)data{
-    NSLog(@"add template:%@",data);
+    NSLog(@"add template:%@ - %@",data,self.rowDataName);
 }
 //
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
@@ -111,4 +96,42 @@
     return [self.rowDataName count];
 }
 
+-(void)tableViewSelectionDidChange:(NSNotification *)notification{
+    short row = [[notification object] selectedRow];
+    float w = [[rowDataWidth objectAtIndex:row] floatValue];
+    float h = [[rowDataHeight objectAtIndex:row] floatValue];
+    NSSize newSize = NSMakeSize(w, h);
+    [self.myView setFrameSize:newSize];
+    NSLog(@"tableViewSelectionDidChange:%hd",row);
+}
+
+- (IBAction)profileTextAction:(id)sender {
+    [self profileSettings];
+     }
+
+- (IBAction)addTextAction:(id)sender {
+    [self profileSettings];
+}
+- (IBAction)profileSelectionAction:(id)sender {
+    NSString *str = [profileSelectionOutlet stringValue];
+    NSLog(@"%@",str);
+}
+
+- (IBAction)update:(id)sender {
+    NSLog(@"update");
+}
+
+-(void)profileSettings{
+    //[profileTextFeild setStringValue:@"hello"];
+    NSString *getText = [profileTextFeild stringValue];
+    [profileNameArray addObject:getText];
+    [profileSelectionOutlet addItemsWithTitles:profileNameArray];
+    [profileSelectionOutlet selectItemWithTitle:getText];
+    [profileDataArray addObject:profileNameArray];
+    [profileDataArray addObject:rowDataName];
+    [profileDataArray addObject:rowDataWidth];
+    [profileDataArray addObject:rowDataHeight];
+
+    NSLog(@"%@",profileDataArray);
+}
 @end

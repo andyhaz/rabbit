@@ -7,35 +7,35 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "preferenceViewContorler.h"
-#import "templateWindowsContorller.h"
-#import "exportViewControler.h"
 #import "myView.h"
 
-@interface ViewController : NSViewController {
-    templateWindowsContorller *twc;
-    exportViewControler *evc;
-    preferenceViewContorler *pvc;
-}
+@interface ViewController : NSViewController
 
 @property (weak) IBOutlet myView *myView;
 
 @property (strong) NSMutableArray *rowDataName;
 @property (strong) NSMutableArray *rowDataWidth;
 @property (strong) NSMutableArray *rowDataHeight;
+@property (strong) NSMutableArray *profileNameArray;
+@property (strong) NSMutableArray *profileDataArray;
 
-
-- (IBAction)preference:(id)sender;
+//menu items
 - (IBAction)importItem:(id)sender;
 - (IBAction)exportItem:(id)sender;
 
-- (IBAction)newTemplateButton:(id)sender;
-- (IBAction)addImageButtonAction:(id)sender;
+@property (weak) IBOutlet NSTextField *profileTextFeild;
+- (IBAction)profileTextAction:(id)sender;
+- (IBAction)addTextAction:(id)sender;
+@property (weak) IBOutlet NSPopUpButton *profileSelectionOutlet;
+- (IBAction)profileSelectionAction:(id)sender;
+- (IBAction)update:(id)sender;
+
+
+//table information
+@property (weak) IBOutlet NSTableView *tableView;
+
 
 - (IBAction)importImageAction:(id)sender;
 
-@property (weak) IBOutlet NSTableView *tableView;
-
--(void)addDataInfo:(NSString*)data;
 
 @end
