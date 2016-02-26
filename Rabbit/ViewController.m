@@ -10,28 +10,23 @@
 
 @implementation ViewController
 
-@synthesize profileTextFeild,profileSelectionOutlet;
+@synthesize profileTextFeild,profileSelectionOutlet,imageViewOutlet;
 @synthesize rowDataName,rowDataHeight,rowDataWidth,profileNameArray,profileDataArray;
+@synthesize tableView;
+@synthesize image;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    edit = NO;
     profileDataArray = [[NSMutableArray alloc]init];
     profileNameArray = [[NSMutableArray alloc]init];
     rowDataName = [[NSMutableArray alloc]init];
     rowDataWidth = [[NSMutableArray alloc]init];
     rowDataHeight = [[NSMutableArray alloc]init];
-    [rowDataName addObject:@"Icon A"];
-    [rowDataWidth addObject:@"40"];
-    [rowDataHeight addObject:@"40"];
-    
-    [rowDataName addObject:@"Icon B"];
-    [rowDataWidth addObject:@"400"];
-    [rowDataHeight addObject:@"400"];
     
     NSSize newSize = NSMakeSize(80, 80);
     [self.myView setFrameSize:newSize];
-    
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -44,20 +39,49 @@
 }
 
 - (IBAction)exportItem:(id)sender{
+     NSLog(@"export image");
+}
+
+- (IBAction)imageViewAction:(id)sender {
+    //[imageViewOutlet ];
+   // NSImage *imageData = [[NSImage alloc] initWithData:sender];
+   // [self.myView setMyImage:sender];
+   // [self.myView updateDisplay];
+   // [self.imageViewOutlet addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
+    
+  //  NSString *imageName = @"/Users/andyhaz/Documents/game rocket studio loadscreen/grs-loadscrenn(320x480).png";
+    
+   // NSImage *loadimage = [[NSImage alloc] initByReferencingFile:imageName];
+   // NSLog(@"loadImage:%@",loadimage);
+
+   // [self.myView setImageName:imageName];
+   // [self.myView updateDisplay];
+    
+//    NSData *imageData = (NSData *)imageViewOutlet;
+    //[imageViewOutlet setImage:<#(NSImage * _Nullable)#>]
+    //   NSImage *imageData =  imageViewOutlet;
+   // [self.myView setMyImage:imageData];
+   // [self.myView updateDisplay];
+    
+  //  NSLog(@"imageViewAction:%@ - name:%@",[sender stringValue],imageData);
+    NSLog(@"image:%@",[sender objectValue]);
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageSelected:) name:@"KSImageDroppedNotification" object:nil];
 
 }
 
-
+- (void)imageSelected:(NSNotification *)notification {
+    NSLog(@"imageSelected");
+}
+//end
 
 - (IBAction)importImageAction:(id)sender {
-    [self.myView importImage:@"image/name.png"];
+ //   [self.myView importImage:@"image/name.png"];
 }
-
-
 //
 -(void)addDataInfo:(NSString*)data{
     NSLog(@"add template:%@ - %@",data,self.rowDataName);
 }
+
 //
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     
@@ -71,6 +95,7 @@
         //  ScaryBugDoc *bugDoc = [self.bugs objectAtIndex:row];
         //  cellView.imageView.image = @"";
         cellView.textField.stringValue = [self.rowDataName objectAtIndex:row];
+        [cellView.textField setEditable:edit]; // Make Cell Editable!
         
         return cellView;
     }
@@ -78,6 +103,7 @@
     if( [tableColumn.identifier isEqualToString:@"widthID"] )
     {
         cellView.textField.stringValue = [self.rowDataWidth objectAtIndex:row];
+        [cellView.textField setEditable:edit]; // Make Cell Editable!
         
         return cellView;
     }
@@ -85,6 +111,7 @@
     if( [tableColumn.identifier isEqualToString:@"heightID"] )
     {
         cellView.textField.stringValue = [self.rowDataHeight objectAtIndex:row];
+        [cellView.textField setEditable:edit]; // Make Cell Editable!
         
         return cellView;
     }
@@ -98,20 +125,60 @@
 
 -(void)tableViewSelectionDidChange:(NSNotification *)notification{
     short row = [[notification object] selectedRow];
+    
+    NSTextField *textName = [[[notification.object viewAtColumn:0 row:row makeIfNecessary:NO]subviews] lastObject];
+    NSTextField *textWidth = [[[notification.object viewAtColumn:1 row:row makeIfNecessary:NO]subviews] lastObject];
+    NSTextField *textHeight = [[[notification.object viewAtColumn:2 row:row makeIfNecessary:NO]subviews] lastObject];
+    
+    [textName selectText:textName.stringValue];
+    [textWidth selectText:textWidth.stringValue];
+    [textName selectText:textHeight.stringValue];
+    
+    //update array
+    [rowDataName replaceObjectAtIndex:row withObject:[textName stringValue]];
+    [rowDataWidth replaceObjectAtIndex:row withObject:[textWidth stringValue]];
+    [rowDataHeight replaceObjectAtIndex:row withObject:[textHeight stringValue]];
+    
+    [self updateDisplay:row];
+
+    NSLog(@"tableViewSelectionDidChange:%hd",row);
+}
+
+-(void)updateDisplay:(int)row{
     float w = [[rowDataWidth objectAtIndex:row] floatValue];
     float h = [[rowDataHeight objectAtIndex:row] floatValue];
+    
     NSSize newSize = NSMakeSize(w, h);
     [self.myView setFrameSize:newSize];
-    NSLog(@"tableViewSelectionDidChange:%hd",row);
+}
+
+- (IBAction)addTable:(id)sender {
+    [rowDataName addObject:@"Icon"];
+    [rowDataWidth addObject:@"40"];
+    [rowDataHeight addObject:@"40"];
+    [tableView reloadData];
+    int r = [[rowDataName lastObject] intValue];
+    [self updateDisplay:r];
+    NSLog(@"add table");
+}
+
+- (IBAction)editAction:(id)sender {
+    if (edit == NO) {
+        edit = YES;
+    } else {
+        edit = NO;
+    }
+    [tableView reloadData];
 }
 
 - (IBAction)profileTextAction:(id)sender {
     [self profileSettings];
-     }
+}
 
 - (IBAction)addTextAction:(id)sender {
     [self profileSettings];
 }
+
 - (IBAction)profileSelectionAction:(id)sender {
     NSString *str = [profileSelectionOutlet stringValue];
     NSLog(@"%@",str);

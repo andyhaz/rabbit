@@ -11,13 +11,21 @@
 
 @implementation myView
 
+@synthesize myImage,imageName;
+
 -(void)importImage :(NSString*)fileName{
     NSLog(@"import image");
 }
 
+-(void)updateDisplay{
+   // image = [[NSImage alloc] initWithData:myImage];
+    [self setNeedsDisplay:YES];
+    
+    NSLog(@"updateDisplay:%@",myImage);
+}
+
 - (void) setFrameSize:(NSSize)newSize {
     [super setFrameSize:newSize];
-    
     // A change in size has required the view to be invalidated.
     if ([self inLiveResize])
     {
@@ -33,9 +41,9 @@
     {
         [self setNeedsDisplay:YES];
     }
-//move nsview to center
-   //width:520 - height: 450
-  //  NSPoint newLocation = NSMakePoint(newSize.width-520, newSize.height-450);
+//  move nsview to center 
+//  width:520 - height: 450
+//  NSPoint newLocation = NSMakePoint(newSize.width-520, newSize.height-450);
     NSPoint newLocation = NSMakePoint(10,10);
     [self setFrameOrigin:newLocation];
 }
@@ -45,6 +53,14 @@
     // Drawing code here.
     [[NSColor blackColor]setFill];
     NSRectFill(dirtyRect);
-}
+    
+//image = [[NSImage alloc] initByReferencingFile:imageName];
 
+    [myImage drawInRect: dirtyRect
+             fromRect: NSZeroRect
+            operation: NSCompositeSourceOver
+             fraction: 1.0];
+    
+    NSLog(@"draw");
+}
 @end

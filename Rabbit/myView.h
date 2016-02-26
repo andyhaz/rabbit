@@ -8,9 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface myView : NSView
+@interface myView : NSView {
+     NSImage *image;
+}
+
+@property (retain) NSImage *myImage;
+@property (retain) NSString *imageName;
 
 -(void)setFrameSize:(NSSize)newSize;
 -(void)importImage :(NSString*)fileName;
+-(void)updateDisplay;
 
 @end
