@@ -10,6 +10,7 @@
 
 @interface myView : NSView {
      NSImage *image;
+    float xScale,yScale;
 }
 
 @property (retain) NSImage *myImage;
@@ -18,5 +19,6 @@
 -(void)setFrameSize:(NSSize)newSize;
 -(void)importImage :(NSString*)fileName;
 -(void)updateDisplay;
+-(void) imageSize:(float)newSize;
 
 @end

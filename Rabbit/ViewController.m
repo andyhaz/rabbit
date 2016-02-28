@@ -10,10 +10,9 @@
 
 @implementation ViewController
 
-@synthesize profileTextFeild,profileSelectionOutlet,imageViewOutlet;
+@synthesize profileTextFeild,profileSelectionOutlet;
 @synthesize rowDataName,rowDataHeight,rowDataWidth,profileNameArray,profileDataArray;
 @synthesize tableView;
-@synthesize image;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,10 +28,6 @@
     [self.myView setFrameSize:newSize];
 }
 
-- (void)setRepresentedObject:(id)representedObject {
-    [super setRepresentedObject:representedObject];
-    // Update the view, if already loaded.
-}
 
 - (IBAction)importItem:(id)sender{
     NSLog(@"import image");
@@ -42,41 +37,6 @@
      NSLog(@"export image");
 }
 
-- (IBAction)imageViewAction:(id)sender {
-    //[imageViewOutlet ];
-   // NSImage *imageData = [[NSImage alloc] initWithData:sender];
-   // [self.myView setMyImage:sender];
-   // [self.myView updateDisplay];
-   // [self.imageViewOutlet addObserver:self forKeyPath:@"image" options:NSKeyValueObservingOptionNew context:nil];
-    
-  //  NSString *imageName = @"/Users/andyhaz/Documents/game rocket studio loadscreen/grs-loadscrenn(320x480).png";
-    
-   // NSImage *loadimage = [[NSImage alloc] initByReferencingFile:imageName];
-   // NSLog(@"loadImage:%@",loadimage);
-
-   // [self.myView setImageName:imageName];
-   // [self.myView updateDisplay];
-    
-//    NSData *imageData = (NSData *)imageViewOutlet;
-    //[imageViewOutlet setImage:<#(NSImage * _Nullable)#>]
-    //   NSImage *imageData =  imageViewOutlet;
-   // [self.myView setMyImage:imageData];
-   // [self.myView updateDisplay];
-    
-  //  NSLog(@"imageViewAction:%@ - name:%@",[sender stringValue],imageData);
-    NSLog(@"image:%@",[sender objectValue]);
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageSelected:) name:@"KSImageDroppedNotification" object:nil];
-
-}
-
-- (void)imageSelected:(NSNotification *)notification {
-    NSLog(@"imageSelected");
-}
-//end
-
-- (IBAction)importImageAction:(id)sender {
- //   [self.myView importImage:@"image/name.png"];
-}
 //
 -(void)addDataInfo:(NSString*)data{
     NSLog(@"add template:%@ - %@",data,self.rowDataName);
@@ -141,7 +101,7 @@
     
     [self updateDisplay:row];
 
-    NSLog(@"tableViewSelectionDidChange:%hd",row);
+  //  NSLog(@"tableViewSelectionDidChange:%hd",row);
 }
 
 -(void)updateDisplay:(int)row{
@@ -159,7 +119,7 @@
     [tableView reloadData];
     int r = [[rowDataName lastObject] intValue];
     [self updateDisplay:r];
-    NSLog(@"add table");
+  //  NSLog(@"add table");
 }
 
 - (IBAction)editAction:(id)sender {
@@ -169,6 +129,15 @@
         edit = NO;
     }
     [tableView reloadData];
+}
+
+- (IBAction)rotactionAction:(id)sender {
+}
+
+- (IBAction)sacleAction:(id)sender {
+    float imageScale = [sender floatValue];
+    [self.myView imageSize:imageScale];
+  //  NSLog(@"sacle:%f",imageScale);
 }
 
 - (IBAction)profileTextAction:(id)sender {
@@ -188,6 +157,19 @@
     NSLog(@"update");
 }
 
+- (IBAction)importImageAction:(id)sender {
+    NSImage *imageData = [[NSImage alloc]init];
+    LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
+    
+    imageData = [lsi loadFileImage];
+    
+    [self.myView setMyImage:imageData];
+    [self.myView imageSize:50];
+    [self.myView updateDisplay];
+    
+  //  NSLog(@"import Image:%@",imageData);
+}
+
 -(void)profileSettings{
     //[profileTextFeild setStringValue:@"hello"];
     NSString *getText = [profileTextFeild stringValue];
@@ -198,7 +180,6 @@
     [profileDataArray addObject:rowDataName];
     [profileDataArray addObject:rowDataWidth];
     [profileDataArray addObject:rowDataHeight];
-
-    NSLog(@"%@",profileDataArray);
+ //   NSLog(@"%@",profileDataArray);
 }
 @end

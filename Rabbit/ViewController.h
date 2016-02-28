@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "LoadSaveInterface.h"
 #import "myView.h"
 
 @interface ViewController : NSViewController {
@@ -33,14 +34,16 @@
 - (IBAction)profileSelectionAction:(id)sender;
 - (IBAction)update:(id)sender;
 
+- (IBAction)importImageAction:(id)sender;
+
 //table information
 @property (weak) IBOutlet NSTableView *tableView;
 - (IBAction)addTable:(id)sender;
 - (IBAction)editAction:(id)sender;
 
-@property (retain) NSImage *image;
-@property (weak) IBOutlet NSImageView *imageViewOutlet;
+@property (weak) IBOutlet NSTextField *rotationOutlet;
+- (IBAction)rotactionAction:(id)sender;
+- (IBAction)sacleAction:(id)sender;
 
-- (IBAction)imageViewAction:(id)sender;
-- (IBAction)importImageAction:(id)sender;
+
 @end

@@ -18,10 +18,13 @@
 }
 
 -(void)updateDisplay{
-   // image = [[NSImage alloc] initWithData:myImage];
     [self setNeedsDisplay:YES];
-    
-    NSLog(@"updateDisplay:%@",myImage);
+}
+
+-(void) imageSize:(float)newSize{
+    xScale = newSize;
+    yScale = newSize;
+    [self setNeedsDisplay:YES];
 }
 
 - (void) setFrameSize:(NSSize)newSize {
@@ -41,11 +44,13 @@
     {
         [self setNeedsDisplay:YES];
     }
-//  move nsview to center 
-//  width:520 - height: 450
-//  NSPoint newLocation = NSMakePoint(newSize.width-520, newSize.height-450);
+//  move nsview to center
     NSPoint newLocation = NSMakePoint(10,10);
     [self setFrameOrigin:newLocation];
+}
+
+-(void)setimage:(NSImage*)imageName{
+//    [myImage setImage:imageName];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -53,14 +58,29 @@
     // Drawing code here.
     [[NSColor blackColor]setFill];
     NSRectFill(dirtyRect);
+    //
+    [[NSGraphicsContext currentContext]
+     setImageInterpolation: NSImageInterpolationHigh];
     
-//image = [[NSImage alloc] initByReferencingFile:imageName];
-
-    [myImage drawInRect: dirtyRect
+    NSSize viewSize  = [self bounds].size;
+    NSSize imageSize = { xScale, yScale };
+    
+    NSPoint viewCenter;
+    viewCenter.x = viewSize.width  * 0.50;
+    viewCenter.y = viewSize.height * 0.50;
+    
+    NSPoint imageOrigin = viewCenter;
+    imageOrigin.x -= imageSize.width  * 0.50;
+    imageOrigin.y -= imageSize.height * 0.50;
+    
+    NSRect destRect;
+    destRect.origin = imageOrigin;
+    destRect.size = imageSize;
+    
+    [myImage drawInRect: destRect
              fromRect: NSZeroRect
             operation: NSCompositeSourceOver
              fraction: 1.0];
-    
-    NSLog(@"draw");
+  //  NSLog(@"draw");
 }
 @end

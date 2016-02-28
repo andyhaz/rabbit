@@ -13,7 +13,7 @@
 -(void)saveFileSata :(NSString*)stringData{
     // get the file url
     NSSavePanel * zSavePanel = [NSSavePanel savePanel];
-    NSArray * zAryOfExtensions = [NSArray arrayWithObject:@"hcp"];
+    NSArray * zAryOfExtensions = [NSArray arrayWithObject:@"rab"];
     [zSavePanel setAllowedFileTypes:zAryOfExtensions];
     
     NSInteger zResult = [zSavePanel runModal];
@@ -38,7 +38,7 @@
 
 -(NSString*)loadFileData{
     NSOpenPanel * zOpenPanel = [NSOpenPanel openPanel];
-    NSArray * zAryOfExtensions = [NSArray arrayWithObject:@"hcp"];
+    NSArray * zAryOfExtensions = [NSArray arrayWithObject:@"rab"];
     [zOpenPanel setAllowedFileTypes:zAryOfExtensions];
     
     NSInteger zIntResult = [zOpenPanel runModal];
@@ -53,5 +53,27 @@
                                                   error:NULL];
     // NSLog(@"zStr=\n%@",zStr);
     return zStr;
+}
+
+-(NSImage*)loadFileImage{
+    NSOpenPanel * zOpenPanel = [NSOpenPanel openPanel];
+    NSArray * zAryOfExtensions = [NSArray arrayWithObjects:@"png",@"jpg",@"psd",nil];
+    [zOpenPanel setAllowedFileTypes:zAryOfExtensions];
+    
+    NSInteger zIntResult = [zOpenPanel runModal];
+    if (zIntResult == NSFileHandlingPanelCancelButton) {
+        NSLog(@"readUsingOpenPanel cancelled");
+    }
+    NSURL *zUrl = [zOpenPanel URL];
+    
+    // read the file
+   // NSString * zStr = [NSString stringWithContentsOfURL:zUrl
+     //                                          encoding:NSASCIIStringEncoding
+       //                                           error:NULL];
+    // NSLog(@"zStr=\n%@",zStr);
+    
+    NSImage *image = [[NSImage alloc] initWithContentsOfURL:zUrl];
+
+    return image;
 }
 @end

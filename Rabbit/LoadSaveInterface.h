@@ -12,5 +12,6 @@
 
 -(void)saveFileSata :(NSString*)stringData;
 -(NSString*)loadFileData;
+-(NSImage*)loadFileImage;
 
 @end
