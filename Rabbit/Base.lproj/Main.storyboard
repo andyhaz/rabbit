@@ -455,6 +455,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="createAction:" target="5gI-5U-AMq" id="Bzz-6c-3be"/>
+                                </connections>
                             </button>
                             <textField verticalHuggingPriority="750" id="Mje-kY-ugp">
                                 <rect key="frame" x="7" y="505" width="151" height="22"/>

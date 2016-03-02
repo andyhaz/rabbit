@@ -12,6 +12,7 @@
 
 @interface ViewController : NSViewController {
     BOOL edit;
+    NSImage *imageData;
 }
 
 @property (weak) IBOutlet myView *myView;
@@ -44,6 +45,6 @@
 @property (weak) IBOutlet NSTextField *rotationOutlet;
 - (IBAction)rotactionAction:(id)sender;
 - (IBAction)sacleAction:(id)sender;
-
-
+//
+- (IBAction)createAction:(id)sender;
 @end

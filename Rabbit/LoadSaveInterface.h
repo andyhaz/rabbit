@@ -14,4 +14,6 @@
 -(NSString*)loadFileData;
 -(NSImage*)loadFileImage;
 
+-(void)saveImage:(NSImage *)image :(NSInteger)size;
+
 @end

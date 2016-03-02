@@ -158,7 +158,7 @@
 }
 
 - (IBAction)importImageAction:(id)sender {
-    NSImage *imageData = [[NSImage alloc]init];
+    imageData = [[NSImage alloc]init];
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
     
     imageData = [lsi loadFileImage];
@@ -181,5 +181,10 @@
     [profileDataArray addObject:rowDataWidth];
     [profileDataArray addObject:rowDataHeight];
  //   NSLog(@"%@",profileDataArray);
+}
+- (IBAction)createAction:(id)sender {
+    NSLog(@"create action");
+    LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
+    [lsi saveImage:imageData :40];
 }
 @end
