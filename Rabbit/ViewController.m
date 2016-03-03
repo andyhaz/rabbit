@@ -129,7 +129,6 @@
 
 - (IBAction)nameAction:(id)sender {
  [rowDataName replaceObjectAtIndex:rowSelection withObject:[sender stringValue]];
-   // NSLog(@"nameAction:%@",[sender stringValue]);
 }
 
 - (IBAction)widthTableAction:(id)sender {

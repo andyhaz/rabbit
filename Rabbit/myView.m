@@ -44,8 +44,10 @@
     {
         [self setNeedsDisplay:YES];
     }
-//  move nsview to center
-    NSPoint newLocation = NSMakePoint(10,10);
+//  move nsview to center 520x450
+    float locX = (520/2)-(newSize.width/2);
+    float locY = (450/2)-(newSize.height/2);
+    NSPoint newLocation = NSMakePoint(locX,locY);
     [self setFrameOrigin:newLocation];
 }
 
