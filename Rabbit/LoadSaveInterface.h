@@ -14,6 +14,7 @@
 -(NSString*)loadFileData;
 -(NSImage*)loadFileImage;
 
+-(void)exportFileImages :(NSImage *)image :(NSArray*)aryData;
 -(void)saveImage:(NSImage *)image :(NSInteger)size;
 
 @end

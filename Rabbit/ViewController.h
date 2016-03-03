@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "LoadSaveInterface.h"
 #import "myView.h"
+#import "cleanDataArray.h"
 
 @interface ViewController : NSViewController {
     BOOL edit;

@@ -25,6 +25,13 @@
     rowDataHeight = [[NSMutableArray alloc]init];
     
     NSSize newSize = NSMakeSize(80, 80);
+     
+    [rowDataName addObject:@"Icon"];
+    [rowDataWidth addObject:@"80"];
+    [rowDataHeight addObject:@"80"];
+    [tableView reloadData];
+    int r = [[rowDataName lastObject] intValue];
+    [self updateDisplay:r];
     [self.myView setFrameSize:newSize];
 }
 
@@ -160,13 +167,11 @@
 - (IBAction)importImageAction:(id)sender {
     imageData = [[NSImage alloc]init];
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
-    
     imageData = [lsi loadFileImage];
     
     [self.myView setMyImage:imageData];
     [self.myView imageSize:50];
     [self.myView updateDisplay];
-    
   //  NSLog(@"import Image:%@",imageData);
 }
 
@@ -185,6 +190,8 @@
 - (IBAction)createAction:(id)sender {
     NSLog(@"create action");
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
-    [lsi saveImage:imageData :40];
+    cleanDataArray *cda = [[cleanDataArray alloc]init];
+   // [lsi saveImage:imageData :40];
+    [lsi exportFileImages:imageData :[cda cleanArray:rowDataName width:rowDataWidth height:rowDataHeight]];
 }
 @end
