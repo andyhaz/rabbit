@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    rowSelection = 0;
     edit = NO;
     pngSetting = YES;
     jpgSetting = YES;
@@ -47,10 +48,10 @@
      NSLog(@"export image");
 }
 
-//
--(void)addDataInfo:(NSString*)data{
+//delete
+/*-(void)addDataInfo:(NSString*)data{
     NSLog(@"add template:%@ - %@",data,self.rowDataName);
-}
+}*/
 
 //
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
@@ -62,7 +63,6 @@
     // But it's a good practice to do it in order by remember it when a table is multicolumn.
     if( [tableColumn.identifier isEqualToString:@"nameID"] )
     {
-        //  ScaryBugDoc *bugDoc = [self.bugs objectAtIndex:row];
         //  cellView.imageView.image = @"";
         cellView.textField.stringValue = [self.rowDataName objectAtIndex:row];
         [cellView.textField setEditable:edit]; // Make Cell Editable!
@@ -85,7 +85,7 @@
         
         return cellView;
     }
-    //  NSLog(@"tableView:%@",tableColumn.identifier);
+     // NSLog(@"tableView:%@",tableColumn.identifier);
     return cellView;
 }
 
@@ -110,38 +110,71 @@
     [rowDataHeight replaceObjectAtIndex:row withObject:[textHeight stringValue]];
     
     [self updateDisplay:row];
+    
+    rowSelection = row;
   //  NSLog(@"tableViewSelectionDidChange:%hd",row);
 }
 
 -(void)updateDisplay:(int)row{
-    float w = [[rowDataWidth objectAtIndex:row] floatValue];
-    float h = [[rowDataHeight objectAtIndex:row] floatValue];
+     w = [[rowDataWidth objectAtIndex:row] floatValue];
+     h = [[rowDataHeight objectAtIndex:row] floatValue];
     
     NSSize newSize = NSMakeSize(w, h);
+    float newScale = (w/2)+(h/2);
+    
+    [self.myView imageSize:newScale];
     [self.myView setFrameSize:newSize];
 }
 
-- (IBAction)addTable:(id)sender {
-    [rowDataName addObject:@"Icon"];
-    [rowDataWidth addObject:@"40"];
-    [rowDataHeight addObject:@"40"];
-    [tableView reloadData];
-    int r = [[rowDataName lastObject] intValue];
-    [self updateDisplay:r];
-  //  NSLog(@"add table");
+
+- (IBAction)nameAction:(id)sender {
+ [rowDataName replaceObjectAtIndex:rowSelection withObject:[sender stringValue]];
+   // NSLog(@"nameAction:%@",[sender stringValue]);
 }
 
-- (IBAction)editAction:(id)sender {
-    if (edit == NO) {
-        edit = YES;
-    } else {
-        edit = NO;
+- (IBAction)widthTableAction:(id)sender {
+    [rowDataWidth replaceObjectAtIndex:rowSelection withObject:[sender stringValue]];
+}
+
+- (IBAction)heightTableAction:(id)sender {
+    [rowDataHeight replaceObjectAtIndex:rowSelection withObject:[sender stringValue]];
+}
+
+- (IBAction)segmentedAction:(id)sender {
+    NSInteger clickedSegment = [sender selectedSegment];
+    NSInteger clickedSegmentTag = [[sender cell] tagForSegment:clickedSegment];
+  //  NSLog(@"clickedSegmentTag:%ld",(long)clickedSegmentTag);
+    switch (clickedSegmentTag) {
+        case 0:
+          //  NSLog(@"add table");
+            [rowDataName addObject:@"Icon"];
+            [rowDataWidth addObject:@"40"];
+            [rowDataHeight addObject:@"40"];
+            [tableView reloadData];
+            int r = [[rowDataName lastObject] intValue];
+            [self updateDisplay:r];
+            break;
+        case 1:
+          //  NSLog(@"sub table");
+            [rowDataName removeLastObject];
+            [rowDataWidth removeLastObject];
+            [rowDataHeight removeLastObject];
+            [tableView reloadData];
+            break;
+        case 2:
+           //  NSLog(@"edit");
+            if (edit == NO) {
+                edit = YES;
+            } else {
+                edit = NO;
+            }
+            [tableView reloadData];
+            break;
+        default:
+            break;
     }
-    [tableView reloadData];
 }
 
-- (IBAction)rotactionAction:(id)sender {
-}
 
 - (IBAction)sacleAction:(id)sender {
     float imageScale = [sender floatValue];
@@ -171,10 +204,12 @@
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
     imageData = [lsi loadFileImage];
     
+    float newSize = (w/2)+(h/2);
+    
     [self.myView setMyImage:imageData];
-    [self.myView imageSize:50];
+    [self.myView imageSize:newSize];
     [self.myView updateDisplay];
-  //  NSLog(@"import Image:%@",imageData);
+    NSLog(@"import Image:%@ - size:%f",imageData,newSize);
 }
 
 -(void)profileSettings{

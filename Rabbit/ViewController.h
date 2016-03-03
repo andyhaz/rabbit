@@ -14,8 +14,9 @@
 @interface ViewController : NSViewController {
     BOOL edit;
     NSImage *imageData;
-    
     BOOL pngSetting,jpgSetting,tiffSetting;
+    float w,h;
+    int rowSelection;
 }
 
 @property (weak) IBOutlet myView *myView;
@@ -42,12 +43,14 @@
 
 //table information
 @property (weak) IBOutlet NSTableView *tableView;
-- (IBAction)addTable:(id)sender;
-- (IBAction)editAction:(id)sender;
+- (IBAction)nameAction:(id)sender;
+- (IBAction)widthTableAction:(id)sender;
+- (IBAction)heightTableAction:(id)sender;
 
-@property (weak) IBOutlet NSTextField *rotationOutlet;
-- (IBAction)rotactionAction:(id)sender;
-- (IBAction)sacleAction:(id)sender;
+
+
+- (IBAction)segmentedAction:(id)sender;
+//- (IBAction)sacleAction:(id)sender;
 //
 - (IBAction)createAction:(id)sender;
 //
