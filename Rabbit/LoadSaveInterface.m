@@ -10,6 +10,8 @@
 
 @implementation LoadSaveInterface
 
+@synthesize png,jpg,tiff;
+
 -(void)saveFileSata :(NSString*)stringData{
     // get the file url
     NSSavePanel * SavePanel = [NSSavePanel savePanel];
@@ -96,8 +98,6 @@
         imageNum ++;
         NSInteger sizeX = [aryData[imageNum] floatValue];
         imageNum ++;
-//set filename
-        NSString *newFileName = [NSString stringWithFormat:@"%@(%ldx%ld).png",path,(long)sizeX,(long)sizeY];
 //create image
        //NSLog(@"save pale:%@",SavePanel.nameFieldStringValue);
         NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
@@ -120,14 +120,29 @@
         
         NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
         
-        NSData *pngData = [rep representationUsingType:NSPNGFileType properties:options];
-        
+        NSData *pngData,*jpgData,*tiffData;
+        NSString *newFileNamePng,*newFileNameJpg,*newFileNameTiff;
         NSError *error = nil;
+        //set filename
+        if (png == true) {
+            newFileNamePng = [NSString stringWithFormat:@"%@(%ldx%ld).png",path,(long)sizeX,(long)sizeY];
+            pngData = [rep representationUsingType:NSPNGFileType properties:options];
+        }
         
-        BOOL BoolResult = [pngData writeToFile:newFileName options:NSDataWritingAtomic error:&error];
+        if (jpg == true) {
+            newFileNameJpg = [NSString stringWithFormat:@"%@(%ldx%ld).jpg",path,(long)sizeX,(long)sizeY];
+            jpgData = [rep representationUsingType:NSJPEGFileType properties:options];
+        }
         
-        NSLog(@"artData:%@ - path:%@",aryData,newFileName);
-        
+        if (tiff == true) {
+             newFileNameTiff = [NSString stringWithFormat:@"%@(%ldx%ld).tiff",path,(long)sizeX,(long)sizeY];
+             tiffData = [rep representationUsingType:NSTIFFFileType properties:options];
+        }
+        BOOL BoolResult;
+        BoolResult = [pngData writeToFile:newFileNamePng options:NSDataWritingAtomic error:&error];
+        BoolResult = [jpgData writeToFile:newFileNameJpg options:NSDataWritingAtomic error:&error];
+        BoolResult = [tiffData writeToFile:newFileNameTiff options:NSDataWritingAtomic error:&error];
+     //   NSLog(@"artData:%@ - path:%@",aryData,newFileName);
         if (!BoolResult) {
             NSLog(@"writeUsingSavePanel failed");
             NSLog(@"Write returned error: %@", [error localizedDescription]);

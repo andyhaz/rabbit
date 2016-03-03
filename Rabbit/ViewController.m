@@ -18,6 +18,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     edit = NO;
+    pngSetting = YES;
+    jpgSetting = YES;
+    tiffSetting = YES;
     profileDataArray = [[NSMutableArray alloc]init];
     profileNameArray = [[NSMutableArray alloc]init];
     rowDataName = [[NSMutableArray alloc]init];
@@ -107,7 +110,6 @@
     [rowDataHeight replaceObjectAtIndex:row withObject:[textHeight stringValue]];
     
     [self updateDisplay:row];
-
   //  NSLog(@"tableViewSelectionDidChange:%hd",row);
 }
 
@@ -187,11 +189,41 @@
     [profileDataArray addObject:rowDataHeight];
  //   NSLog(@"%@",profileDataArray);
 }
+
 - (IBAction)createAction:(id)sender {
     NSLog(@"create action");
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
     cleanDataArray *cda = [[cleanDataArray alloc]init];
-   // [lsi saveImage:imageData :40];
-    [lsi exportFileImages:imageData :[cda cleanArray:rowDataName width:rowDataWidth height:rowDataHeight]];
+    
+    [lsi setPng:pngSetting];
+    [lsi setJpg:jpgSetting];
+    [lsi setTiff:tiffSetting];
+    if (pngSetting == YES || jpgSetting == YES || tiffSetting == YES) {
+        [lsi exportFileImages:imageData :[cda cleanArray:rowDataName width:rowDataWidth height:rowDataHeight]];
+    }//end
+}//end creteation
+
+- (IBAction)pngAction:(id)sender {
+    if (pngSetting == YES) {
+        pngSetting = NO;
+    } else {
+        pngSetting = YES;
+    }
+}
+
+- (IBAction)jpgeAction:(id)sender {
+    if (jpgSetting == YES) {
+        jpgSetting = NO;
+    } else {
+        jpgSetting = YES;
+    }
+}
+
+- (IBAction)tiffAction:(id)sender {
+    if (tiffSetting == YES) {
+        tiffSetting = NO;
+    } else {
+        tiffSetting = YES;
+    }
 }
 @end

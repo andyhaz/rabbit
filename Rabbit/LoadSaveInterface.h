@@ -10,6 +10,11 @@
 
 @interface LoadSaveInterface : NSObject
 
+@property() BOOL png;
+@property() BOOL jpg;
+@property() BOOL tiff;
+
+
 -(void)saveFileSata :(NSString*)stringData;
 -(NSString*)loadFileData;
 -(NSImage*)loadFileImage;

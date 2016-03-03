@@ -14,6 +14,8 @@
 @interface ViewController : NSViewController {
     BOOL edit;
     NSImage *imageData;
+    
+    BOOL pngSetting,jpgSetting,tiffSetting;
 }
 
 @property (weak) IBOutlet myView *myView;
@@ -48,4 +50,9 @@
 - (IBAction)sacleAction:(id)sender;
 //
 - (IBAction)createAction:(id)sender;
+//
+- (IBAction)pngAction:(id)sender;
+- (IBAction)jpgeAction:(id)sender;
+- (IBAction)tiffAction:(id)sender;
+
 @end
