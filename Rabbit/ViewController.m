@@ -29,7 +29,7 @@
     rowDataWidth = [[NSMutableArray alloc]init];
     rowDataHeight = [[NSMutableArray alloc]init];
     
-    NSSize newSize = NSMakeSize(80, 80);
+    /*  NSSize newSize = NSMakeSize(80, 80);
      
     [rowDataName addObject:@"Icon"];
     [rowDataWidth addObject:@"80"];
@@ -37,17 +37,16 @@
     [tableView reloadData];
     int r = [[rowDataName lastObject] intValue];
     [self updateDisplay:r];
-    [self.myView setFrameSize:newSize];
+    [self.myView setFrameSize:newSize];*/
     
 }
 
-
 - (IBAction)importItem:(id)sender{
-    NSLog(@"import image");
+    NSLog(@"import settings");
 }
 
 - (IBAction)exportItem:(id)sender{
-     NSLog(@"export image");
+     NSLog(@"export settings");
 }
 
 //
@@ -182,7 +181,6 @@
     [self profileSettings];
 }
 
-
 - (IBAction)profileSelectionAction:(id)sender {
     NSString *str = [profileSelectionOutlet stringValue];
     NSLog(@"%@",str);
@@ -213,11 +211,24 @@
     NSString *lastTitieName =  [profileNameArray lastObject];
     [profileSelectionOutlet selectItemWithTitle:lastTitieName];
 
-    NSLog(@"%@",profileNameArray);
+   // NSLog(@"%@",profileNameArray);
 }
 //handly delegat
 - (void)titleLabel:(NSString*)ourTitle {
     [profileNameArray addObject:ourTitle];
+    //add info
+    NSSize newSize = NSMakeSize(80, 80);
+    
+    [rowDataName addObject:@"icon"];
+    [rowDataWidth addObject:@"40"];
+    [rowDataHeight addObject:@"40"];
+    [tableView reloadData];
+    int r = [[rowDataName lastObject] intValue];
+    [self updateDisplay:r];
+    [self.myView setFrameSize:newSize];
+    
+    edit = YES;
+    
     [self profileSettings];
     // NSLog(@"title Label:%@",profileNameArray);
 }

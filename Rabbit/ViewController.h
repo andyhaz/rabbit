@@ -20,7 +20,6 @@
     int rowSelection;
 }
 
-
 @property (strong) NSWindow *detachedWindow;
 @property (strong) NSPanel *detachedHUDWindow;
 
@@ -38,12 +37,10 @@
 
 //@property (weak) IBOutlet NSTextField *profileTextFeild;
 - (IBAction)profileTextAction:(id)sender;
-//- (IBAction)addTextAction:(id)sender;
 
 @property (weak) IBOutlet NSPopUpButton *profileSelectionOutlet;
 - (IBAction)profileSelectionAction:(id)sender;
-- (IBAction)update:(id)sender;
-- (IBAction)popOverAction:(id)sender;
+//- (IBAction)popOverAction:(id)sender;
 
 - (IBAction)importImageAction:(id)sender;
 
@@ -54,7 +51,6 @@
 - (IBAction)heightTableAction:(id)sender;
 
 - (IBAction)segmentedAction:(id)sender;
-//- (IBAction)sacleAction:(id)sender;
 //
 - (IBAction)createAction:(id)sender;
 //
