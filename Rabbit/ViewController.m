@@ -10,12 +10,13 @@
 
 @implementation ViewController
 
-@synthesize profileTextFeild,profileSelectionOutlet;
+@synthesize profileSelectionOutlet;
 @synthesize rowDataName,rowDataHeight,rowDataWidth,profileNameArray,profileDataArray;
 @synthesize tableView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     // Do any additional setup after loading the view.
     rowSelection = 0;
     edit = NO;
@@ -37,6 +38,7 @@
     int r = [[rowDataName lastObject] intValue];
     [self updateDisplay:r];
     [self.myView setFrameSize:newSize];
+    
 }
 
 
@@ -47,11 +49,6 @@
 - (IBAction)exportItem:(id)sender{
      NSLog(@"export image");
 }
-
-//delete
-/*-(void)addDataInfo:(NSString*)data{
-    NSLog(@"add template:%@ - %@",data,self.rowDataName);
-}*/
 
 //
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
@@ -185,17 +182,10 @@
     [self profileSettings];
 }
 
-- (IBAction)addTextAction:(id)sender {
-    [self profileSettings];
-}
 
 - (IBAction)profileSelectionAction:(id)sender {
     NSString *str = [profileSelectionOutlet stringValue];
     NSLog(@"%@",str);
-}
-
-- (IBAction)update:(id)sender {
-    NSLog(@"update");
 }
 
 - (IBAction)importImageAction:(id)sender {
@@ -212,18 +202,34 @@
 }
 
 -(void)profileSettings{
-    //[profileTextFeild setStringValue:@"hello"];
-    NSString *getText = [profileTextFeild stringValue];
-    [profileNameArray addObject:getText];
+ /*   NSString *getText = [profileTextFeild stringValue];
+    [profileNameArray addObject:getText];  */
     [profileSelectionOutlet addItemsWithTitles:profileNameArray];
-    [profileSelectionOutlet selectItemWithTitle:getText];
     [profileDataArray addObject:profileNameArray];
     [profileDataArray addObject:rowDataName];
     [profileDataArray addObject:rowDataWidth];
     [profileDataArray addObject:rowDataHeight];
- //   NSLog(@"%@",profileDataArray);
+//set up title bar
+    NSString *lastTitieName =  [profileNameArray lastObject];
+    [profileSelectionOutlet selectItemWithTitle:lastTitieName];
+
+    NSLog(@"%@",profileNameArray);
+}
+//handly delegat
+- (void)titleLabel:(NSString*)ourTitle {
+    [profileNameArray addObject:ourTitle];
+    [self profileSettings];
+    // NSLog(@"title Label:%@",profileNameArray);
 }
 
+-(void)prepareForSegue:(NSStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"pvcSegue"]) {
+        //NSLog(@"todo");
+        profilesViewControler *pvc = segue.destinationController;
+        pvc.delegate = self;
+    }
+}
+//end hanly delgate
 - (IBAction)createAction:(id)sender {
     NSLog(@"create action");
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];

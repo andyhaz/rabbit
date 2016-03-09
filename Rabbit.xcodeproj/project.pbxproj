@@ -21,6 +21,7 @@
 		9744D7EA1C58C25F0065DBAE /* RBResize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7E91C58C25F0065DBAE /* RBResize.m */; };
 		97A88DA51C6C7877004A0712 /* TemplateTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A88DA41C6C7877004A0712 /* TemplateTableController.m */; };
 		97FD58AB1C87CB730059C87C /* cleanDataArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FD58AA1C87CB730059C87C /* cleanDataArray.m */; };
+		97FD58AE1C88F6FE0059C87C /* profilesViewControler.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FD58AD1C88F6FE0059C87C /* profilesViewControler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,8 @@
 		97A88DA41C6C7877004A0712 /* TemplateTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateTableController.m; sourceTree = "<group>"; };
 		97FD58A91C87CB730059C87C /* cleanDataArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cleanDataArray.h; sourceTree = "<group>"; };
 		97FD58AA1C87CB730059C87C /* cleanDataArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cleanDataArray.m; sourceTree = "<group>"; };
+		97FD58AC1C88F6FE0059C87C /* profilesViewControler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = profilesViewControler.h; sourceTree = "<group>"; };
+		97FD58AD1C88F6FE0059C87C /* profilesViewControler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = profilesViewControler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +169,8 @@
 			children = (
 				9744D79D1C58519B0065DBAE /* ViewController.h */,
 				9744D79E1C58519B0065DBAE /* ViewController.m */,
+				97FD58AC1C88F6FE0059C87C /* profilesViewControler.h */,
+				97FD58AD1C88F6FE0059C87C /* profilesViewControler.m */,
 				9744D7A01C58519B0065DBAE /* Document.h */,
 				9744D7A11C58519B0065DBAE /* Document.m */,
 				9744D7D21C5859D60065DBAE /* myView.h */,
@@ -349,6 +354,7 @@
 				9744D79F1C58519B0065DBAE /* ViewController.m in Sources */,
 				9744D7D41C5859D60065DBAE /* myView.m in Sources */,
 				9744D7EA1C58C25F0065DBAE /* RBResize.m in Sources */,
+				97FD58AE1C88F6FE0059C87C /* profilesViewControler.m in Sources */,
 				9744D79C1C58519B0065DBAE /* main.m in Sources */,
 				9744D7A51C58519B0065DBAE /* Document.xcdatamodeld in Sources */,
 				97FD58AB1C87CB730059C87C /* cleanDataArray.m in Sources */,

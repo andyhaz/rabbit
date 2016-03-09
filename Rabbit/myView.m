@@ -51,9 +51,6 @@
     [self setFrameOrigin:newLocation];
 }
 
--(void)setimage:(NSImage*)imageName{
-//    [myImage setImage:imageName];
-}
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];

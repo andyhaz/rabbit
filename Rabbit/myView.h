@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @interface myView : NSView {
-     NSImage *image;
+    NSImage *image;
     float xScale,yScale;
 }
 
