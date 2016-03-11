@@ -27,7 +27,7 @@
     NSString *theTitileText = [profileOutlet stringValue];
     [delegate titleLabel:theTitileText];
     [self dismissViewController:self];
-    NSLog(@"the title Text:%@",theTitileText);
+  //  NSLog(@"the title Text:%@",theTitileText);
 }
 
 - (IBAction)cancelButtonAction:(id)sender {

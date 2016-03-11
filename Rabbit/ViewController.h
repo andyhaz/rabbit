@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "LoadSaveInterface.h"
 #import "myView.h"
-#import "cleanDataArray.h"
+#import "DataArray.h"
 #import "profilesViewControler.h"
 
 @interface ViewController : NSViewController<popOverControllerDelegate> {
@@ -18,6 +18,8 @@
     BOOL pngSetting,jpgSetting,tiffSetting;
     float w,h;
     int rowSelection;
+    DataArray *ourData;
+    NSString *popTitle;
 }
 
 @property (strong) NSWindow *detachedWindow;
@@ -25,11 +27,17 @@
 
 @property (weak) IBOutlet myView *myView;
 //
-@property (strong) NSMutableArray *rowDataName;
-@property (strong) NSMutableArray *rowDataWidth;
-@property (strong) NSMutableArray *rowDataHeight;
+@property (nonatomic) NSMutableDictionary *colomData;
+@property (nonatomic) NSMutableArray *rowData;
+@property (nonatomic) NSMutableDictionary *myData;
+
+/*delete this infomation
+@property (nonatomic) NSMutableDictionary *profileRootDictionary;
 @property (strong) NSMutableArray *profileNameArray;
 @property (strong) NSMutableArray *profileDataArray;
+@property (strong) NSMutableArray *rowDataName;
+@property (strong) NSMutableArray *rowDataWidth;
+@property (strong) NSMutableArray *rowDataHeight;*/
 
 //menu items
 - (IBAction)importItem:(id)sender;

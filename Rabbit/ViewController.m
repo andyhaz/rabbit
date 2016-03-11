@@ -11,7 +11,8 @@
 @implementation ViewController
 
 @synthesize profileSelectionOutlet;
-@synthesize rowDataName,rowDataHeight,rowDataWidth,profileNameArray,profileDataArray;
+//@synthesize rowDataName,rowDataHeight,rowDataWidth,profileNameArray,profileDataArray,profileRootDictionary;
+@synthesize myData,colomData,rowData;
 @synthesize tableView;
 
 - (void)viewDidLoad {
@@ -23,22 +24,13 @@
     pngSetting = YES;
     jpgSetting = YES;
     tiffSetting = YES;
-    profileDataArray = [[NSMutableArray alloc]init];
-    profileNameArray = [[NSMutableArray alloc]init];
-    rowDataName = [[NSMutableArray alloc]init];
-    rowDataWidth = [[NSMutableArray alloc]init];
-    rowDataHeight = [[NSMutableArray alloc]init];
     
-    /*  NSSize newSize = NSMakeSize(80, 80);
-     
-    [rowDataName addObject:@"Icon"];
-    [rowDataWidth addObject:@"80"];
-    [rowDataHeight addObject:@"80"];
-    [tableView reloadData];
-    int r = [[rowDataName lastObject] intValue];
-    [self updateDisplay:r];
-    [self.myView setFrameSize:newSize];*/
+    ourData = [[DataArray alloc]init];
+    myData = [[NSMutableDictionary alloc]init];
+    colomData = [[NSMutableDictionary alloc]init];
+    rowData = [[NSMutableArray alloc]init];
     
+    [self updateDisplayView];
 }
 
 - (IBAction)importItem:(id)sender{
@@ -60,7 +52,7 @@
     if( [tableColumn.identifier isEqualToString:@"nameID"] )
     {
         //  cellView.imageView.image = @"";
-        cellView.textField.stringValue = [self.rowDataName objectAtIndex:row];
+        cellView.textField.stringValue = [ourData getNameAtIndex:row];// [self.rowDataName objectAtIndex:row];
         [cellView.textField setEditable:edit]; // Make Cell Editable!
         
         return cellView;
@@ -68,7 +60,7 @@
     //widthID
     if( [tableColumn.identifier isEqualToString:@"widthID"] )
     {
-        cellView.textField.stringValue = [self.rowDataWidth objectAtIndex:row];
+        cellView.textField.stringValue =[ourData getWidthAtIndex:row];//[self.rowDataWidth objectAtIndex:row];
         [cellView.textField setEditable:edit]; // Make Cell Editable!
         
         return cellView;
@@ -76,7 +68,7 @@
     //heightID
     if( [tableColumn.identifier isEqualToString:@"heightID"] )
     {
-        cellView.textField.stringValue = [self.rowDataHeight objectAtIndex:row];
+        cellView.textField.stringValue =[ourData getHeightAtIndex:row]; //[self.rowDataHeight objectAtIndex:row];
         [cellView.textField setEditable:edit]; // Make Cell Editable!
         
         return cellView;
@@ -86,7 +78,7 @@
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return [self.rowDataName count];
+    return [[ourData nameColom] count];// [self.rowDataName count];
 }
 
 -(void)tableViewSelectionDidChange:(NSNotification *)notification{
@@ -101,9 +93,9 @@
     [textName selectText:textHeight.stringValue];
     
     //update array
-    [rowDataName replaceObjectAtIndex:row withObject:[textName stringValue]];
-    [rowDataWidth replaceObjectAtIndex:row withObject:[textWidth stringValue]];
-    [rowDataHeight replaceObjectAtIndex:row withObject:[textHeight stringValue]];
+    [ourData updateName:row newData:[textName stringValue]];
+    [ourData updateWidth:row newData:[textWidth stringValue]];
+    [ourData updateHieght:row newData:[textHeight stringValue]];
     
     [self updateDisplay:row];
     
@@ -112,8 +104,8 @@
 }
 
 -(void)updateDisplay:(int)row{
-     w = [[rowDataWidth objectAtIndex:row] floatValue];
-     h = [[rowDataHeight objectAtIndex:row] floatValue];
+    w = [[ourData getWidthAtIndex:row] floatValue];
+    h = [[ourData getHeightAtIndex:row] floatValue];
     
     NSSize newSize = NSMakeSize(w, h);
     float newScale = (w/2)+(h/2);
@@ -122,54 +114,66 @@
     [self.myView setFrameSize:newSize];
 }
 
-
 - (IBAction)nameAction:(id)sender {
- [rowDataName replaceObjectAtIndex:rowSelection withObject:[sender stringValue]];
+    [ourData updateName:rowSelection newData:[sender stringValue]];
+   // [rowDataName replaceObjectAtIndex:rowSelection withObject:[sender stringValue]];
 }
 
 - (IBAction)widthTableAction:(id)sender {
-    [rowDataWidth replaceObjectAtIndex:rowSelection withObject:[sender stringValue]];
+    [ourData updateWidth:rowSelection newData:[sender stringValue]];
+  //  [rowDataWidth replaceObjectAtIndex:rowSelection withObject:[sender stringValue]];
 }
 
 - (IBAction)heightTableAction:(id)sender {
-    [rowDataHeight replaceObjectAtIndex:rowSelection withObject:[sender stringValue]];
+    [ourData updateHieght:rowSelection newData:[sender stringValue]];
+  //  [rowDataHeight replaceObjectAtIndex:rowSelection withObject:[sender stringValue]];
 }
 
 - (IBAction)segmentedAction:(id)sender {
     NSInteger clickedSegment = [sender selectedSegment];
     NSInteger clickedSegmentTag = [[sender cell] tagForSegment:clickedSegment];
   //  NSLog(@"clickedSegmentTag:%ld",(long)clickedSegmentTag);
-    switch (clickedSegmentTag) {
-        case 0:
-          //  NSLog(@"add table");
-            [rowDataName addObject:@"Icon"];
-            [rowDataWidth addObject:@"40"];
-            [rowDataHeight addObject:@"40"];
-            [tableView reloadData];
-            int r = [[rowDataName lastObject] intValue];
-            [self updateDisplay:r];
-            break;
-        case 1:
-          //  NSLog(@"sub table");
-            [rowDataName removeLastObject];
-            [rowDataWidth removeLastObject];
-            [rowDataHeight removeLastObject];
-            [tableView reloadData];
-            break;
-        case 2:
-           //  NSLog(@"edit");
-            if (edit == NO) {
-                edit = YES;
-            } else {
-                edit = NO;
-            }
-            [tableView reloadData];
-            break;
-        default:
-            break;
+    NSMutableArray *temp = [[NSMutableArray alloc] initWithArray:[ourData getRowData:popTitle]];
+    NSMutableDictionary *oldDict = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+//  NSLog(@"dict:%@",dict);
+    /*
+     NSMutableDictionary *temp = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
+     [temp setValuesForKeysWithDictionary:[ourData newData:ourTitle]];
+     [ourData setMyData:temp];
+     */
+    if (clickedSegmentTag == 0) {
+        [temp addObject:[ourData newTableData]];
+        [dict setObject:temp forKey:popTitle];
+        [oldDict setValuesForKeysWithDictionary:dict];
+        [ourData setMyData:oldDict];
+        [self changeTable:popTitle];
+        [self updateDisplayView];
+        [tableView reloadData];
+       // NSLog(@"clickedSegmentTag ourdata:%@",[ourData myData]);
     }
+    
+    if (clickedSegmentTag == 1 ) {
+//NSLog(@"sub table");
+        [temp removeLastObject];
+        [dict setObject:temp forKey:popTitle];
+        [ourData setMyData:dict];
+        [self changeTable:popTitle];
+        [self updateDisplayView];
+        [tableView reloadData];
+    }
+    
+    if (clickedSegmentTag == 2 ) {
+//  NSLog(@"edit");
+        if (edit == NO) {
+            edit = YES;
+        } else {
+            edit = NO;
+        }
+        [tableView reloadData];
+    }
+  //  NSLog(@"myDate%@",[ourData myData]);
 }
-
 
 - (IBAction)sacleAction:(id)sender {
     float imageScale = [sender floatValue];
@@ -178,12 +182,15 @@
 }
 
 - (IBAction)profileTextAction:(id)sender {
-    [self profileSettings];
+    NSLog(@"profileTextAction");
 }
 
 - (IBAction)profileSelectionAction:(id)sender {
-    NSString *str = [profileSelectionOutlet stringValue];
-    NSLog(@"%@",str);
+    NSString *newTitle = [sender titleOfSelectedItem];
+    popTitle = newTitle;
+    [self changeTable:newTitle];
+    [tableView reloadData];
+    NSLog(@"profileSelectionAction:%@ \n %@",newTitle,[ourData myData]);
 }
 
 - (IBAction)importImageAction:(id)sender {
@@ -196,41 +203,46 @@
     [self.myView setMyImage:imageData];
     [self.myView imageSize:newSize];
     [self.myView updateDisplay];
-    NSLog(@"import Image:%@ - size:%f",imageData,newSize);
+  //  NSLog(@"import Image:%@ - size:%f",imageData,newSize);
 }
 
--(void)profileSettings{
- /*   NSString *getText = [profileTextFeild stringValue];
-    [profileNameArray addObject:getText];  */
-    [profileSelectionOutlet addItemsWithTitles:profileNameArray];
-    [profileDataArray addObject:profileNameArray];
-    [profileDataArray addObject:rowDataName];
-    [profileDataArray addObject:rowDataWidth];
-    [profileDataArray addObject:rowDataHeight];
-//set up title bar
-    NSString *lastTitieName =  [profileNameArray lastObject];
+-(void)createPopup:(NSString*)popupTitle{
+    [profileSelectionOutlet addItemsWithTitles:[ourData getDictionaryKeyNames]];
+    NSString *lastTitieName =  [[ourData getDictionaryKeyNames] lastObject];
     [profileSelectionOutlet selectItemWithTitle:lastTitieName];
-
-   // NSLog(@"%@",profileNameArray);
+ //   NSLog(@"last titlw:%@",lastTitieName);
 }
-//handly delegat
-- (void)titleLabel:(NSString*)ourTitle {
-    [profileNameArray addObject:ourTitle];
-    //add info
+
+-(void)changeTable:(NSString*)tableTitle{
+    NSArray *myRowData = [[NSArray alloc] initWithArray:[ourData getRowData:tableTitle]];
+    //  NSLog(@"row data:%@",myRowData);
+    [ourData setNameColom:[myRowData valueForKey:@"Name"]];
+    [ourData setWidthColom:[myRowData valueForKey:@"Width"]];
+    [ourData setHightColom:[myRowData valueForKey:@"Height"]];
+}
+
+-(void)updateDisplayView {
     NSSize newSize = NSMakeSize(80, 80);
-    
-    [rowDataName addObject:@"icon"];
-    [rowDataWidth addObject:@"40"];
-    [rowDataHeight addObject:@"40"];
-    [tableView reloadData];
-    int r = [[rowDataName lastObject] intValue];
+    int r = [[[ourData getDictionaryKeyNames] lastObject] intValue];
     [self updateDisplay:r];
     [self.myView setFrameSize:newSize];
+}
+
+//handly delegat
+- (void)titleLabel:(NSString*)ourTitle {
+    NSMutableDictionary *temp = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
+    [temp setValuesForKeysWithDictionary:[ourData newData:ourTitle]];
+    [ourData setMyData:temp];
     
+    [self createPopup:ourTitle];
+    [self changeTable:ourTitle];
+    popTitle = ourTitle;
     edit = YES;
-    
-    [self profileSettings];
-    // NSLog(@"title Label:%@",profileNameArray);
+
+    [self updateDisplayView];
+   // [self profileSettings];
+  //  NSLog(@"ourData:%@",[ourData myData]);
+    [tableView reloadData];
 }
 
 -(void)prepareForSegue:(NSStoryboardSegue *)segue sender:(id)sender{
@@ -240,17 +252,19 @@
         pvc.delegate = self;
     }
 }
+
 //end hanly delgate
 - (IBAction)createAction:(id)sender {
     NSLog(@"create action");
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
-    cleanDataArray *cda = [[cleanDataArray alloc]init];
+    DataArray *cda = [[DataArray alloc]init];
     
     [lsi setPng:pngSetting];
     [lsi setJpg:jpgSetting];
     [lsi setTiff:tiffSetting];
     if (pngSetting == YES || jpgSetting == YES || tiffSetting == YES) {
-        [lsi exportFileImages:imageData :[cda cleanArray:rowDataName width:rowDataWidth height:rowDataHeight]];
+        //need to update this file
+//        [lsi exportFileImages:imageData :[cda cleanArray:rowDataName width:rowDataWidth height:rowDataHeight]];
     }//end
 }//end creteation
 
