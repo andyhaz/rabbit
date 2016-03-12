@@ -31,9 +31,9 @@
 -(NSString*) getWidthAtIndex:(NSInteger)row;
 -(NSString*) getHeightAtIndex:(NSInteger)row;
 
--(void) updateName:(NSInteger)row newData:(NSString*)strData;
--(void) updateWidth:(NSInteger)row newData:(NSString*)strData;
--(void) updateHieght:(NSInteger)row newData:(NSString*)strData;
+
+-(NSMutableArray*) replaceSubArray:(NSMutableArray*)subArray atIndex:(int)index setStrValue:(NSString*)value valueForKey:(NSString*)valueKey;
+-(NSMutableArray*) replaceSubArray:(NSMutableArray*)subArray atIndex:(int)index setNumberValue:(float)value valueForKey:(NSString*)valueKey;
 
 -(NSMutableDictionary*)newData:(NSString*)title;
 -(NSMutableDictionary*)newTableData;

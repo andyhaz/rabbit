@@ -32,16 +32,28 @@
     return [hightColom objectAtIndex:row];
 }
 
--(void) updateName:(NSInteger)row newData:(NSString*)strData{
-    [nameColom replaceObjectAtIndex:row withObject:strData];
+-(NSMutableArray*) replaceSubArray:(NSMutableArray*)subArray atIndex:(int)index setStrValue:(NSString*)value valueForKey:(NSString*)valueKey{
+    if (index < [subArray count]) {
+        NSMutableArray *myRowData = [[NSMutableArray alloc] initWithArray:subArray];
+        NSMutableDictionary *dic =[[NSMutableDictionary alloc] initWithDictionary:[myRowData objectAtIndex:index]];
+        [dic setValue:value forKey:valueKey];
+        [myRowData replaceObjectAtIndex:index withObject:dic];
+        
+        return myRowData;
+    }
+    return nil;
 }
 
--(void) updateWidth:(NSInteger)row newData:(NSString*)strData{
-    [widthColom replaceObjectAtIndex:row withObject:strData];
-}
-
--(void) updateHieght:(NSInteger)row newData:(NSString*)strData{
-    [hightColom replaceObjectAtIndex:row withObject:strData];
+-(NSMutableArray*) replaceSubArray:(NSMutableArray*)subArray atIndex:(int)index setNumberValue:(float)value valueForKey:(NSString*)valueKey{
+    if (index < [subArray count]) {
+        NSMutableArray *myRowData = [[NSMutableArray alloc] initWithArray:subArray];
+        NSMutableDictionary *dic =[[NSMutableDictionary alloc] initWithDictionary:[myRowData objectAtIndex:index]];
+        [dic setValue:[NSNumber numberWithFloat:value] forKey:valueKey];
+        [myRowData replaceObjectAtIndex:index withObject:dic];
+        
+        return myRowData;
+    }
+    return nil;
 }
 
 -(NSMutableDictionary*)newData:(NSString*)title{

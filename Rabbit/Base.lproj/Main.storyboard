@@ -453,21 +453,6 @@
                                 <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <font key="titleFont" metaFont="system"/>
                             </box>
-                            <segmentedControl verticalHuggingPriority="750" id="GIk-V5-voG">
-                                <rect key="frame" x="-1" y="115" width="250" height="23"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="smallSquare" trackingMode="momentary" id="9Ca-Ra-YN4">
-                                    <font key="font" metaFont="system"/>
-                                    <segments>
-                                        <segment label="+"/>
-                                        <segment label="-" tag="1"/>
-                                        <segment label="Edit" width="190" tag="2"/>
-                                    </segments>
-                                </segmentedCell>
-                                <connections>
-                                    <action selector="segmentedAction:" target="5gI-5U-AMq" id="LyF-a5-H9o"/>
-                                </connections>
-                            </segmentedControl>
                             <button verticalHuggingPriority="750" id="v9h-l4-OsK">
                                 <rect key="frame" x="62" y="72" width="127" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -491,6 +476,23 @@
                                     <segue destination="5oe-cs-AYY" kind="popover" identifier="pvcSegue" popoverAnchorView="job-Bb-aGo" popoverBehavior="t" preferredEdge="maxX" id="anK-e2-PEQ"/>
                                 </connections>
                             </button>
+                            <segmentedControl verticalHuggingPriority="750" id="GIk-V5-voG">
+                                <rect key="frame" x="-1" y="118" width="251" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="smallSquare" trackingMode="momentary" id="9Ca-Ra-YN4">
+                                    <font key="font" metaFont="system"/>
+                                    <segments>
+                                        <segment label="+"/>
+                                        <segment label="-" tag="1"/>
+                                        <segment width="191" tag="2">
+                                            <nil key="label"/>
+                                        </segment>
+                                    </segments>
+                                </segmentedCell>
+                                <connections>
+                                    <action selector="segmentedAction:" target="5gI-5U-AMq" id="LyF-a5-H9o"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                     </view>
                     <connections>

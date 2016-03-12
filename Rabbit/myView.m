@@ -13,10 +13,6 @@
 
 @synthesize myImage,imageName;
 
--(void)importImage :(NSString*)fileName{
-    NSLog(@"import image");
-}
-
 -(void)updateDisplay{
     [self setNeedsDisplay:YES];
 }
@@ -30,18 +26,14 @@
 - (void) setFrameSize:(NSSize)newSize {
     [super setFrameSize:newSize];
     // A change in size has required the view to be invalidated.
-    if ([self inLiveResize])
-    {
+    if ([self inLiveResize]) {
         NSRect rects[4];
         NSInteger count;
         [self getRectsExposedDuringLiveResize:rects count:&count];
-        while (count-- > 0)
-        {
+        while (count-- > 0) {
             [self setNeedsDisplayInRect:rects[count]];
         }
-    }
-    else
-    {
+    } else {
         [self setNeedsDisplay:YES];
     }
 //  move nsview to center 520x450
@@ -80,6 +72,6 @@
              fromRect: NSZeroRect
             operation: NSCompositeSourceOver
              fraction: 1.0];
-  //  NSLog(@"draw");
+    NSLog(@"draw");
 }
 @end

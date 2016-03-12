@@ -17,7 +17,6 @@
 @property (retain) NSString *imageName;
 
 -(void)setFrameSize:(NSSize)newSize;
--(void)importImage :(NSString*)fileName;
 -(void)updateDisplay;
 -(void) imageSize:(float)newSize;
 
