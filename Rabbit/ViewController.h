@@ -13,10 +13,8 @@
 #import "profilesViewControler.h"
 
 @interface ViewController : NSViewController<popOverControllerDelegate> {
-    BOOL edit;
     NSImage *imageData;
     BOOL pngSetting,jpgSetting,tiffSetting;
-   //delete float w,h;
     int rowSelection;
     DataArray *ourData;
     NSString *popTitle;
@@ -30,8 +28,9 @@
 @property (weak) IBOutlet myView *myView;
 //
 @property (nonatomic) NSMutableDictionary *colomData;
-@property (nonatomic) NSMutableArray *rowData;
 @property (nonatomic) NSMutableDictionary *myData;
+@property (nonatomic) NSMutableArray *tableRowData;
+
 
 //menu items
 - (IBAction)importItem:(id)sender;

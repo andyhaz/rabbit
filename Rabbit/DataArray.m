@@ -80,4 +80,28 @@
     
     return clear;
 }
+
+-(NSMutableDictionary*)createNewData:(NSString*)title{
+    
+    NSMutableDictionary *dicAry = [[NSMutableDictionary alloc] initWithDictionary:[self newTableData]];
+    
+    NSMutableArray *ourRowData = [[NSMutableArray alloc]init];
+
+    [ourRowData addObject:dicAry];
+    
+    for (NSInteger i = 0; i < [nameColom count]; i++) {
+        [dicAry setObject:[nameColom objectAtIndex:i] forKey:@"Name"];
+        [dicAry setObject:[widthColom objectAtIndex:i] forKey:@"Width"];
+        [dicAry setObject:[hightColom objectAtIndex:i] forKey:@"Height"];
+        [ourRowData addObject:[dicAry copy]];
+    }
+  //  NSLog(@"new data:%@",ourRowData);
+
+    NSMutableDictionary *usrData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:ourRowData,title,nil ];
+
+//    NSLog(@"usrData:%@",usrData);
+    
+    return usrData;
+}
+
 @end
