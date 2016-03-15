@@ -33,7 +33,7 @@
   //  [self updateDisplayView];
     
     /*test code here */
-    NSString *ourTitle = @"Apple Icons";
+  /*  NSString *ourTitle = @"Apple Icons";
     NSMutableDictionary *temp = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
     [temp setValuesForKeysWithDictionary:[ourData newData:ourTitle]];
     [ourData setMyData:temp];
@@ -44,7 +44,7 @@
     
     [self updateDisplayView];
     //NSLog(@"ourData:%@",[ourData myData]);
-    [tableView reloadData];
+    [tableView reloadData];*/
 }
 
 - (IBAction)importItem:(id)sender{
@@ -209,8 +209,7 @@
             [tableView reloadData];
         }//error handyling
     }
-    
-    myData = [ourData createNewData:popTitle];
+    [myData setObject:[ourData createNewData] forKey:popTitle];
 //NSLog(@"myDate%@",[ourData myData]);
 }//end srgmentedAction
 
@@ -226,12 +225,11 @@
 
 #pragma mark change popup title
 - (IBAction)profileSelectionAction:(id)sender {
-    NSLog(@"profileSelectionAction:%@",myData);
+   // NSLog(@"profileSelectionAction:%@",myData);
+    [ourData setMyData:myData];
     NSString *newTitle = [sender titleOfSelectedItem];
     popTitle = newTitle;
     //update
-    
-    
     [self changeTable:newTitle];
     [tableView reloadData];
 //NSLog(@"profileSelectionAction:%@ \n %@",newTitle,[ourData myData]);
@@ -259,15 +257,15 @@
 }
 
 -(void)changeTable:(NSString*)tableTitle{
-    NSLog(@"change Table");
-    NSMutableDictionary *firstDict = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
-    //NSArray *myRowData = [[NSArray alloc] initWithArray:[ourData getRowData:tableTitle]];
+//    NSLog(@"change Table");
+    //NSMutableDictionary *firstDict = [[NSMutableDictionary alloc] initWithDictionary:[myData valueForKey:popTitle]];
+ //   NSLog(@"changeTable data:%@",[ourData myData]);
+    
     tableRowData = [[NSMutableArray alloc] initWithArray:[ourData getRowData:tableTitle]];
-    NSLog(@"row data:%@",tableRowData);
+  //  NSLog(@"row data:%@",[ourData getRowData:tableTitle]);
     [ourData setNameColom:[tableRowData valueForKey:@"Name"]];
     [ourData setWidthColom:[tableRowData valueForKey:@"Width"]];
     [ourData setHightColom:[tableRowData valueForKey:@"Height"]];
-    [ourData setMyData:firstDict];
 }
 
 //handly delegat
@@ -282,7 +280,7 @@
     popTitle = ourTitle;
     
     [self updateDisplayView];
-  //NSLog(@"ourData:%@",[ourData myData]);
+    NSLog(@"titleLabel ourData:%@",[ourData myData]);
     [tableView reloadData];
 }
 

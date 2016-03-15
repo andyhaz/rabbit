@@ -38,5 +38,5 @@
 -(NSMutableDictionary*)newData:(NSString*)title;
 -(NSMutableDictionary*)newTableData;
 
--(NSMutableDictionary*)createNewData:(NSString*)title;
+-(NSMutableArray*)createNewData;
 @end

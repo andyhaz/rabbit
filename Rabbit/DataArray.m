@@ -81,7 +81,7 @@
     return clear;
 }
 
--(NSMutableDictionary*)createNewData:(NSString*)title{
+-(NSMutableArray*)createNewData{
     
     NSMutableDictionary *dicAry = [[NSMutableDictionary alloc] initWithDictionary:[self newTableData]];
     
@@ -97,11 +97,11 @@
     }
   //  NSLog(@"new data:%@",ourRowData);
 
-    NSMutableDictionary *usrData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:ourRowData,title,nil ];
+   // NSMutableDictionary *usrData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:ourRowData,title,nil ];
 
 //    NSLog(@"usrData:%@",usrData);
     
-    return usrData;
+    return ourRowData;
 }
 
 @end
