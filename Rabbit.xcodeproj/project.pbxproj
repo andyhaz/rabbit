@@ -19,7 +19,6 @@
 		9744D7D41C5859D60065DBAE /* myView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7D31C5859D60065DBAE /* myView.m */; };
 		9744D7E71C58C1CC0065DBAE /* LoadSaveInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7E61C58C1CC0065DBAE /* LoadSaveInterface.m */; };
 		9744D7EA1C58C25F0065DBAE /* RBResize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7E91C58C25F0065DBAE /* RBResize.m */; };
-		97A88DA51C6C7877004A0712 /* TemplateTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A88DA41C6C7877004A0712 /* TemplateTableController.m */; };
 		97DB4D4B1C90F2AC0091D45C /* DataArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DB4D4A1C90F2AC0091D45C /* DataArray.m */; };
 		97FD58AE1C88F6FE0059C87C /* profilesViewControler.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FD58AD1C88F6FE0059C87C /* profilesViewControler.m */; };
 /* End PBXBuildFile section */
@@ -68,8 +67,6 @@
 		9744D7E91C58C25F0065DBAE /* RBResize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBResize.m; sourceTree = "<group>"; };
 		97A88D9F1C6C6F96004A0712 /* libsharedObjectUtile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsharedObjectUtile.a; sourceTree = "<group>"; };
 		97A88DA01C6C6F96004A0712 /* sharedObjectUtile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sharedObjectUtile.h; sourceTree = "<group>"; };
-		97A88DA31C6C7877004A0712 /* TemplateTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateTableController.h; sourceTree = "<group>"; };
-		97A88DA41C6C7877004A0712 /* TemplateTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplateTableController.m; sourceTree = "<group>"; };
 		97DB4D491C90F2AC0091D45C /* DataArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataArray.h; sourceTree = "<group>"; };
 		97DB4D4A1C90F2AC0091D45C /* DataArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataArray.m; sourceTree = "<group>"; };
 		97FD58AC1C88F6FE0059C87C /* profilesViewControler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = profilesViewControler.h; sourceTree = "<group>"; };
@@ -175,8 +172,6 @@
 				9744D7A11C58519B0065DBAE /* Document.m */,
 				9744D7D21C5859D60065DBAE /* myView.h */,
 				9744D7D31C5859D60065DBAE /* myView.m */,
-				97A88DA31C6C7877004A0712 /* TemplateTableController.h */,
-				97A88DA41C6C7877004A0712 /* TemplateTableController.m */,
 			);
 			name = viewControle;
 			sourceTree = "<group>";
@@ -349,7 +344,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97A88DA51C6C7877004A0712 /* TemplateTableController.m in Sources */,
 				9744D7A21C58519B0065DBAE /* Document.m in Sources */,
 				9744D79F1C58519B0065DBAE /* ViewController.m in Sources */,
 				97DB4D4B1C90F2AC0091D45C /* DataArray.m in Sources */,

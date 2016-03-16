@@ -29,7 +29,33 @@
     myData = [[NSMutableDictionary alloc]init];
     colomData = [[NSMutableDictionary alloc]init];
 }
+#pragma mark - new project
+- (IBAction)newProject:(id)sender{
+    NSLog(@"new project");
+    popTitle = @"";
+    [self titleLabel:popTitle];
+    [profileSelectionOutlet removeAllItems];
+    NSArray *popup = [[NSArray alloc] initWithObjects:@"None", nil];
+    [profileSelectionOutlet addItemsWithTitles:popup];
 
+    rowSelection = 0;
+    curentWidth = 80;
+    curentHeight = 80;
+    ourData = [[DataArray alloc]init];
+    myData = [[NSMutableDictionary alloc]init];
+    colomData = [[NSMutableDictionary alloc]init];
+
+    [tableView reloadData];
+}
+
+#pragma mark - open & saveproject
+- (IBAction)openProject:(id)sender{
+    NSLog(@"open");
+}
+
+- (IBAction)SaveProject:(id)sender{
+    NSLog(@"save");
+}
 - (IBAction)importItem:(id)sender{
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:[lsi importProfile]];
@@ -65,6 +91,7 @@
 
 }
 
+#pragma mark - import & export
 - (IBAction)exportItem:(id)sender{
    // fileFormate *RFF = [[fileFormate alloc]init];
     NSMutableDictionary *exportData = [[NSMutableDictionary alloc] init];

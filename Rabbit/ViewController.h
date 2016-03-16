@@ -31,6 +31,11 @@
 @property (nonatomic) NSMutableDictionary *myData;
 //@property (nonatomic) NSMutableArray *tableRowData;
 
+//new project
+- (IBAction)newProject:(id)sender;
+//open and Save
+- (IBAction)openProject:(id)sender;
+- (IBAction)SaveProject:(id)sender;
 
 //menu items
 - (IBAction)importItem:(id)sender;

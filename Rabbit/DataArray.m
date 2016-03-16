@@ -99,6 +99,6 @@
         [dicAry setObject:[widthColom objectAtIndex:i] forKey:@"Width"];
         [dicAry setObject:[hightColom objectAtIndex:i] forKey:@"Height"];
     }
-      NSLog(@"createTableData:%@ - %@",myData,dicAry);
+    //  NSLog(@"createTableData:%@ - %@",myData,dicAry);
 }
 @end
