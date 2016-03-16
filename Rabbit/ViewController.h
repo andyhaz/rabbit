@@ -29,7 +29,7 @@
 //
 @property (nonatomic) NSMutableDictionary *colomData;
 @property (nonatomic) NSMutableDictionary *myData;
-@property (nonatomic) NSMutableArray *tableRowData;
+//@property (nonatomic) NSMutableArray *tableRowData;
 
 
 //menu items

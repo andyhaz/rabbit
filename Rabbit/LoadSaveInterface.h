@@ -15,11 +15,14 @@
 @property() BOOL tiff;
 
 
--(void)saveFileSata :(NSString*)stringData;
+-(void)saveFileData :(NSString*)stringData;
 -(NSString*)loadFileData;
--(NSImage*)loadFileImage;
 
+-(NSImage*)loadFileImage;
 -(void)exportFileImages :(NSImage *)image :(NSArray*)aryData;
--(void)saveImage:(NSImage *)image :(NSInteger)size;
+//-(void)saveImage:(NSImage *)image :(NSInteger)size;
+
+-(NSMutableDictionary*)importProfile;
+-(void)exportProfile:(NSDictionary*)repData;
 
 @end

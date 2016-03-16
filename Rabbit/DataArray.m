@@ -57,38 +57,30 @@
 }
 
 -(NSMutableDictionary*)newData:(NSString*)title{
-
     NSMutableArray *ourRowData = [[NSMutableArray alloc]initWithObjects:[self newTableData], nil];
-    
     NSMutableDictionary *usrData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:ourRowData,title,nil ];
     return usrData;
 }
 
 -(NSMutableDictionary*)newTableData{
-    NSMutableDictionary *myColomData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"Icon Name",@"Name",@"40",@"Width",@"40",@"Height", nil];
+    NSMutableDictionary *myColomData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"Icon",@"Name",@"40",@"Width",@"40",@"Height", nil];
     return myColomData;
 }
 
 -(NSArray*)cleanArray :(NSArray*)nameAry width:(NSArray*)widthAry height:(NSArray*)heightAry{
     NSMutableArray *clear = [[NSMutableArray alloc]init];
-    
     for (int i = 0 ; i < nameAry.count; i++) {
         [clear addObject:nameAry[i]];
         [clear addObject:widthAry[i]];
         [clear addObject:heightAry[i]];
     }
-    
     return clear;
 }
 
 -(NSMutableArray*)createNewData{
-    
     NSMutableDictionary *dicAry = [[NSMutableDictionary alloc] initWithDictionary:[self newTableData]];
-    
     NSMutableArray *ourRowData = [[NSMutableArray alloc]init];
-
     [ourRowData addObject:dicAry];
-    
     for (NSInteger i = 0; i < [nameColom count]; i++) {
         [dicAry setObject:[nameColom objectAtIndex:i] forKey:@"Name"];
         [dicAry setObject:[widthColom objectAtIndex:i] forKey:@"Width"];
@@ -96,12 +88,17 @@
         [ourRowData addObject:[dicAry copy]];
     }
   //  NSLog(@"new data:%@",ourRowData);
-
-   // NSMutableDictionary *usrData = [[NSMutableDictionary alloc] initWithObjectsAndKeys:ourRowData,title,nil ];
-
-//    NSLog(@"usrData:%@",usrData);
-    
     return ourRowData;
 }
 
+-(void)createTableData{
+    NSMutableDictionary *dicAry = [[NSMutableDictionary alloc] initWithDictionary:myData];
+
+    for (NSInteger i = 0; i < [nameColom count]; i++) {
+        [dicAry setObject:[nameColom objectAtIndex:i] forKey:@"Name"];
+        [dicAry setObject:[widthColom objectAtIndex:i] forKey:@"Width"];
+        [dicAry setObject:[hightColom objectAtIndex:i] forKey:@"Height"];
+    }
+      NSLog(@"createTableData:%@ - %@",myData,dicAry);
+}
 @end

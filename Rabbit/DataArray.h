@@ -39,4 +39,5 @@
 -(NSMutableDictionary*)newTableData;
 
 -(NSMutableArray*)createNewData;
+-(void)createTableData;
 @end

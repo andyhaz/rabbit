@@ -11,7 +11,7 @@
 @implementation ViewController
 
 @synthesize profileSelectionOutlet;
-@synthesize myData,colomData,tableRowData;
+@synthesize myData,colomData;
 @synthesize tableView;
 
 - (void)viewDidLoad {
@@ -28,31 +28,50 @@
     ourData = [[DataArray alloc]init];
     myData = [[NSMutableDictionary alloc]init];
     colomData = [[NSMutableDictionary alloc]init];
-    tableRowData = [[NSMutableArray alloc]init];
-    
-  //  [self updateDisplayView];
-    
-    /*test code here */
-  /*  NSString *ourTitle = @"Apple Icons";
-    NSMutableDictionary *temp = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
-    [temp setValuesForKeysWithDictionary:[ourData newData:ourTitle]];
-    [ourData setMyData:temp];
-    
-    [self createPopup:ourTitle];
-    [self changeTable:ourTitle];
-    popTitle = ourTitle;
-    
-    [self updateDisplayView];
-    //NSLog(@"ourData:%@",[ourData myData]);
-    [tableView reloadData];*/
 }
 
 - (IBAction)importItem:(id)sender{
-    NSLog(@"import settings");
+    LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:[lsi importProfile]];
+    NSString *setTitle = [[dic allKeys] objectAtIndex:0];
+     [self titleLabel:setTitle];
+   // NSLog(@"dic:%@",dic);
+    [ourData setMyData:dic];
+    NSArray *dicData = [[NSArray alloc] initWithArray:[[ourData myData] valueForKey:setTitle]];
+    
+    NSMutableArray *createNameData = [[NSMutableArray alloc]init];
+    NSMutableArray *createWidthData = [[NSMutableArray alloc]init];
+    NSMutableArray *createHeightData = [[NSMutableArray alloc]init];
+
+    short lenght = [dicData count];
+    
+    for (int i = 0; i < lenght; i++) {
+        //NSLog(@"names:%@",[[dicData objectAtIndex:i] valueForKey:@"Name"]);
+        [createNameData addObject:[[dicData objectAtIndex:i] valueForKey:@"Name"]];
+        [createWidthData addObject:[[dicData objectAtIndex:i] valueForKey:@"Width"]];
+        [createHeightData addObject:[[dicData objectAtIndex:i] valueForKey:@"Height"]];
+    }
+   
+        [ourData setNameColom:createNameData];
+        [ourData setWidthColom:createWidthData];
+        [ourData setHightColom:createHeightData];
+    
+   // NSLog(@"createData info:%@",createNameData);
+    NSLog(@"name Colom:%@",[ourData nameColom]);
+
+  //
+    [self updateDisplayView];
+    [tableView reloadData];
+
 }
 
 - (IBAction)exportItem:(id)sender{
-     NSLog(@"export settings");
+   // fileFormate *RFF = [[fileFormate alloc]init];
+    NSMutableDictionary *exportData = [[NSMutableDictionary alloc] init];
+    [exportData setObject:[[ourData myData] valueForKey:popTitle] forKey:popTitle];
+    LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
+    [lsi exportProfile:exportData];
+    NSLog(@"export settings:%@",exportData);
 }
 
 #pragma mark table setup
@@ -84,11 +103,11 @@
         
         return cellView;
     }
-     // NSLog(@"tableView:%@",tableColumn.identifier);
     return cellView;
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+    NSLog(@"row numbers:%lu",(unsigned long)[[ourData nameColom] count]);
     return [[ourData nameColom] count];
 }
 
@@ -112,9 +131,9 @@
     rowSelection = row;
 }
 
-#pragma mark-update Dispaly
+#pragma mark-update Display
 -(void)updateDisplayView {
-    NSLog(@"update Display View");
+   // NSLog(@"update Display View");
     float w = curentWidth;
     float h = curentHeight;
 
@@ -139,16 +158,12 @@
    // NSLog(@"ourData:%@",ourData);
   //  NSLog(@"name action:%@ - %d",updateName,rowSelection);
 }
-
+#pragma mark - Width Table Action
 - (IBAction)widthTableAction:(id)sender {
     float newFloat = [sender floatValue];
-    //get colome
     NSMutableArray *usersColome = [[NSMutableArray alloc] initWithArray:[ourData widthColom]];
-    
     [usersColome replaceObjectAtIndex:rowSelection withObject:[NSNumber numberWithFloat:newFloat]];
-    
     [ourData setWidthColom:usersColome];
-    
   //  NSMutableArray *newNumSubArray = [[NSMutableArray alloc] initWithArray:[ourData replaceSubArray:subRowData atIndex:rowSelection setNumberValue:newFloat valueForKey:@"Width"]];
     curentWidth = newFloat;
     [self updateDisplayView];
@@ -156,13 +171,9 @@
 
 - (IBAction)heightTableAction:(id)sender {
     float newFloat = [sender floatValue];
-    
     NSMutableArray *usersColome = [[NSMutableArray alloc] initWithArray:[ourData hightColom]];
-    
     [usersColome replaceObjectAtIndex:rowSelection withObject:[NSNumber numberWithFloat:newFloat]];
-    
     [ourData setHightColom:usersColome];
-
     curentHeight = newFloat;
     [self updateDisplayView];
 }
@@ -180,7 +191,7 @@
     if (clickedSegmentTag == 0) {
         //NSLog(@"add");
        //add to the array
-        [tempName addObject:@"new Icon"];
+        [tempName addObject:@"Icon"];
         [tempWidh addObject:[NSNumber numberWithFloat:40]];
         [tempHeight addObject:[NSNumber numberWithFloat:40]];
         
@@ -190,11 +201,9 @@
         
         [self updateDisplayView];
         [tableView reloadData];
-
     }//end clicked Segment Tag
     
     if (clickedSegmentTag == 1 ) {
-        
 //NSLog(@"sub table");
         if (tempName >= 0) {
             [tempName removeLastObject];
@@ -223,16 +232,15 @@
     NSLog(@"profileTextAction");
 }
 
-#pragma mark change popup title
+#pragma mark Change PopUp title
 - (IBAction)profileSelectionAction:(id)sender {
-   // NSLog(@"profileSelectionAction:%@",myData);
+//NSLog(@"profileSelectionAction:%@",myData);
     [ourData setMyData:myData];
     NSString *newTitle = [sender titleOfSelectedItem];
     popTitle = newTitle;
     //update
     [self changeTable:newTitle];
     [tableView reloadData];
-//NSLog(@"profileSelectionAction:%@ \n %@",newTitle,[ourData myData]);
 }
 
 #pragma mark
@@ -256,13 +264,9 @@
 //NSLog(@"last titlw:%@",lastTitieName);
 }
 
+#pragma mark Change Table
 -(void)changeTable:(NSString*)tableTitle{
-//    NSLog(@"change Table");
-    //NSMutableDictionary *firstDict = [[NSMutableDictionary alloc] initWithDictionary:[myData valueForKey:popTitle]];
- //   NSLog(@"changeTable data:%@",[ourData myData]);
-    
-    tableRowData = [[NSMutableArray alloc] initWithArray:[ourData getRowData:tableTitle]];
-  //  NSLog(@"row data:%@",[ourData getRowData:tableTitle]);
+    NSMutableArray *tableRowData = [[NSMutableArray alloc] initWithArray:[ourData getRowData:tableTitle]];
     [ourData setNameColom:[tableRowData valueForKey:@"Name"]];
     [ourData setWidthColom:[tableRowData valueForKey:@"Width"]];
     [ourData setHightColom:[tableRowData valueForKey:@"Height"]];
@@ -302,7 +306,6 @@
     [lsi setTiff:tiffSetting];
   //  NSLog(@"rowDataWidth:%@f %@f",[ourData widthColom],[ourData hightColom]);
     if (pngSetting == YES || jpgSetting == YES || tiffSetting == YES) {
-        //need to update this file
        [lsi exportFileImages:imageData :[cda cleanArray:[ourData nameColom] width:[ourData widthColom] height:[ourData hightColom]]];
     }//end
 }//end creteation
