@@ -14,7 +14,7 @@
 
 @interface ViewController : NSViewController<popOverControllerDelegate> {
     NSImage *imageData;
-    BOOL pngSetting,jpgSetting,tiffSetting;
+    BOOL pngSetting,jpgSetting,tiffSetting,popMenu;
     int rowSelection;
     DataArray *ourData;
     NSString *popTitle;
@@ -46,7 +46,6 @@
 
 @property (weak) IBOutlet NSPopUpButton *profileSelectionOutlet;
 - (IBAction)profileSelectionAction:(id)sender;
-//- (IBAction)popOverAction:(id)sender;
 
 - (IBAction)importImageAction:(id)sender;
 

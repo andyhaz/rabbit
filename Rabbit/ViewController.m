@@ -24,6 +24,7 @@
     pngSetting = YES;
     jpgSetting = YES;
     tiffSetting = YES;
+    popMenu = NO;
     
     ourData = [[DataArray alloc]init];
     myData = [[NSMutableDictionary alloc]init];
@@ -54,6 +55,7 @@
     NSMutableDictionary *loadFileData = [[NSMutableDictionary alloc] initWithDictionary:[lsi loadFileData]];
     //get version info
     float versionInfo = [[loadFileData valueForKey:@"version"] floatValue];
+   
     if (versionInfo == 1) {
         NSMutableDictionary *usrDic = [[NSMutableDictionary alloc] initWithDictionary:[loadFileData valueForKey:@"Main"]];
         [ourData setMyData:usrDic];
@@ -71,7 +73,7 @@
         NSString *setTitle = [[usrDic allKeys] objectAtIndex:0];
         [self titleLabel:setTitle];
         [profileSelectionOutlet selectItemWithTitle:setTitle];
-        NSLog(@"title label:%@",setTitle);
+      //  NSLog(@"title label:%@",setTitle);
         //end p=popup menu
         
         NSArray *dicData = [[NSArray alloc] initWithArray:[usrDic valueForKey:setTitle]];
@@ -145,7 +147,6 @@
    // NSLog(@"dic:%@",dic);
     [ourData setMyData:dic];
     NSArray *dicData = [[NSArray alloc] initWithArray:[[ourData myData] valueForKey:setTitle]];
-    
     NSMutableArray *createNameData = [[NSMutableArray alloc]init];
     NSMutableArray *createWidthData = [[NSMutableArray alloc]init];
     NSMutableArray *createHeightData = [[NSMutableArray alloc]init];
@@ -158,18 +159,13 @@
         [createWidthData addObject:[[dicData objectAtIndex:i] valueForKey:@"Width"]];
         [createHeightData addObject:[[dicData objectAtIndex:i] valueForKey:@"Height"]];
     }
-   
         [ourData setNameColom:createNameData];
         [ourData setWidthColom:createWidthData];
         [ourData setHightColom:createHeightData];
-    
-   // NSLog(@"createData info:%@",createNameData);
-    NSLog(@"name Colom:%@",[ourData nameColom]);
-
-  //
+// NSLog(@"createData info:%@",createNameData);
+// NSLog(@"name Colom:%@",[ourData nameColom]);
     [self updateDisplayView];
     [tableView reloadData];
-
 }
 
 #pragma mark - import & export
@@ -289,28 +285,13 @@
     NSMutableArray *tempName = [[NSMutableArray alloc] initWithArray:[ourData nameColom]];
     NSMutableArray *tempWidh = [[NSMutableArray alloc] initWithArray:[ourData widthColom]];
     NSMutableArray *tempHeight = [[NSMutableArray alloc] initWithArray:[ourData hightColom]];
-
-    if (clickedSegmentTag == 0) {
-        //NSLog(@"add");
-       //add to the array
-        [tempName addObject:@"Icon"];
-        [tempWidh addObject:[NSNumber numberWithFloat:40]];
-        [tempHeight addObject:[NSNumber numberWithFloat:40]];
-        
-        [ourData setNameColom:tempName];
-        [ourData setWidthColom:tempWidh];
-        [ourData setHightColom:tempHeight];
-        
-        [self updateDisplayView];
-        [tableView reloadData];
-    }//end clicked Segment Tag
-    
-    if (clickedSegmentTag == 1 ) {
-//NSLog(@"sub table");
-        if (tempName >= 0) {
-            [tempName removeLastObject];
-            [tempWidh removeLastObject];
-            [tempHeight removeLastObject];
+    if (popMenu ==YES) {
+        if (clickedSegmentTag == 0) {
+            //NSLog(@"add");
+           //add to the array
+            [tempName addObject:@"Icon"];
+            [tempWidh addObject:[NSNumber numberWithFloat:40]];
+            [tempHeight addObject:[NSNumber numberWithFloat:40]];
             
             [ourData setNameColom:tempName];
             [ourData setWidthColom:tempWidh];
@@ -318,9 +299,25 @@
             
             [self updateDisplayView];
             [tableView reloadData];
-        }//error handyling
-    }
+        }//end clicked Segment Tag
+        
+        if (clickedSegmentTag == 1 ) {
+    //NSLog(@"sub table");
+            if (tempName >= 0) {
+                [tempName removeLastObject];
+                [tempWidh removeLastObject];
+                [tempHeight removeLastObject];
+                
+                [ourData setNameColom:tempName];
+                [ourData setWidthColom:tempWidh];
+                [ourData setHightColom:tempHeight];
+                
+                [self updateDisplayView];
+                [tableView reloadData];
+            }//error handyling
+        }
     [myData setObject:[ourData createNewData] forKey:popTitle];
+    }//end
 //NSLog(@"myDate%@",[ourData myData]);
 }//end srgmentedAction
 
@@ -378,6 +375,7 @@
 //handly delegat
 #pragma mark Delegat functions
 - (void)titleLabel:(NSString*)ourTitle {
+    popMenu = YES;
     NSMutableDictionary *temp = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
     [temp setValuesForKeysWithDictionary:[ourData newData:ourTitle]];
     [ourData setMyData:temp];
