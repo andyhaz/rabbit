@@ -52,30 +52,30 @@
 - (IBAction)openProject:(id)sender{
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
     NSMutableDictionary *loadFileData = [[NSMutableDictionary alloc] initWithDictionary:[lsi loadFileData]];
-    NSLog(@"open%@",loadFileData);
-    
     //get version info
     float versionInfo = [[loadFileData valueForKey:@"version"] floatValue];
     if (versionInfo == 1) {
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:[loadFileData valueForKey:@"Main"]];
-        [ourData setMyData:dic];
-        
+        NSMutableDictionary *usrDic = [[NSMutableDictionary alloc] initWithDictionary:[loadFileData valueForKey:@"Main"]];
+        [ourData setMyData:usrDic];
         //load image
         imageData = [[NSImage alloc] initWithData:[loadFileData valueForKey:@"image"]];
        // NSLog(@"image data:%@",imageData);
         if (imageData) {
-         //   NSLog(@"display image:%@",imageData);
             float newSize = (curentWidth/2)+(curentHeight/2);
             [self.myView setMyImage:imageData];
             [self.myView imageSize:newSize];
             [self.myView updateDisplay];
         }//end if imageData
         
-        //set up main data are
-        NSString *setTitle = [[dic allKeys] lastObject];
+        //set up popup menu
+        NSString *setTitle = [[usrDic allKeys] objectAtIndex:0];
         [self titleLabel:setTitle];
+        [profileSelectionOutlet selectItemWithTitle:setTitle];
+        NSLog(@"title label:%@",setTitle);
+        //end p=popup menu
         
-        NSArray *dicData = [[NSArray alloc] initWithArray:[[ourData myData] valueForKey:setTitle]];
+        NSArray *dicData = [[NSArray alloc] initWithArray:[usrDic valueForKey:setTitle]];
+      //  NSLog(@"dice Data:%@ ary:%@",dicData,[dicData objectAtIndex:3]);
         
         NSMutableArray *createNameData = [[NSMutableArray alloc]init];
         NSMutableArray *createWidthData = [[NSMutableArray alloc]init];
@@ -84,17 +84,21 @@
         short lenght = [dicData count];
         
         for (int i = 0; i < lenght; i++) {
-            //NSLog(@"names:%@",[[dicData objectAtIndex:i] valueForKey:@"Name"]);
+           // NSLog(@"names:%@",[[dicData objectAtIndex:i] valueForKey:@"Name"]);
             [createNameData addObject:[[dicData objectAtIndex:i] valueForKey:@"Name"]];
             [createWidthData addObject:[[dicData objectAtIndex:i] valueForKey:@"Width"]];
             [createHeightData addObject:[[dicData objectAtIndex:i] valueForKey:@"Height"]];
-        }
+        }//end for loop
         
         [ourData setNameColom:createNameData];
         [ourData setWidthColom:createWidthData];
         [ourData setHightColom:createHeightData];
-   //     NSLog(@"dic:%@",dic);
-    }
+        
+        [self updateDisplayView];
+        [tableView reloadData];
+//        NSLog(@"dicData:%@ / %@",dicData,[[ourData myData] valueForKey:setTitle]);
+    }//end imageData
+   //  NSLog(@"open%@",loadFileData);
 }
 
 - (IBAction)SaveProject:(id)sender{
@@ -181,7 +185,7 @@
     [exportData setObject:[[ourData myData] valueForKey:popTitle] forKey:popTitle];
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
     [lsi exportProfile:exportData];
-    NSLog(@"export settings:%@",exportData);
+   // NSLog(@"export settings:%@",exportData);
 }
 
 #pragma mark table setup
@@ -223,21 +227,16 @@
 
 #pragma mark select table item
 -(void)tableViewSelectionDidChange:(NSNotification *)notification {
-    
     short row = [[notification object] selectedRow];
-    
     NSTextField *textName = [[[notification.object viewAtColumn:0 row:row makeIfNecessary:NO]subviews] lastObject];
     NSTextField *textWidth = [[[notification.object viewAtColumn:1 row:row makeIfNecessary:NO]subviews] lastObject];
     NSTextField *textHeight = [[[notification.object viewAtColumn:2 row:row makeIfNecessary:NO]subviews] lastObject];
-   
     [textName selectText:textName.stringValue];
     [textWidth selectText:textWidth.stringValue];
     [textHeight selectText:textHeight.stringValue];
-    
     curentName = [textName stringValue];
     curentWidth = [textWidth floatValue];
     curentHeight = [textHeight floatValue];
-    
     rowSelection = row;
 }
 
@@ -372,7 +371,7 @@
     [profileSelectionOutlet addItemsWithTitles:[ourData getDictionaryKeyNames]];
     NSString *lastTitieName =  [[ourData getDictionaryKeyNames] lastObject];
     [profileSelectionOutlet selectItemWithTitle:lastTitieName];
-//NSLog(@"last titlw:%@",lastTitieName);
+    NSLog(@"popup:%@",[ourData getDictionaryKeyNames]);
 }
 
 #pragma mark Change Table
