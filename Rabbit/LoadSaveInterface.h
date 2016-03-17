@@ -15,8 +15,8 @@
 @property() BOOL tiff;
 
 
--(void)saveFileData :(NSString*)stringData;
--(NSString*)loadFileData;
+-(void)saveFileData :(NSDictionary*)stringData;
+-(NSDictionary*)loadFileData;
 
 -(NSImage*)loadFileImage;
 -(void)exportFileImages :(NSImage *)image :(NSArray*)aryData;

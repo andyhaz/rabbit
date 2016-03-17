@@ -12,7 +12,7 @@
 
 @synthesize png,jpg,tiff;
 
--(void)saveFileData :(NSString*)stringData{
+-(void)saveFileData :(NSDictionary*)stringData{
     // get the file url
     NSSavePanel * SavePanel = [NSSavePanel savePanel];
     NSArray * zAryOfExtensions = [NSArray arrayWithObject:@"rab"];
@@ -39,7 +39,7 @@
 }
 
 
--(NSString*)loadFileData{
+-(NSDictionary*)loadFileData{
     NSOpenPanel * zOpenPanel = [NSOpenPanel openPanel];
     NSArray * zAryOfExtensions = [NSArray arrayWithObject:@"rab"];
     [zOpenPanel setAllowedFileTypes:zAryOfExtensions];
@@ -51,10 +51,9 @@
     NSURL *zUrl = [zOpenPanel URL];
     
     // read the file
-    NSString * zStr = [NSString stringWithContentsOfURL:zUrl
-                                               encoding:NSASCIIStringEncoding
-                                                  error:NULL];
-    return zStr;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithContentsOfURL:zUrl];
+
+    return dic;
 }
 #pragma mark import/export handling
 -(NSMutableDictionary*)importProfile{
@@ -114,7 +113,7 @@
     
     // read the file
     NSImage *image = [[NSImage alloc] initWithContentsOfURL:zUrl];
-
+    
     return image;
 }
 
@@ -127,7 +126,6 @@
     NSInteger imageCont = (aryData.count)/3;
     NSInteger imageNum = 0;
   //  NSLog(@"%@:%ld",aryData,(long)imageCont);
-    
     if (Result == NSFileHandlingPanelCancelButton) {
         NSLog(@"writeUsingSavePanel cancelled");
         return;
@@ -158,7 +156,9 @@
         
         [NSGraphicsContext saveGraphicsState];
         [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:rep]];
+        
         [image drawInRect:NSMakeRect(0, 0, sizeX, sizeY) fromRect:NSZeroRect operation:NSCompositeCopy fraction:1.0];
+        
         [NSGraphicsContext restoreGraphicsState];
         
         NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
@@ -181,6 +181,7 @@
              newFileNameTiff = [NSString stringWithFormat:@"%@(%ldx%ld).tiff",path,(long)sizeX,(long)sizeY];
              tiffData = [rep representationUsingType:NSTIFFFileType properties:options];
         }
+        
         BOOL BoolResult;
         BoolResult = [pngData writeToFile:newFileNamePng options:NSDataWritingAtomic error:&error];
         BoolResult = [jpgData writeToFile:newFileNameJpg options:NSDataWritingAtomic error:&error];

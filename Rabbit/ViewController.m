@@ -37,24 +37,108 @@
     [profileSelectionOutlet removeAllItems];
     NSArray *popup = [[NSArray alloc] initWithObjects:@"None", nil];
     [profileSelectionOutlet addItemsWithTitles:popup];
-
     rowSelection = 0;
     curentWidth = 80;
     curentHeight = 80;
+    imageData = [[NSImage alloc]init];
+    [self.myView setMyImage:imageData];
     ourData = [[DataArray alloc]init];
     myData = [[NSMutableDictionary alloc]init];
     colomData = [[NSMutableDictionary alloc]init];
-
     [tableView reloadData];
 }
 
 #pragma mark - open & saveproject
 - (IBAction)openProject:(id)sender{
-    NSLog(@"open");
+    LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
+    NSMutableDictionary *loadFileData = [[NSMutableDictionary alloc] initWithDictionary:[lsi loadFileData]];
+    NSLog(@"open%@",loadFileData);
+    
+    //get version info
+    float versionInfo = [[loadFileData valueForKey:@"version"] floatValue];
+    if (versionInfo == 1) {
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:[loadFileData valueForKey:@"Main"]];
+        [ourData setMyData:dic];
+        
+        //load image
+        imageData = [[NSImage alloc] initWithData:[loadFileData valueForKey:@"image"]];
+       // NSLog(@"image data:%@",imageData);
+        if (imageData) {
+         //   NSLog(@"display image:%@",imageData);
+            float newSize = (curentWidth/2)+(curentHeight/2);
+            [self.myView setMyImage:imageData];
+            [self.myView imageSize:newSize];
+            [self.myView updateDisplay];
+        }//end if imageData
+        
+        //set up main data are
+        NSString *setTitle = [[dic allKeys] lastObject];
+        [self titleLabel:setTitle];
+        
+        NSArray *dicData = [[NSArray alloc] initWithArray:[[ourData myData] valueForKey:setTitle]];
+        
+        NSMutableArray *createNameData = [[NSMutableArray alloc]init];
+        NSMutableArray *createWidthData = [[NSMutableArray alloc]init];
+        NSMutableArray *createHeightData = [[NSMutableArray alloc]init];
+        
+        short lenght = [dicData count];
+        
+        for (int i = 0; i < lenght; i++) {
+            //NSLog(@"names:%@",[[dicData objectAtIndex:i] valueForKey:@"Name"]);
+            [createNameData addObject:[[dicData objectAtIndex:i] valueForKey:@"Name"]];
+            [createWidthData addObject:[[dicData objectAtIndex:i] valueForKey:@"Width"]];
+            [createHeightData addObject:[[dicData objectAtIndex:i] valueForKey:@"Height"]];
+        }
+        
+        [ourData setNameColom:createNameData];
+        [ourData setWidthColom:createWidthData];
+        [ourData setHightColom:createHeightData];
+   //     NSLog(@"dic:%@",dic);
+    }
 }
 
 - (IBAction)SaveProject:(id)sender{
-    NSLog(@"save");
+    NSMutableDictionary *saveData = [[NSMutableDictionary alloc] init];
+    [saveData setObject:[NSNumber numberWithFloat:1.0] forKey:@"version"];
+    //save image data
+    
+    NSInteger sizeY = 100;
+    NSInteger sizeX = 100;
+    //create image
+    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
+                             initWithBitmapDataPlanes:NULL
+                             pixelsWide:sizeY
+                             pixelsHigh:sizeX
+                             bitsPerSample:8
+                             samplesPerPixel:4
+                             hasAlpha:YES
+                             isPlanar:NO
+                             colorSpaceName:NSCalibratedRGBColorSpace
+                             bytesPerRow:0
+                             bitsPerPixel:0];
+                            [rep setSize:NSMakeSize(sizeX, sizeY)];
+    
+    [NSGraphicsContext saveGraphicsState];
+    [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:rep]];
+    
+    [imageData drawInRect:NSMakeRect(0, 0, sizeX, sizeY) fromRect:NSZeroRect operation:NSCompositeCopy fraction:1.0];
+    
+    [NSGraphicsContext restoreGraphicsState];
+    
+    NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
+    
+    NSData *iData = [rep representationUsingType:NSPNGFileType properties:options];
+    
+    [saveData setObject:iData forKey:@"image"];
+    
+    
+    //[saveData setObject:imageData forKey:@"image"];
+    
+    [saveData setObject:[ourData myData] forKey:@"Main"];
+    LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
+    [lsi saveFileData:saveData];
+    NSLog(@"save:%@",saveData);
+    
 }
 - (IBAction)importItem:(id)sender{
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
@@ -93,7 +177,6 @@
 
 #pragma mark - import & export
 - (IBAction)exportItem:(id)sender{
-   // fileFormate *RFF = [[fileFormate alloc]init];
     NSMutableDictionary *exportData = [[NSMutableDictionary alloc] init];
     [exportData setObject:[[ourData myData] valueForKey:popTitle] forKey:popTitle];
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
@@ -275,6 +358,7 @@
     imageData = [[NSImage alloc]init];
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
     imageData = [lsi loadFileImage];
+    NSLog(@"imageData:%@",imageData);
     
     float newSize = (curentWidth/2)+(curentHeight/2);
     
@@ -322,7 +406,7 @@
         pvc.delegate = self;
     }
 }
-//end hanly delgate
+//end handly delgate
 #pragma mark handles expoing images
 - (IBAction)createAction:(id)sender {
    // NSLog(@"create action");

@@ -14,6 +14,7 @@
 @synthesize myImage,imageName;
 
 -(void)updateDisplay{
+    NSLog(@"updateDisplay:%@",myImage);
     [self setNeedsDisplay:YES];
 }
 
