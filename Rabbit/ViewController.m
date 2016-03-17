@@ -105,7 +105,6 @@
     NSMutableDictionary *saveData = [[NSMutableDictionary alloc] init];
     [saveData setObject:[NSNumber numberWithFloat:1.0] forKey:@"version"];
     //save image data
-    
     NSInteger sizeY = 100;
     NSInteger sizeX = 100;
     //create image
@@ -132,17 +131,11 @@
     NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
     
     NSData *iData = [rep representationUsingType:NSPNGFileType properties:options];
-    
     [saveData setObject:iData forKey:@"image"];
-    
-    
-    //[saveData setObject:imageData forKey:@"image"];
-    
     [saveData setObject:[ourData myData] forKey:@"Main"];
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
     [lsi saveFileData:saveData];
     NSLog(@"save:%@",saveData);
-    
 }
 - (IBAction)importItem:(id)sender{
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];

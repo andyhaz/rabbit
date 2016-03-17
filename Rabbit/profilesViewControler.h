@@ -20,5 +20,6 @@
 @property (weak) IBOutlet NSTextField *profileOutlet;
 - (IBAction)newButtonAction:(id)sender;
 - (IBAction)cancelButtonAction:(id)sender;
+- (IBAction)textField:(id)sender;
 
 @end

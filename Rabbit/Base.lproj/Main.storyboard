@@ -507,7 +507,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <action selector="profileTextAction:" target="5gI-5U-AMq" id="A5k-2d-McC"/>
+                                    <action selector="textField:" target="5oe-cs-AYY" id="G5U-eJ-gh8"/>
                                 </connections>
                             </textField>
                             <button verticalHuggingPriority="750" id="Z6j-q6-pP2">
