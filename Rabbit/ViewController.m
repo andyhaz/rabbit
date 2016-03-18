@@ -48,6 +48,7 @@
     myData = [[NSMutableDictionary alloc]init];
     colomData = [[NSMutableDictionary alloc]init];
     [tableView reloadData];
+    [self updateDisplayView];
 }
 
 #pragma mark - open & saveproject
@@ -405,12 +406,8 @@
     [lsi setTiff:tiffSetting];
   //  NSLog(@"rowDataWidth:%@f %@f",[ourData widthColom],[ourData hightColom]);
     if ([[ourData nameColom] count] < -1 || imageData == NULL ) {
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"OK"];
-        [alert setMessageText:@"Error"];
-        [alert setInformativeText:@"There is nothing to expot"];
-        [alert setAlertStyle:NSWarningAlertStyle];
-        [alert runModal];
+        alertInfo *ai = [[alertInfo alloc]init];
+        [ai showAlert:@"Error" Massage:@"Incomplet data ro exoprt"];
     } else {
         if (pngSetting == YES || jpgSetting == YES || tiffSetting == YES) {
            [lsi exportFileImages:imageData :[cda cleanArray:[ourData nameColom] width:[ourData widthColom] height:[ourData hightColom]]];

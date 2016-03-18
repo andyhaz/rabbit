@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		97427CF01C9C548F00883527 /* alertInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97427CEF1C9C548F00883527 /* alertInfo.m */; };
 		9744D7991C58519B0065DBAE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7981C58519B0065DBAE /* AppDelegate.m */; };
 		9744D79C1C58519B0065DBAE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D79B1C58519B0065DBAE /* main.m */; };
 		9744D79F1C58519B0065DBAE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D79E1C58519B0065DBAE /* ViewController.m */; };
@@ -42,6 +43,8 @@
 
 /* Begin PBXFileReference section */
 		97427CED1C9A753C00883527 /* Rabbit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Rabbit.entitlements; sourceTree = "<group>"; };
+		97427CEE1C9C548F00883527 /* alertInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = alertInfo.h; sourceTree = "<group>"; };
+		97427CEF1C9C548F00883527 /* alertInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = alertInfo.m; sourceTree = "<group>"; };
 		9744D7941C58519B0065DBAE /* Rabbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rabbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9744D7971C58519B0065DBAE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9744D7981C58519B0065DBAE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -195,6 +198,8 @@
 				9744D7E91C58C25F0065DBAE /* RBResize.m */,
 				97DB4D491C90F2AC0091D45C /* DataArray.h */,
 				97DB4D4A1C90F2AC0091D45C /* DataArray.m */,
+				97427CEE1C9C548F00883527 /* alertInfo.h */,
+				97427CEF1C9C548F00883527 /* alertInfo.m */,
 			);
 			name = class;
 			sourceTree = "<group>";
@@ -361,6 +366,7 @@
 				9744D7A51C58519B0065DBAE /* Document.xcdatamodeld in Sources */,
 				9744D7991C58519B0065DBAE /* AppDelegate.m in Sources */,
 				9744D7E71C58C1CC0065DBAE /* LoadSaveInterface.m in Sources */,
+				97427CF01C9C548F00883527 /* alertInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

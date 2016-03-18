@@ -11,6 +11,7 @@
 #import "myView.h"
 #import "DataArray.h"
 #import "profilesViewControler.h"
+#import "alertInfo.h"
 
 @interface ViewController : NSViewController<popOverControllerDelegate> {
     NSImage *imageData;
