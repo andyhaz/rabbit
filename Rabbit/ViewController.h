@@ -28,8 +28,8 @@
 
 @property (weak) IBOutlet myView *myView;
 //
-@property (nonatomic) NSMutableDictionary *colomData;
-@property (nonatomic) NSMutableDictionary *myData;
+//@property (nonatomic) NSMutableDictionary *colomData;
+//@property (nonatomic) NSMutableDictionary *myData;
 //@property (nonatomic) NSMutableArray *tableRowData;
 
 //new project
@@ -43,13 +43,9 @@
 - (IBAction)exportItem:(id)sender;
 
 //@property (weak) IBOutlet NSTextField *profileTextFeild;
-- (IBAction)profileTextAction:(id)sender;
 
 @property (weak) IBOutlet NSPopUpButton *profileSelectionOutlet;
 - (IBAction)profileSelectionAction:(id)sender;
-
-- (IBAction)importImageAction:(id)sender;
-
 //table information
 @property (weak) IBOutlet NSTableView *tableView;
 - (IBAction)nameAction:(id)sender;

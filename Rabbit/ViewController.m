@@ -11,7 +11,7 @@
 @implementation ViewController
 
 @synthesize profileSelectionOutlet;
-@synthesize myData,colomData;
+//@synthesize myData,colomData;
 @synthesize tableView;
 
 - (void)viewDidLoad {
@@ -27,13 +27,12 @@
     popMenu = NO;
     
     ourData = [[DataArray alloc]init];
-    myData = [[NSMutableDictionary alloc]init];
-    colomData = [[NSMutableDictionary alloc]init];
+ //del   myData = [[NSMutableDictionary alloc]init];
+//    colomData = [[NSMutableDictionary alloc]init];
     [self updateDisplayView];
 }
 #pragma mark - new project
 - (IBAction)newProject:(id)sender{
-    NSLog(@"new project");
     popTitle = @"";
     [self titleLabel:popTitle];
     [profileSelectionOutlet removeAllItems];
@@ -45,8 +44,8 @@
     imageData = [[NSImage alloc]init];
     [self.myView setMyImage:imageData];
     ourData = [[DataArray alloc]init];
-    myData = [[NSMutableDictionary alloc]init];
-    colomData = [[NSMutableDictionary alloc]init];
+ //del   myData = [[NSMutableDictionary alloc]init];
+//    colomData = [[NSMutableDictionary alloc]init];
     [tableView reloadData];
     [self updateDisplayView];
 }
@@ -78,25 +77,7 @@
       //  NSLog(@"title label:%@",setTitle);
         //end p=popup menu
         
-        NSArray *dicData = [[NSArray alloc] initWithArray:[usrDic valueForKey:setTitle]];
-      //  NSLog(@"dice Data:%@ ary:%@",dicData,[dicData objectAtIndex:3]);
-        
-        NSMutableArray *createNameData = [[NSMutableArray alloc]init];
-        NSMutableArray *createWidthData = [[NSMutableArray alloc]init];
-        NSMutableArray *createHeightData = [[NSMutableArray alloc]init];
-        
-        short lenght = [dicData count];
-        
-        for (int i = 0; i < lenght; i++) {
-           // NSLog(@"names:%@",[[dicData objectAtIndex:i] valueForKey:@"Name"]);
-            [createNameData addObject:[[dicData objectAtIndex:i] valueForKey:@"Name"]];
-            [createWidthData addObject:[[dicData objectAtIndex:i] valueForKey:@"Width"]];
-            [createHeightData addObject:[[dicData objectAtIndex:i] valueForKey:@"Height"]];
-        }//end for loop
-        
-        [ourData setNameColom:createNameData];
-        [ourData setWidthColom:createWidthData];
-        [ourData setHightColom:createHeightData];
+        [self updateSubTabile];
         
         [self updateDisplayView];
         [tableView reloadData];
@@ -141,45 +122,31 @@
     [lsi saveFileData:saveData];
     NSLog(@"save:%@",saveData);
 }
+#pragma mark - import & export
 - (IBAction)importItem:(id)sender{
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:[lsi importProfile]];
     NSString *setTitle = [[dic allKeys] objectAtIndex:0];
-     [self titleLabel:setTitle];
+    [self titleLabel:setTitle];
+    popTitle = setTitle;
+    [self updateSubTabile];
    // NSLog(@"dic:%@",dic);
     [ourData setMyData:dic];
-    NSArray *dicData = [[NSArray alloc] initWithArray:[[ourData myData] valueForKey:setTitle]];
-    NSMutableArray *createNameData = [[NSMutableArray alloc]init];
-    NSMutableArray *createWidthData = [[NSMutableArray alloc]init];
-    NSMutableArray *createHeightData = [[NSMutableArray alloc]init];
-
-    short lenght = [dicData count];
-    
-    for (int i = 0; i < lenght; i++) {
-        //NSLog(@"names:%@",[[dicData objectAtIndex:i] valueForKey:@"Name"]);
-        [createNameData addObject:[[dicData objectAtIndex:i] valueForKey:@"Name"]];
-        [createWidthData addObject:[[dicData objectAtIndex:i] valueForKey:@"Width"]];
-        [createHeightData addObject:[[dicData objectAtIndex:i] valueForKey:@"Height"]];
-    }
-        [ourData setNameColom:createNameData];
-        [ourData setWidthColom:createWidthData];
-        [ourData setHightColom:createHeightData];
-// NSLog(@"createData info:%@",createNameData);
-// NSLog(@"name Colom:%@",[ourData nameColom]);
     [self updateDisplayView];
+    [self changeTable:popTitle];
     [tableView reloadData];
 }
 
-#pragma mark - import & export
 - (IBAction)exportItem:(id)sender{
+ //del   [ourData setMyData:myData];
     NSMutableDictionary *exportData = [[NSMutableDictionary alloc] init];
     [exportData setObject:[[ourData myData] valueForKey:popTitle] forKey:popTitle];
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
     [lsi exportProfile:exportData];
-   // NSLog(@"export settings:%@",exportData);
+    NSLog(@"export settings:%@",exportData);
 }
 
-#pragma mark table setup
+#pragma mark - tableView setup
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     // Get a new ViewCell
     NSTableCellView *cellView = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
@@ -250,10 +217,9 @@
     NSMutableArray *subRowData = [[NSMutableArray alloc] initWithArray:[ourData getRowData:popTitle]];
     NSMutableArray *newSubArray = [[NSMutableArray alloc] initWithArray:[ourData replaceSubArray:subRowData atIndex:rowSelection setStrValue:updateName valueForKey:@"Name"]];
     [ourData setNameColom:newSubArray];
-    [myData setObject:newSubArray forKey:popTitle];
+ //del   [myData setObject:newSubArray forKey:popTitle];
     curentName = updateName;
-    
-    [self updateDisplayView];
+  //  [self updateDisplayView];
    // NSLog(@"ourData:%@",ourData);
   //  NSLog(@"name action:%@ - %d",updateName,rowSelection);
 }
@@ -263,8 +229,7 @@
     NSMutableArray *usersColome = [[NSMutableArray alloc] initWithArray:[ourData widthColom]];
     [usersColome replaceObjectAtIndex:rowSelection withObject:[NSNumber numberWithFloat:newFloat]];
     [ourData setWidthColom:usersColome];
-  //  NSMutableArray *newNumSubArray = [[NSMutableArray alloc] initWithArray:[ourData replaceSubArray:subRowData atIndex:rowSelection setNumberValue:newFloat valueForKey:@"Width"]];
-   // curentWidth = newFloat;
+    [[[[ourData myData] valueForKey:popTitle] objectAtIndex:rowSelection] setObject:[NSNumber numberWithFloat:newFloat] forKey:@"Width"];
     [self updateDisplayView];
 }
 
@@ -273,8 +238,31 @@
     NSMutableArray *usersColome = [[NSMutableArray alloc] initWithArray:[ourData hightColom]];
     [usersColome replaceObjectAtIndex:rowSelection withObject:[NSNumber numberWithFloat:newFloat]];
     [ourData setHightColom:usersColome];
-  //  curentHeight = newFloat;
+    [[[[ourData myData] valueForKey:popTitle] objectAtIndex:rowSelection] setObject:[NSNumber numberWithFloat:newFloat] forKey:@"Height"];
     [self updateDisplayView];
+}
+
+#pragma mark - update the table
+-(void)updateSubTabile {
+    NSArray *dicData = [[NSArray alloc] initWithArray:[[ourData myData] valueForKey:popTitle]];
+    NSMutableArray *createNameData = [[NSMutableArray alloc]init];
+    NSMutableArray *createWidthData = [[NSMutableArray alloc]init];
+    NSMutableArray *createHeightData = [[NSMutableArray alloc]init];
+    
+    short lenght = [dicData count];
+    
+    for (int i = 0; i < lenght; i++) {
+        //NSLog(@"names:%@",[[dicData objectAtIndex:i] valueForKey:@"Name"]);
+        [createNameData addObject:[[dicData objectAtIndex:i] valueForKey:@"Name"]];
+        [createWidthData addObject:[[dicData objectAtIndex:i] valueForKey:@"Width"]];
+        [createHeightData addObject:[[dicData objectAtIndex:i] valueForKey:@"Height"]];
+    }
+    
+    [ourData setNameColom:createNameData];
+    [ourData setWidthColom:createWidthData];
+    [ourData setHightColom:createHeightData];
+    
+    NSLog(@"import Item:%@",[ourData myData]);
 }
 
 #pragma mark handly table manubar
@@ -282,12 +270,15 @@
     NSInteger clickedSegment = [sender selectedSegment];
     NSInteger clickedSegmentTag = [[sender cell] tagForSegment:clickedSegment];
 
+    NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
+    NSMutableArray *dicDataAry = [[NSMutableArray alloc] initWithArray:[[ourData myData] valueForKey:popTitle]];
     NSMutableArray *tempName = [[NSMutableArray alloc] initWithArray:[ourData nameColom]];
     NSMutableArray *tempWidh = [[NSMutableArray alloc] initWithArray:[ourData widthColom]];
     NSMutableArray *tempHeight = [[NSMutableArray alloc] initWithArray:[ourData hightColom]];
     if (popMenu ==YES) {
         if (clickedSegmentTag == 0) {
-//NSLog(@"add");
+            //NSLog(@"add");
+           // [temp setValuesForKeysWithDictionary:[ourData newData:popTitle]];
            //add to the array
             [tempName addObject:@"Icon"];
             [tempWidh addObject:[NSNumber numberWithFloat:40]];
@@ -297,13 +288,17 @@
             [ourData setWidthColom:tempWidh];
             [ourData setHightColom:tempHeight];
             
+            [dicDataAry addObject:[ourData createNewData]];
+            [tempDic setObject:dicDataAry forKey:popTitle];
+            [ourData setMyData:tempDic];
+          //  NSLog(@"add roes:%@",[ourData myData]);
             [self updateDisplayView];
             [tableView reloadData];
         }//end clicked Segment Tag
         
         if (clickedSegmentTag == 1 ) {
 //NSLog(@"sub table");
-            if (tempName >= 0) {
+            if (dicDataAry > 0) {
                 [tempName removeLastObject];
                 [tempWidh removeLastObject];
                 [tempHeight removeLastObject];
@@ -312,11 +307,18 @@
                 [ourData setWidthColom:tempWidh];
                 [ourData setHightColom:tempHeight];
                 
+                [dicDataAry removeLastObject];
+                [tempDic setObject:dicDataAry forKey:popTitle];
+                [ourData setMyData:tempDic];
+               // NSLog(@"subtract tempDic:%@",tempDic);
+                
                 [self updateDisplayView];
                 [tableView reloadData];
             }//error handyling
         }
-    [myData setObject:[ourData createNewData] forKey:popTitle];
+        
+  //  [[ourData myData] setObject:[ourData createNewData] forKey:popTitle];
+        
     }//end if popMenu
     if (clickedSegmentTag == 2) {
         imageData = [[NSImage alloc]init];
@@ -347,7 +349,7 @@
 #pragma mark Change PopUp title
 - (IBAction)profileSelectionAction:(id)sender {
 //NSLog(@"profileSelectionAction:%@",myData);
-    [ourData setMyData:myData];
+ //   [ourData setMyData:myData];
     NSString *newTitle = [sender titleOfSelectedItem];
     popTitle = newTitle;
     //update
