@@ -287,7 +287,7 @@
     NSMutableArray *tempHeight = [[NSMutableArray alloc] initWithArray:[ourData hightColom]];
     if (popMenu ==YES) {
         if (clickedSegmentTag == 0) {
-            //NSLog(@"add");
+//NSLog(@"add");
            //add to the array
             [tempName addObject:@"Icon"];
             [tempWidh addObject:[NSNumber numberWithFloat:40]];
@@ -302,7 +302,7 @@
         }//end clicked Segment Tag
         
         if (clickedSegmentTag == 1 ) {
-    //NSLog(@"sub table");
+//NSLog(@"sub table");
             if (tempName >= 0) {
                 [tempName removeLastObject];
                 [tempWidh removeLastObject];
@@ -318,6 +318,23 @@
         }
     [myData setObject:[ourData createNewData] forKey:popTitle];
     }//end
+    if (clickedSegmentTag == 2) {
+        imageData = [[NSImage alloc]init];
+        LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
+        imageData = [lsi loadFileImage];
+        NSLog(@"imageData:%@ width:%f Hight:%f",imageData,curentWidth,curentHeight);
+        float imageHight = imageData.size.height;
+        float imageWidth = imageData.size.width;
+        
+        //  float newSize = (curentWidth/imageWidth)+(curentHeight/imageHight);
+        float newSize = (imageWidth)+(imageHight);
+        
+        NSLog(@"new size:%f",newSize);
+        
+        [self.myView setMyImage:imageData];
+        [self.myView imageSize:newSize];
+        [self.myView updateDisplay];
+    }
 //NSLog(@"myDate%@",[ourData myData]);
 }//end srgmentedAction
 
@@ -325,10 +342,6 @@
     float imageScale = [sender floatValue];
     [self.myView imageSize:imageScale];
   //  NSLog(@"sacle:%f",imageScale);
-}
-
-- (IBAction)profileTextAction:(id)sender {
-    NSLog(@"profileTextAction");
 }
 
 #pragma mark Change PopUp title
@@ -342,20 +355,6 @@
     [tableView reloadData];
 }
 
-#pragma mark
-- (IBAction)importImageAction:(id)sender {
-    imageData = [[NSImage alloc]init];
-    LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
-    imageData = [lsi loadFileImage];
-    NSLog(@"imageData:%@",imageData);
-    
-    float newSize = (curentWidth/2)+(curentHeight/2);
-    
-    [self.myView setMyImage:imageData];
-    [self.myView imageSize:newSize];
-    [self.myView updateDisplay];
-//NSLog(@"import Image:%@ - size:%f",imageData,newSize);
-}
 
 -(void)createPopup:(NSString*)popupTitle{
     [profileSelectionOutlet addItemsWithTitles:[ourData getDictionaryKeyNames]];
@@ -375,18 +374,21 @@
 //handly delegat
 #pragma mark Delegat functions
 - (void)titleLabel:(NSString*)ourTitle {
-    popMenu = YES;
-    NSMutableDictionary *temp = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
-    [temp setValuesForKeysWithDictionary:[ourData newData:ourTitle]];
-    [ourData setMyData:temp];
-    
-    [self createPopup:ourTitle];
-    [self changeTable:ourTitle];
-    popTitle = ourTitle;
-    
-    [self updateDisplayView];
-    NSLog(@"titleLabel ourData:%@",[ourData myData]);
-    [tableView reloadData];
+    if ([ourTitle isNotEqualTo:@""]) {
+        NSLog(@"not empty");
+        popMenu = YES;
+        NSMutableDictionary *temp = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
+        [temp setValuesForKeysWithDictionary:[ourData newData:ourTitle]];
+        [ourData setMyData:temp];
+        
+        [self createPopup:ourTitle];
+        [self changeTable:ourTitle];
+        popTitle = ourTitle;
+        
+        [self updateDisplayView];
+        NSLog(@"titleLabel ourData:%@",[ourData myData]);
+        [tableView reloadData];
+    }
 }
 
 -(void)prepareForSegue:(NSStoryboardSegue *)segue sender:(id)sender{

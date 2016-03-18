@@ -9,7 +9,6 @@
 #import "profilesViewControler.h"
 
 @interface profilesViewControler ()
-
 @end
 
 @implementation profilesViewControler
@@ -29,7 +28,7 @@
 
 - (BOOL)textFieldShouldReturn:(NSTextField *)textField {
     [textField resignFirstResponder];
-    NSLog(@"return");
+  //  NSLog(@"return");
     return NO;
 }
 
