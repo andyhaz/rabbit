@@ -196,7 +196,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="770" height="456"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="qtW-W7-pai">
+                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="qtW-W7-pai">
                                 <rect key="frame" x="249" y="-1" width="520" height="450"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <clipView key="contentView" copiesOnScroll="NO" id="hf1-K6-52k">
@@ -216,12 +216,13 @@
                                     </subviews>
                                     <color key="backgroundColor" red="0.25913968682289124" green="0.25913193821907043" blue="0.25913631916046143" alpha="1" colorSpace="calibratedRGB"/>
                                 </clipView>
-                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="WZ8-V3-uoi">
-                                    <rect key="frame" x="1" y="433" width="518" height="16"/>
+                                <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="WZ8-V3-uoi">
+                                    <rect key="frame" x="-100" y="-100" width="518" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="XbS-oK-fvX">
-                                    <rect key="frame" x="503" y="1" width="16" height="448"/>
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="XbS-oK-fvX">
+                                    <rect key="frame" x="-100" y="-100" width="16" height="448"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -445,7 +446,7 @@
                                 </connections>
                             </segmentedControl>
                             <button verticalHuggingPriority="750" id="job-Bb-aGo">
-                                <rect key="frame" x="-2" y="421" width="37" height="32"/>
+                                <rect key="frame" x="-2" y="420" width="37" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="+" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="YOw-bf-nqp">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -453,7 +454,7 @@
                                 </buttonCell>
                                 <connections>
                                     <action selector="popOverAction:" target="5gI-5U-AMq" id="R5B-wa-FmT"/>
-                                    <segue destination="5oe-cs-AYY" kind="popover" identifier="pvcSegue" popoverAnchorView="job-Bb-aGo" popoverBehavior="t" preferredEdge="minX" id="anK-e2-PEQ"/>
+                                    <segue destination="5oe-cs-AYY" kind="popover" identifier="pvcSegue" popoverAnchorView="job-Bb-aGo" popoverBehavior="t" preferredEdge="maxY" id="anK-e2-PEQ"/>
                                 </connections>
                             </button>
                         </subviews>

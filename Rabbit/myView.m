@@ -48,7 +48,7 @@
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     // Drawing code here.
-    [[NSColor blackColor]setFill];
+    [[NSColor darkGrayColor]setFill];
     NSRectFill(dirtyRect);
     //
     [[NSGraphicsContext currentContext]

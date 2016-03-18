@@ -19,8 +19,8 @@
 
     // Do any additional setup after loading the view.
     rowSelection = 0;
-    curentWidth = 80;
-    curentHeight = 80;
+    curentWidth = 510;
+    curentHeight = 440;
     pngSetting = YES;
     jpgSetting = YES;
     tiffSetting = YES;
@@ -29,6 +29,7 @@
     ourData = [[DataArray alloc]init];
     myData = [[NSMutableDictionary alloc]init];
     colomData = [[NSMutableDictionary alloc]init];
+    [self updateDisplayView];
 }
 #pragma mark - new project
 - (IBAction)newProject:(id)sender{
@@ -39,8 +40,8 @@
     NSArray *popup = [[NSArray alloc] initWithObjects:@"None", nil];
     [profileSelectionOutlet addItemsWithTitles:popup];
     rowSelection = 0;
-    curentWidth = 80;
-    curentHeight = 80;
+    curentWidth = 510;
+    curentHeight = 440;
     imageData = [[NSImage alloc]init];
     [self.myView setMyImage:imageData];
     ourData = [[DataArray alloc]init];
@@ -181,12 +182,11 @@
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     // Get a new ViewCell
     NSTableCellView *cellView = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
-    
     //nameID
     if( [tableColumn.identifier isEqualToString:@"nameID"] )
     {
         //  cellView.imageView.image = @"";
-        cellView.textField.stringValue = [ourData getNameAtIndex:row];// [self.rowDataName objectAtIndex:row];
+        cellView.textField.stringValue = [ourData getNameAtIndex:row];
         
         return cellView;
     }
@@ -210,7 +210,7 @@
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    NSLog(@"row numbers:%lu",(unsigned long)[[ourData nameColom] count]);
+  //  NSLog(@"row numbers:%lu",(unsigned long)[[ourData nameColom] count]);
     return [[ourData nameColom] count];
 }
 
@@ -223,9 +223,9 @@
     [textName selectText:textName.stringValue];
     [textWidth selectText:textWidth.stringValue];
     [textHeight selectText:textHeight.stringValue];
-    curentName = [textName stringValue];
-    curentWidth = [textWidth floatValue];
-    curentHeight = [textHeight floatValue];
+  //  curentName = [textName stringValue];
+  //  curentWidth = [textWidth floatValue];
+  //  curentHeight = [textHeight floatValue];
     rowSelection = row;
 }
 
@@ -263,7 +263,7 @@
     [usersColome replaceObjectAtIndex:rowSelection withObject:[NSNumber numberWithFloat:newFloat]];
     [ourData setWidthColom:usersColome];
   //  NSMutableArray *newNumSubArray = [[NSMutableArray alloc] initWithArray:[ourData replaceSubArray:subRowData atIndex:rowSelection setNumberValue:newFloat valueForKey:@"Width"]];
-    curentWidth = newFloat;
+   // curentWidth = newFloat;
     [self updateDisplayView];
 }
 
@@ -272,13 +272,12 @@
     NSMutableArray *usersColome = [[NSMutableArray alloc] initWithArray:[ourData hightColom]];
     [usersColome replaceObjectAtIndex:rowSelection withObject:[NSNumber numberWithFloat:newFloat]];
     [ourData setHightColom:usersColome];
-    curentHeight = newFloat;
+  //  curentHeight = newFloat;
     [self updateDisplayView];
 }
 
 #pragma mark handly table manubar
 - (IBAction)segmentedAction:(id)sender {
-    
     NSInteger clickedSegment = [sender selectedSegment];
     NSInteger clickedSegmentTag = [[sender cell] tagForSegment:clickedSegment];
 
@@ -317,7 +316,7 @@
             }//error handyling
         }
     [myData setObject:[ourData createNewData] forKey:popTitle];
-    }//end
+    }//end if popMenu
     if (clickedSegmentTag == 2) {
         imageData = [[NSImage alloc]init];
         LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
@@ -355,7 +354,6 @@
     [tableView reloadData];
 }
 
-
 -(void)createPopup:(NSString*)popupTitle{
     [profileSelectionOutlet addItemsWithTitles:[ourData getDictionaryKeyNames]];
     NSString *lastTitieName =  [[ourData getDictionaryKeyNames] lastObject];
@@ -375,7 +373,6 @@
 #pragma mark Delegat functions
 - (void)titleLabel:(NSString*)ourTitle {
     if ([ourTitle isNotEqualTo:@""]) {
-        NSLog(@"not empty");
         popMenu = YES;
         NSMutableDictionary *temp = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
         [temp setValuesForKeysWithDictionary:[ourData newData:ourTitle]];
@@ -401,16 +398,24 @@
 //end handly delgate
 #pragma mark handles expoing images
 - (IBAction)createAction:(id)sender {
-   // NSLog(@"create action");
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
     DataArray *cda = [[DataArray alloc]init];
     [lsi setPng:pngSetting];
     [lsi setJpg:jpgSetting];
     [lsi setTiff:tiffSetting];
   //  NSLog(@"rowDataWidth:%@f %@f",[ourData widthColom],[ourData hightColom]);
-    if (pngSetting == YES || jpgSetting == YES || tiffSetting == YES) {
-       [lsi exportFileImages:imageData :[cda cleanArray:[ourData nameColom] width:[ourData widthColom] height:[ourData hightColom]]];
-    }//end
+    if ([[ourData nameColom] count] < -1 || imageData == NULL ) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert addButtonWithTitle:@"OK"];
+        [alert setMessageText:@"Error"];
+        [alert setInformativeText:@"There is nothing to expot"];
+        [alert setAlertStyle:NSWarningAlertStyle];
+        [alert runModal];
+    } else {
+        if (pngSetting == YES || jpgSetting == YES || tiffSetting == YES) {
+           [lsi exportFileImages:imageData :[cda cleanArray:[ourData nameColom] width:[ourData widthColom] height:[ourData hightColom]]];
+        }//end
+    }
 }//end creteation
 
 #pragma mark impage export setteings
