@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @protocol popOverControllerDelegate <NSObject>
-    - (void) titleLabel:(NSString*)ourTitle;
+    - (void) titleLabel:(NSArray*)ourTitle;
 @end
 
 @interface profilesViewControler : NSViewController<NSPopoverDelegate>
@@ -17,9 +17,13 @@
     @property(weak) id <popOverControllerDelegate> delegate;
     @property (nonatomic, retain) NSString *ourTitle;
 
-@property (weak) IBOutlet NSTextField *profileOutlet;
-- (IBAction)newButtonAction:(id)sender;
-- (IBAction)cancelButtonAction:(id)sender;
-- (IBAction)textField:(id)sender;
+@property (weak) IBOutlet NSTableView *tableView;
+@property (nonatomic) NSMutableArray *profileTitle;
+
+- (IBAction)buttonBarAction:(id)sender;
+
+- (IBAction)nameAction:(id)sender;
+
+-(void)popOverData:(NSArray*)popAry;
 
 @end

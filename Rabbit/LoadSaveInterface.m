@@ -102,7 +102,7 @@
 #pragma mark image handling
 -(NSImage*)loadFileImage{
     NSOpenPanel * zOpenPanel = [NSOpenPanel openPanel];
-    NSArray * zAryOfExtensions = [NSArray arrayWithObjects:@"png",@"jpg",@"psd",nil];
+    NSArray * zAryOfExtensions = [NSArray arrayWithObjects:@"png",@"jpg",@"psd",@"tiff",@"tif",@"bmp",nil];
     [zOpenPanel setAllowedFileTypes:zAryOfExtensions];
     
     NSInteger zIntResult = [zOpenPanel runModal];

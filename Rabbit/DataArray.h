@@ -34,7 +34,6 @@
 -(NSMutableArray*) replaceSubArray:(NSMutableArray*)subArray atIndex:(int)index setStrValue:(NSString*)value valueForKey:(NSString*)valueKey;
 -(NSMutableArray*) replaceSubArray:(NSMutableArray*)subArray atIndex:(int)index setNumberValue:(float)value valueForKey:(NSString*)valueKey;
 
-
 -(NSMutableDictionary*)newData:(NSString*)title;
 -(NSMutableDictionary*)newTableData;
 

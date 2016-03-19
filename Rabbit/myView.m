@@ -73,6 +73,6 @@
              fromRect: NSZeroRect
             operation: NSCompositeSourceOver
              fraction: 1.0];
-    NSLog(@"draw");
+ //   NSLog(@"draw");
 }
 @end

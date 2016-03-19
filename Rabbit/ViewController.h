@@ -27,10 +27,6 @@
 @property (strong) NSPanel *detachedHUDWindow;
 
 @property (weak) IBOutlet myView *myView;
-//
-//@property (nonatomic) NSMutableDictionary *colomData;
-//@property (nonatomic) NSMutableDictionary *myData;
-//@property (nonatomic) NSMutableArray *tableRowData;
 
 //new project
 - (IBAction)newProject:(id)sender;
@@ -41,8 +37,6 @@
 //menu items
 - (IBAction)importItem:(id)sender;
 - (IBAction)exportItem:(id)sender;
-
-//@property (weak) IBOutlet NSTextField *profileTextFeild;
 
 @property (weak) IBOutlet NSPopUpButton *profileSelectionOutlet;
 - (IBAction)profileSelectionAction:(id)sender;

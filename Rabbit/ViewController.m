@@ -27,8 +27,6 @@
     popMenu = NO;
     
     ourData = [[DataArray alloc]init];
- //del   myData = [[NSMutableDictionary alloc]init];
-//    colomData = [[NSMutableDictionary alloc]init];
     [self updateDisplayView];
 }
 #pragma mark - new project
@@ -125,20 +123,20 @@
 #pragma mark - import & export
 - (IBAction)importItem:(id)sender{
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithDictionary:[lsi importProfile]];
-    NSString *setTitle = [[dic allKeys] objectAtIndex:0];
+    NSMutableDictionary *importData = [[NSMutableDictionary alloc] initWithDictionary:[lsi importProfile]];
+    NSString *setTitle = [[importData allKeys] objectAtIndex:0];
     [self titleLabel:setTitle];
     popTitle = setTitle;
     [self updateSubTabile];
-   // NSLog(@"dic:%@",dic);
-    [ourData setMyData:dic];
+    [ourData setMyData:importData];
     [self updateDisplayView];
     [self changeTable:popTitle];
     [tableView reloadData];
+    NSLog(@"import settings:%@",importData);
+
 }
 
 - (IBAction)exportItem:(id)sender{
- //del   [ourData setMyData:myData];
     NSMutableDictionary *exportData = [[NSMutableDictionary alloc] init];
     [exportData setObject:[[ourData myData] valueForKey:popTitle] forKey:popTitle];
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
@@ -147,7 +145,7 @@
 }
 
 #pragma mark - tableView setup
-- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+- (NSView *)tableView:(NSTableView *)mytableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     // Get a new ViewCell
     NSTableCellView *cellView = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
     //nameID
@@ -208,29 +206,27 @@
     
     [self.myView imageSize:newScale];
     [self.myView setFrameSize:newSize];
-    [self.myView setFrameSize:newSize];
     [self.myView updateDisplay];
 }//end updateDusplayView
-
+#pragma mark - Name Table Action
 - (IBAction)nameAction:(id)sender {
     NSString *updateName = [sender stringValue];
     NSMutableArray *subRowData = [[NSMutableArray alloc] initWithArray:[ourData getRowData:popTitle]];
     NSMutableArray *newSubArray = [[NSMutableArray alloc] initWithArray:[ourData replaceSubArray:subRowData atIndex:rowSelection setStrValue:updateName valueForKey:@"Name"]];
     [ourData setNameColom:newSubArray];
- //del   [myData setObject:newSubArray forKey:popTitle];
+    [[[[ourData myData] valueForKey:popTitle] objectAtIndex:rowSelection] setObject:updateName forKey:@"Width"];
+
     curentName = updateName;
-  //  [self updateDisplayView];
-   // NSLog(@"ourData:%@",ourData);
-  //  NSLog(@"name action:%@ - %d",updateName,rowSelection);
+
 }
-#pragma mark - Width Table Action
+#pragma mark Width Table Action
 - (IBAction)widthTableAction:(id)sender {
     float newFloat = [sender floatValue];
     NSMutableArray *usersColome = [[NSMutableArray alloc] initWithArray:[ourData widthColom]];
     [usersColome replaceObjectAtIndex:rowSelection withObject:[NSNumber numberWithFloat:newFloat]];
     [ourData setWidthColom:usersColome];
     [[[[ourData myData] valueForKey:popTitle] objectAtIndex:rowSelection] setObject:[NSNumber numberWithFloat:newFloat] forKey:@"Width"];
-    [self updateDisplayView];
+   // [self updateDisplayView];
 }
 
 - (IBAction)heightTableAction:(id)sender {
@@ -239,7 +235,7 @@
     [usersColome replaceObjectAtIndex:rowSelection withObject:[NSNumber numberWithFloat:newFloat]];
     [ourData setHightColom:usersColome];
     [[[[ourData myData] valueForKey:popTitle] objectAtIndex:rowSelection] setObject:[NSNumber numberWithFloat:newFloat] forKey:@"Height"];
-    [self updateDisplayView];
+   // [self updateDisplayView];
 }
 
 #pragma mark - update the table
@@ -324,18 +320,9 @@
         imageData = [[NSImage alloc]init];
         LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
         imageData = [lsi loadFileImage];
-        NSLog(@"imageData:%@ width:%f Hight:%f",imageData,curentWidth,curentHeight);
-        float imageHight = imageData.size.height;
-        float imageWidth = imageData.size.width;
-        
-        //  float newSize = (curentWidth/imageWidth)+(curentHeight/imageHight);
-        float newSize = (imageWidth)+(imageHight);
-        
-        NSLog(@"new size:%f",newSize);
-        
         [self.myView setMyImage:imageData];
-        [self.myView imageSize:newSize];
-        [self.myView updateDisplay];
+        [self updateDisplayView];
+        NSLog(@"imageData:%@ width:%f Hight:%f",imageData,curentWidth,curentHeight);
     }
 //NSLog(@"myDate%@",[ourData myData]);
 }//end srgmentedAction
@@ -357,13 +344,6 @@
     [tableView reloadData];
 }
 
--(void)createPopup:(NSString*)popupTitle{
-    [profileSelectionOutlet addItemsWithTitles:[ourData getDictionaryKeyNames]];
-    NSString *lastTitieName =  [[ourData getDictionaryKeyNames] lastObject];
-    [profileSelectionOutlet selectItemWithTitle:lastTitieName];
-    NSLog(@"popup:%@",[ourData getDictionaryKeyNames]);
-}
-
 #pragma mark Change Table
 -(void)changeTable:(NSString*)tableTitle{
     NSMutableArray *tableRowData = [[NSMutableArray alloc] initWithArray:[ourData getRowData:tableTitle]];
@@ -374,31 +354,43 @@
 
 //handly delegat
 #pragma mark Delegat functions
-- (void)titleLabel:(NSString*)ourTitle {
-    if ([ourTitle isNotEqualTo:@""]) {
+-(void)prepareForSegue:(NSStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"pvcSegue"]) {
+        //NSLog(@"todo");
+        
+        profilesViewControler *pvc = segue.destinationController;
+        pvc.delegate = self;
+        [pvc popOverData:[ourData getDictionaryKeyNames]];
+    }
+}
+- (void)titleLabel:(NSArray*)ourTitleAry {
+    NSLog(@"title ary:%@",ourTitleAry);
+    if ([ourTitleAry isNotEqualTo:@""]) {
         popMenu = YES;
+        NSString *ourTitleString = [ourTitleAry lastObject];
         NSMutableDictionary *temp = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
-        [temp setValuesForKeysWithDictionary:[ourData newData:ourTitle]];
+        [temp setValuesForKeysWithDictionary:[ourData newData:ourTitleString]];
         [ourData setMyData:temp];
         
-        [self createPopup:ourTitle];
-        [self changeTable:ourTitle];
-        popTitle = ourTitle;
+        [self createPopup:ourTitleAry];
+        [self changeTable:ourTitleString];
+        popTitle = ourTitleString;
         
         [self updateDisplayView];
         NSLog(@"titleLabel ourData:%@",[ourData myData]);
         [tableView reloadData];
     }
 }
-
--(void)prepareForSegue:(NSStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"pvcSegue"]) {
-        //NSLog(@"todo");
-        profilesViewControler *pvc = segue.destinationController;
-        pvc.delegate = self;
-    }
-}
 //end handly delgate
+-(void)createPopup:(NSArray*)popupTitle{
+    for (int i = 0; i < [popupTitle count]; i++) {
+        //[
+    }
+    [profileSelectionOutlet addItemsWithTitles:[ourData getDictionaryKeyNames]];
+    NSString *lastTitieName =  [[ourData getDictionaryKeyNames] lastObject];
+    [profileSelectionOutlet selectItemWithTitle:lastTitieName];
+    NSLog(@"popup:%@",[ourData getDictionaryKeyNames]);
+}
 #pragma mark handles expoing images
 - (IBAction)createAction:(id)sender {
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
@@ -407,9 +399,9 @@
     [lsi setJpg:jpgSetting];
     [lsi setTiff:tiffSetting];
   //  NSLog(@"rowDataWidth:%@f %@f",[ourData widthColom],[ourData hightColom]);
-    if ([[ourData nameColom] count] < -1 || imageData == NULL ) {
+    if ([[ourData nameColom] count] <= 0 || imageData == NULL ) {
         alertInfo *ai = [[alertInfo alloc]init];
-        [ai showAlert:@"Error" Massage:@"Incomplet data ro exoprt"];
+        [ai showAlert:@"Error" Massage:@"Incomplet data to exoprt"];
     } else {
         if (pngSetting == YES || jpgSetting == YES || tiffSetting == YES) {
            [lsi exportFileImages:imageData :[cda cleanArray:[ourData nameColom] width:[ourData widthColom] height:[ourData hightColom]]];
