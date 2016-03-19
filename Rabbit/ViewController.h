@@ -11,11 +11,12 @@
 #import "myView.h"
 #import "DataArray.h"
 #import "profilesViewControler.h"
+#import "imageViewController.h"
 #import "alertInfo.h"
 
 @interface ViewController : NSViewController<popOverControllerDelegate> {
+    BOOL popMenu;
     NSImage *imageData;
-    BOOL pngSetting,jpgSetting,tiffSetting,popMenu;
     int rowSelection;
     DataArray *ourData;
     NSString *popTitle;
@@ -49,8 +50,5 @@
 - (IBAction)segmentedAction:(id)sender;
 //
 - (IBAction)createAction:(id)sender;
-//
-- (IBAction)pngAction:(id)sender;
-- (IBAction)jpgeAction:(id)sender;
-- (IBAction)tiffAction:(id)sender;
+
 @end

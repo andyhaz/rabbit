@@ -21,9 +21,6 @@
     rowSelection = 0;
     curentWidth = 510;
     curentHeight = 440;
-    pngSetting = YES;
-    jpgSetting = YES;
-    tiffSetting = YES;
     popMenu = NO;
     
     ourData = [[DataArray alloc]init];
@@ -42,8 +39,6 @@
     imageData = [[NSImage alloc]init];
     [self.myView setMyImage:imageData];
     ourData = [[DataArray alloc]init];
- //del   myData = [[NSMutableDictionary alloc]init];
-//    colomData = [[NSMutableDictionary alloc]init];
     [tableView reloadData];
     [self updateDisplayView];
 }
@@ -118,7 +113,7 @@
     [saveData setObject:[ourData myData] forKey:@"Main"];
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
     [lsi saveFileData:saveData];
-    NSLog(@"save:%@",saveData);
+  //  NSLog(@"save:%@",saveData);
 }
 #pragma mark - import & export
 - (IBAction)importItem:(id)sender{
@@ -357,10 +352,19 @@
 -(void)prepareForSegue:(NSStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"pvcSegue"]) {
         //NSLog(@"todo");
-        
         profilesViewControler *pvc = segue.destinationController;
         pvc.delegate = self;
         [pvc popOverData:[ourData getDictionaryKeyNames]];
+    }
+    if ([segue.identifier isEqualToString:@"imageSegue"]) {
+        NSLog(@"imageSegue");
+        DataArray *cda = [[DataArray alloc]init];
+        imageViewController *ivc = segue.destinationController;
+        NSInteger aryLenght = (long)[[ourData myData] count];
+        [ivc setImageData:imageData];
+        [ivc setArraySize:aryLenght];
+        [ivc setDataAray:[cda cleanArray:[ourData nameColom] width:[ourData widthColom] height:[ourData hightColom]]];
+        NSLog(@"clean Array:%@",[cda cleanArray:[ourData nameColom] width:[ourData widthColom] height:[ourData hightColom]]);
     }
 }
 - (void)titleLabel:(NSArray*)ourTitleAry {
@@ -378,6 +382,7 @@
         
         [self updateDisplayView];
         NSLog(@"titleLabel ourData:%@",[ourData myData]);
+
         [tableView reloadData];
     }
 }
@@ -390,47 +395,5 @@
     NSString *lastTitieName =  [[ourData getDictionaryKeyNames] lastObject];
     [profileSelectionOutlet selectItemWithTitle:lastTitieName];
     NSLog(@"popup:%@",[ourData getDictionaryKeyNames]);
-}
-#pragma mark handles expoing images
-- (IBAction)createAction:(id)sender {
-    LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
-    DataArray *cda = [[DataArray alloc]init];
-    [lsi setPng:pngSetting];
-    [lsi setJpg:jpgSetting];
-    [lsi setTiff:tiffSetting];
-  //  NSLog(@"rowDataWidth:%@f %@f",[ourData widthColom],[ourData hightColom]);
-    if ([[ourData nameColom] count] <= 0 || imageData == NULL ) {
-        alertInfo *ai = [[alertInfo alloc]init];
-        [ai showAlert:@"Error" Massage:@"Incomplet data to exoprt"];
-    } else {
-        if (pngSetting == YES || jpgSetting == YES || tiffSetting == YES) {
-           [lsi exportFileImages:imageData :[cda cleanArray:[ourData nameColom] width:[ourData widthColom] height:[ourData hightColom]]];
-        }//end
-    }
-}//end creteation
-
-#pragma mark impage export setteings
-- (IBAction)pngAction:(id)sender {
-    if (pngSetting == YES) {
-        pngSetting = NO;
-    } else {
-        pngSetting = YES;
-    }
-}
-
-- (IBAction)jpgeAction:(id)sender {
-    if (jpgSetting == YES) {
-        jpgSetting = NO;
-    } else {
-        jpgSetting = YES;
-    }
-}
-
-- (IBAction)tiffAction:(id)sender {
-    if (tiffSetting == YES) {
-        tiffSetting = NO;
-    } else {
-        tiffSetting = YES;
-    }
 }
 @end

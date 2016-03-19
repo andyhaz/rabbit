@@ -227,14 +227,14 @@
                                 </scroller>
                             </scrollView>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="qml-Jq-dbF">
-                                <rect key="frame" x="-1" y="77" width="252" height="345"/>
+                                <rect key="frame" x="-1" y="19" width="252" height="403"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" id="INR-5O-nBl">
-                                    <rect key="frame" x="1" y="0.0" width="250" height="344"/>
+                                    <rect key="frame" x="1" y="0.0" width="250" height="402"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="WCu-7k-oFm" viewBased="YES" id="fcX-Nc-14v">
-                                            <rect key="frame" x="0.0" y="0.0" width="250" height="327"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="250" height="385"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -370,65 +370,18 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
-                            <button verticalHuggingPriority="750" id="FED-59-Amc">
-                                <rect key="frame" x="54" y="0.0" width="143" height="32"/>
+                            <button verticalHuggingPriority="750" id="0CZ-pD-XI3">
+                                <rect key="frame" x="179" y="-8" width="80" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Export Images" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ndh-6W-0af">
+                                <buttonCell key="cell" type="push" title="Export" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AS8-Wu-KcS">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="createAction:" target="5gI-5U-AMq" id="Bzz-6c-3be"/>
+                                    <action selector="createAction:" target="5gI-5U-AMq" id="JX1-9W-bor"/>
+                                    <segue destination="iEc-G2-U29" kind="sheet" identifier="imageSegue" id="161-hT-24C"/>
                                 </connections>
                             </button>
-                            <button id="yml-c7-xSt">
-                                <rect key="frame" x="100" y="34" width="50" height="18"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="PNG" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Uvo-hu-RLI">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="pngAction:" target="5gI-5U-AMq" id="cGd-WU-cz5"/>
-                                </connections>
-                            </button>
-                            <button id="Y1n-Rh-9jZ">
-                                <rect key="frame" x="4" y="34" width="55" height="18"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="JEPG" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="c62-vI-bL6">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="jpgeAction:" target="5gI-5U-AMq" id="bk5-nz-pIb"/>
-                                </connections>
-                            </button>
-                            <button id="q0a-WH-rpk">
-                                <rect key="frame" x="188" y="34" width="43" height="18"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Tiff" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="B4r-wx-nwV">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="tiffAction:" target="5gI-5U-AMq" id="4Zd-Gt-CjB"/>
-                                </connections>
-                            </button>
-                            <segmentedControl verticalHuggingPriority="750" id="GIk-V5-voG">
-                                <rect key="frame" x="-1" y="58" width="252" height="23"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="smallSquare" trackingMode="momentary" id="9Ca-Ra-YN4">
-                                    <font key="font" metaFont="system"/>
-                                    <segments>
-                                        <segment label="+"/>
-                                        <segment label="-" tag="1"/>
-                                        <segment label="Import Image" width="192" tag="2"/>
-                                    </segments>
-                                </segmentedCell>
-                                <connections>
-                                    <action selector="segmentedAction:" target="5gI-5U-AMq" id="LyF-a5-H9o"/>
-                                </connections>
-                            </segmentedControl>
                             <button verticalHuggingPriority="750" id="job-Bb-aGo">
                                 <rect key="frame" x="217" y="421" width="37" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -457,6 +410,21 @@
                                     <action selector="profileSelectionAction:" target="5gI-5U-AMq" id="lyI-bX-sVv"/>
                                 </connections>
                             </popUpButton>
+                            <segmentedControl verticalHuggingPriority="750" id="GIk-V5-voG">
+                                <rect key="frame" x="-1" y="-2" width="190" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="smallSquare" trackingMode="momentary" id="9Ca-Ra-YN4">
+                                    <font key="font" metaFont="system"/>
+                                    <segments>
+                                        <segment label="+"/>
+                                        <segment label="-" tag="1"/>
+                                        <segment label="Import Image" width="130" tag="2"/>
+                                    </segments>
+                                </segmentedCell>
+                                <connections>
+                                    <action selector="segmentedAction:" target="5gI-5U-AMq" id="LyF-a5-H9o"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                     </view>
                     <connections>
@@ -469,6 +437,85 @@
                 <userDefaultsController representsSharedInstance="YES" id="Prt-Fc-Y7g"/>
             </objects>
             <point key="canvasLocation" x="74" y="796"/>
+        </scene>
+        <!--Image View Controller-->
+        <scene sceneID="t86-2X-McT">
+            <objects>
+                <viewController id="iEc-G2-U29" customClass="imageViewController" sceneMemberID="viewController">
+                    <view key="view" id="IPH-Hu-8wJ">
+                        <rect key="frame" x="0.0" y="0.0" width="237" height="91"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button id="bK3-78-ep4">
+                                <rect key="frame" x="106" y="44" width="50" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="PNG" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="BI7-8w-meQ">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="pngAction:" target="iEc-G2-U29" id="vAb-c1-uHG"/>
+                                </connections>
+                            </button>
+                            <button id="UAi-ng-MIq">
+                                <rect key="frame" x="6" y="44" width="55" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="JEPG" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ljo-Iq-8cx">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="jpgeAction:" target="iEc-G2-U29" id="Beg-4x-fGQ"/>
+                                </connections>
+                            </button>
+                            <button id="rgN-LJ-ZIV">
+                                <rect key="frame" x="185" y="44" width="43" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Tiff" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Htf-vo-xoi">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="tiffAction:" target="iEc-G2-U29" id="f55-qn-pqN"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" id="H8I-dl-xzZ">
+                                <rect key="frame" x="121" y="2" width="116" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Cancle" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Owd-d5-wyd">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="dismissController:" target="iEc-G2-U29" id="YzS-hd-Hf3"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" id="rav-zx-Ir9">
+                                <rect key="frame" x="-2" y="2" width="117" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Save Iamges" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gPF-MQ-G6Q">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="saveImageAction:" target="iEc-G2-U29" id="xas-gG-ma3"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ZAH-zj-LOc">
+                                <rect key="frame" x="68" y="71" width="92" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Export Iamges" id="mD3-1P-VGj">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="3nc-fF-LO4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="70.5" y="1225.5"/>
         </scene>
         <!--Profiles View Controler-->
         <scene sceneID="umL-fb-5R7">
