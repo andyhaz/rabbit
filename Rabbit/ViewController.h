@@ -26,7 +26,6 @@
 
 @property (strong) NSWindow *detachedWindow;
 @property (strong) NSPanel *detachedHUDWindow;
-
 @property (weak) IBOutlet myView *myView;
 
 //new project
@@ -49,6 +48,4 @@
 
 - (IBAction)segmentedAction:(id)sender;
 //
-- (IBAction)createAction:(id)sender;
-
 @end

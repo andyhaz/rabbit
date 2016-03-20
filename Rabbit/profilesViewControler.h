@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @protocol popOverControllerDelegate <NSObject>
-    - (void) titleLabel:(NSArray*)ourTitle;
+    - (void)titleLabel:(NSString*)ourTitle ourTitleAry:(NSArray*)ourTitleAry;
 @end
 
 @interface profilesViewControler : NSViewController<NSPopoverDelegate>

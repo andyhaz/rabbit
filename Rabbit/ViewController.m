@@ -29,7 +29,7 @@
 #pragma mark - new project
 - (IBAction)newProject:(id)sender{
     popTitle = @"";
-    [self titleLabel:popTitle];
+    [self titleLabel:popTitle ourTitleAry:NULL];
     [profileSelectionOutlet removeAllItems];
     NSArray *popup = [[NSArray alloc] initWithObjects:@"None", nil];
     [profileSelectionOutlet addItemsWithTitles:popup];
@@ -65,7 +65,7 @@
         
         //set up popup menu
         NSString *setTitle = [[usrDic allKeys] objectAtIndex:0];
-        [self titleLabel:setTitle];
+        [self titleLabel:popTitle ourTitleAry:NULL];
         [profileSelectionOutlet selectItemWithTitle:setTitle];
       //  NSLog(@"title label:%@",setTitle);
         //end p=popup menu
@@ -120,7 +120,7 @@
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
     NSMutableDictionary *importData = [[NSMutableDictionary alloc] initWithDictionary:[lsi importProfile]];
     NSString *setTitle = [[importData allKeys] objectAtIndex:0];
-    [self titleLabel:setTitle];
+    [self titleLabel:popTitle ourTitleAry:NULL];
     popTitle = setTitle;
     [self updateSubTabile];
     [ourData setMyData:importData];
@@ -148,7 +148,8 @@
     {
         //  cellView.imageView.image = @"";
         cellView.textField.stringValue = [ourData getNameAtIndex:row];
-        
+        [cellView.textField setEditable:YES]; // Make Cell Editable!
+
         return cellView;
     }
     //widthID
@@ -203,6 +204,7 @@
     [self.myView setFrameSize:newSize];
     [self.myView updateDisplay];
 }//end updateDusplayView
+
 #pragma mark - Name Table Action
 - (IBAction)nameAction:(id)sender {
     NSString *updateName = [sender stringValue];
@@ -212,8 +214,8 @@
     [[[[ourData myData] valueForKey:popTitle] objectAtIndex:rowSelection] setObject:updateName forKey:@"Width"];
 
     curentName = updateName;
-
 }
+
 #pragma mark Width Table Action
 - (IBAction)widthTableAction:(id)sender {
     float newFloat = [sender floatValue];
@@ -252,7 +254,6 @@
     [ourData setNameColom:createNameData];
     [ourData setWidthColom:createWidthData];
     [ourData setHightColom:createHeightData];
-    
     NSLog(@"import Item:%@",[ourData myData]);
 }
 
@@ -317,7 +318,7 @@
         imageData = [lsi loadFileImage];
         [self.myView setMyImage:imageData];
         [self updateDisplayView];
-        NSLog(@"imageData:%@ width:%f Hight:%f",imageData,curentWidth,curentHeight);
+      //  NSLog(@"imageData:%@ width:%f Hight:%f",imageData,curentWidth,curentHeight);
     }
 //NSLog(@"myDate%@",[ourData myData]);
 }//end srgmentedAction
@@ -354,20 +355,23 @@
         //NSLog(@"todo");
         profilesViewControler *pvc = segue.destinationController;
         pvc.delegate = self;
+    
         [pvc popOverData:[ourData getDictionaryKeyNames]];
     }
+    
     if ([segue.identifier isEqualToString:@"imageSegue"]) {
-        NSLog(@"imageSegue");
+    //    NSLog(@"imageSegue");
         DataArray *cda = [[DataArray alloc]init];
         imageViewController *ivc = segue.destinationController;
         NSInteger aryLenght = (long)[[ourData myData] count];
         [ivc setImageData:imageData];
         [ivc setArraySize:aryLenght];
         [ivc setDataAray:[cda cleanArray:[ourData nameColom] width:[ourData widthColom] height:[ourData hightColom]]];
-        NSLog(@"clean Array:%@",[cda cleanArray:[ourData nameColom] width:[ourData widthColom] height:[ourData hightColom]]);
+      //  NSLog(@"clean Array:%@",[cda cleanArray:[ourData nameColom] width:[ourData widthColom] height:[ourData hightColom]]);
     }
 }
-- (void)titleLabel:(NSArray*)ourTitleAry {
+
+- (void)titleLabel:(NSString*)ourTitle ourTitleAry:(NSArray*)ourTitleAry {
     NSLog(@"title ary:%@",ourTitleAry);
     if ([ourTitleAry isNotEqualTo:@""]) {
         popMenu = YES;
@@ -377,7 +381,7 @@
         [ourData setMyData:temp];
         
         [self createPopup:ourTitleAry];
-        [self changeTable:ourTitleString];
+        [self changeTable:ourTitle];
         popTitle = ourTitleString;
         
         [self updateDisplayView];
@@ -388,12 +392,26 @@
 }
 //end handly delgate
 -(void)createPopup:(NSArray*)popupTitle{
-    for (int i = 0; i < [popupTitle count]; i++) {
-        //[
-    }
+    NSDictionary *oldMyData = [ourData myData];
+    NSMutableDictionary *rootDic = [[NSMutableDictionary alloc] initWithDictionary:[ourData createMainData:popupTitle oldData:oldMyData]];
+
+ /*NSArray *allPopUp = [[NSArray alloc]initWithArray:[ourData getDictionaryKeyNames]];
+    for (int i = 0; i < [[ourData getDictionaryKeyNames] count]; i++) {
+        if ([[allPopUp objectAtIndex:i] isNotEqualTo:[allPopUp objectAtIndex:i]] ) {
+            NSLog(@"update root array");
+        }
+    }*/
+    
+    //creat new root
+    [ourData setMyData:rootDic];
     [profileSelectionOutlet addItemsWithTitles:[ourData getDictionaryKeyNames]];
+    //set popup title
+     [profileSelectionOutlet selectItemWithTitle:[[ourData getDictionaryKeyNames] objectAtIndex:0]];
+    
+  // NSLog(@"ourData:%@",[ourData myData]);
+    /*[profileSelectionOutlet addItemsWithTitles:[ourData getDictionaryKeyNames]];
     NSString *lastTitieName =  [[ourData getDictionaryKeyNames] lastObject];
     [profileSelectionOutlet selectItemWithTitle:lastTitieName];
-    NSLog(@"popup:%@",[ourData getDictionaryKeyNames]);
+    NSLog(@"popup:%@",[ourData getDictionaryKeyNames]);*/
 }
 @end

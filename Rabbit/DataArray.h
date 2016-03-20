@@ -39,4 +39,7 @@
 
 -(NSMutableArray*)createNewData;
 -(void)createTableData;
+
+-(NSMutableDictionary*)createMainData:(NSArray*)mainAry oldData:(NSDictionary*)oldDataAry;
+
 @end

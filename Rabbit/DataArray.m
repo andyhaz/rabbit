@@ -101,4 +101,17 @@
     }
     //  NSLog(@"createTableData:%@ - %@",myData,dicAry);
 }
+
+-(NSMutableDictionary*)createMainData:(NSArray*)mainAry oldData:(NSDictionary*)oldDataAry{
+    NSLog(@"pullDownAry:%@ - oladDataAryKeys:%@",mainAry,[oldDataAry allKeys]);
+    NSMutableDictionary *rootDic = [[NSMutableDictionary alloc]initWithDictionary:oldDataAry];
+    if (rootDic) {
+        for (int i = 0; i < [mainAry count]; i++) {
+            [rootDic setObject:[self createNewData] forKey:[mainAry objectAtIndex:i]];
+             NSLog(@"empty root return:%@",rootDic);
+        }
+    }
+    return rootDic;
+}
+
 @end

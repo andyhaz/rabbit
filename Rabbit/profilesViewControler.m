@@ -19,7 +19,7 @@
 @synthesize tableView;
 @synthesize delegate;
 @synthesize profileTitle;
-//@synthesize titleText = _titleText;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do view setup here.
@@ -36,7 +36,7 @@
 - (IBAction)buttonBarAction:(id)sender {
     NSInteger clickedSegment = [sender selectedSegment];
     NSInteger clickedSegmentTag = [[sender cell] tagForSegment:clickedSegment];
-    NSLog(@"%ld",(long)clickedSegmentTag);
+  //  NSLog(@"%ld",(long)clickedSegmentTag);
     
     if (clickedSegmentTag == 0) {
      //   NSLog(@"add");
@@ -47,14 +47,14 @@
     if (clickedSegmentTag == 1) {
        // NSLog(@"sub");
         if ([profileTitle count] > 0 ) {
-            [profileTitle removeLastObject];
+            [profileTitle removeObjectAtIndex:rowSelectionTable];
             [tableView reloadData];
         }
     }
     
     if (clickedSegmentTag == 3) {
         NSLog(@"done:%@",profileTitle);
-        [delegate titleLabel:profileTitle];
+        [delegate titleLabel:profileTitle[0] ourTitleAry:profileTitle];
         [self dismissViewController:self];
     }
 
@@ -80,7 +80,7 @@
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    //  NSLog(@"row numbers:%lu",(unsigned long)[profileTitle count]);
+    //NSLog(@"row numbers:%lu",(unsigned long)[profileTitle count]);
     return [profileTitle count];
 }
 
@@ -90,7 +90,7 @@
     NSTextField *textName = [[[notification.object viewAtColumn:0 row:row makeIfNecessary:NO]subviews] lastObject];
     [textName selectText:textName.stringValue];
     rowSelectionTable = row;
-    NSLog(@"row:%ld",(long)row);
+  //  NSLog(@"row:%ld",(long)row);
 }
 
 #pragma mark - Name Table Action
@@ -99,5 +99,4 @@
     [profileTitle replaceObjectAtIndex:rowSelectionTable withObject:updateTitleName];
    // NSLog(@"profile title:%@",profileTitle);
 }
-
 @end
