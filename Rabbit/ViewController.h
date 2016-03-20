@@ -13,8 +13,9 @@
 #import "profilesViewControler.h"
 #import "imageViewController.h"
 #import "alertInfo.h"
+#import "addTableViewController.h"
 
-@interface ViewController : NSViewController<popOverControllerDelegate> {
+@interface ViewController : NSViewController<popOverControllerDelegate,addTableControllerDelegate> {
     BOOL popMenu;
     NSImage *imageData;
     int rowSelection;
@@ -42,9 +43,6 @@
 - (IBAction)profileSelectionAction:(id)sender;
 //table information
 @property (weak) IBOutlet NSTableView *tableView;
-- (IBAction)nameAction:(id)sender;
-- (IBAction)widthTableAction:(id)sender;
-- (IBAction)heightTableAction:(id)sender;
 
 - (IBAction)segmentedAction:(id)sender;
 //

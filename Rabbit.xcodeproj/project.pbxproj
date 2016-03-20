@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		97427CF01C9C548F00883527 /* alertInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97427CEF1C9C548F00883527 /* alertInfo.m */; };
 		97427CF31C9CD7EA00883527 /* imageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97427CF21C9CD7EA00883527 /* imageViewController.m */; };
+		97427D011C9E804A00883527 /* addTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97427D001C9E804A00883527 /* addTableViewController.m */; };
 		9744D7991C58519B0065DBAE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D7981C58519B0065DBAE /* AppDelegate.m */; };
 		9744D79C1C58519B0065DBAE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D79B1C58519B0065DBAE /* main.m */; };
 		9744D79F1C58519B0065DBAE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9744D79E1C58519B0065DBAE /* ViewController.m */; };
@@ -47,6 +48,8 @@
 		97427CEF1C9C548F00883527 /* alertInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = alertInfo.m; sourceTree = "<group>"; };
 		97427CF11C9CD7EA00883527 /* imageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imageViewController.h; sourceTree = "<group>"; };
 		97427CF21C9CD7EA00883527 /* imageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imageViewController.m; sourceTree = "<group>"; };
+		97427CFF1C9E804A00883527 /* addTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addTableViewController.h; sourceTree = "<group>"; };
+		97427D001C9E804A00883527 /* addTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addTableViewController.m; sourceTree = "<group>"; };
 		9744D7941C58519B0065DBAE /* Rabbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rabbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9744D7971C58519B0065DBAE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9744D7981C58519B0065DBAE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -173,6 +176,8 @@
 				9744D79E1C58519B0065DBAE /* ViewController.m */,
 				97FD58AC1C88F6FE0059C87C /* profilesViewControler.h */,
 				97FD58AD1C88F6FE0059C87C /* profilesViewControler.m */,
+				97427CFF1C9E804A00883527 /* addTableViewController.h */,
+				97427D001C9E804A00883527 /* addTableViewController.m */,
 				97427CF11C9CD7EA00883527 /* imageViewController.h */,
 				97427CF21C9CD7EA00883527 /* imageViewController.m */,
 				9744D7D21C5859D60065DBAE /* myView.h */,
@@ -367,6 +372,7 @@
 				9744D7991C58519B0065DBAE /* AppDelegate.m in Sources */,
 				9744D7E71C58C1CC0065DBAE /* LoadSaveInterface.m in Sources */,
 				97427CF01C9C548F00883527 /* alertInfo.m in Sources */,
+				97427D011C9E804A00883527 /* addTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

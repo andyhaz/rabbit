@@ -16,7 +16,7 @@
     return [myData  allKeys];
 }
 
--(NSArray*)getRowData:(NSString*)rowName{
+-(NSArray*)getRowData:(NSString*)rowName {
     return [myData valueForKey:rowName];
 }
 

@@ -37,7 +37,6 @@
     NSInteger clickedSegment = [sender selectedSegment];
     NSInteger clickedSegmentTag = [[sender cell] tagForSegment:clickedSegment];
   //  NSLog(@"%ld",(long)clickedSegmentTag);
-    
     if (clickedSegmentTag == 0) {
      //   NSLog(@"add");
         [profileTitle addObject:@"Empty Title"];

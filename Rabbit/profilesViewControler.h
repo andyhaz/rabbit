@@ -14,8 +14,8 @@
 
 @interface profilesViewControler : NSViewController<NSPopoverDelegate>
 
-    @property(weak) id <popOverControllerDelegate> delegate;
-    @property (nonatomic, retain) NSString *ourTitle;
+@property(weak) id <popOverControllerDelegate> delegate;
+@property (nonatomic, retain) NSString *ourTitle;
 
 @property (weak) IBOutlet NSTableView *tableView;
 @property (nonatomic) NSMutableArray *profileTitle;
