@@ -16,11 +16,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [table setTarget:self];
+    [table setDoubleAction:@selector(doubleClick:)];
     [self initz];
 }
+
 #pragma mark - initz vaules
 -(void)initz {
     popMenu = NO;
+    updateTable = NO;
     popTitle = @"";
     [self titleLabel:popTitle ourTitleAry:NULL];
     [profileSelectionOutlet removeAllItems];
@@ -35,10 +39,12 @@
     [tableView reloadData];
     [self updateDisplayView];
 }
+
 #pragma mark - new project
 - (IBAction)newProject:(id)sender{
     [self initz];
 }
+
 #pragma mark - open & saveproject
 - (IBAction)openProject:(id)sender{
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
@@ -115,7 +121,7 @@
     [self updateSubTabile];
     [self updateDisplayView];
     [tableView reloadData];
-    NSLog(@"import settings:%@",importData);
+  //  NSLog(@"import settings:%@",importData);
 }
 
 - (IBAction)exportItem:(id)sender{
@@ -123,8 +129,8 @@
     [self updateSubTabile];
     NSMutableDictionary *exportData = [[NSMutableDictionary alloc] init];
     [exportData setObject:[[ourData myData] valueForKey:popTitle] forKey:popTitle];
-   // [lsi exportProfile:exportData];
-    NSLog(@"export settings:%@",[[ourData myData] valueForKey:popTitle]);
+    [lsi exportProfile:exportData];
+   // NSLog(@"export settings:%@",[[ourData myData] valueForKey:popTitle]);
 }
 
 #pragma mark - tableView setup
@@ -155,7 +161,6 @@
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-  //  NSLog(@"row numbers:%lu",(unsigned long)[[ourData nameColom] count]);
     return [[ourData nameColom] count];
 }
 
@@ -171,9 +176,21 @@
     rowSelection = row;
 }
 
+#pragma mark - double click
+- (void)doubleClick:(id)sender {
+//NSLog(@"double-click in row %ld col %ld", (long)[table clickedRow], (long)[table clickedColumn]);
+    NSArray *dicData = [[NSArray alloc] initWithArray:[[ourData myData] valueForKey:popTitle]];
+    curentName = [[dicData objectAtIndex:[table clickedRow]] valueForKey:@"Name"];
+    curentWidth = [[[dicData objectAtIndex:[table clickedRow]] valueForKey:@"Width"] floatValue];
+    curentHeight = [[[dicData objectAtIndex:[table clickedRow]] valueForKey:@"Height"] floatValue];
+    NSLog(@"get current name:%@",curentName);
+    updateTable = YES;
+    [self performSegueWithIdentifier:@"addSegue" sender:self];
+}
+
 #pragma mark-update Display
 -(void)updateDisplayView {
-   // NSLog(@"update Display View");
+//NSLog(@"update Display View");
     if (imageData) {
         float w = curentWidth;
         float h = curentHeight;
@@ -194,11 +211,9 @@
     if (popMenu ==YES) {
         if (clickedSegmentTag == 0) {
             [self performSegueWithIdentifier:@"addSegue" sender:self];
-//NSLog(@"add");
         }//end clicked Segment Tag
         
         if (clickedSegmentTag == 1 ) {
-//NSLog(@"sub table");
             [self  removeItemFormTable];
         }
     }//end if popMenu
@@ -232,11 +247,24 @@
         pvc.delegate = self;
         [pvc popOverData:[ourData getDictionaryKeyNames]];
     }
+    
     if ([segue.identifier isEqualToString:@"addSegue"]) {
-      //  NSLog(@"add Segue");
+        NSLog(@"add Segue");
         addTableViewController *atv =  segue.destinationController;
         atv.delegate = self;
+      if (updateTable == YES) {
+            NSLog(@"updteTable:%@",curentName);
+            [atv setTiteName:curentName];
+            [atv setWidth:curentWidth];
+            [atv setHeight:curentHeight];
+            updateTable = NO;
+      } else {
+          [atv setTiteName:@"Icon"];
+          [atv setWidth:40];
+          [atv setHeight:40];
+      }//end
     }
+    
     if ([segue.identifier isEqualToString:@"imageSegue"]) {
        // NSLog(@"imageSegue");
         DataArray *cda = [[DataArray alloc]init];
@@ -304,7 +332,7 @@
     [self updateSubTabile];
     [self updateDisplayView];
     [tableView reloadData];
-     NSLog(@"addTableName:%@",tempArray);
+ //    NSLog(@"addTableName:%@",tempArray);
 }
 #pragma mark - Remove data
 -(void)removeItemFormTable{
@@ -330,7 +358,7 @@
 
 #pragma mark - update table
 -(void)updateTable:(NSString*)titleName width:(float)width height:(float)height{
-    
+    NSLog(@"update table");
 }
 
 #pragma mark - update subtable
@@ -340,7 +368,6 @@
     NSMutableArray *createWidthData = [[NSMutableArray alloc]init];
     NSMutableArray *createHeightData = [[NSMutableArray alloc]init];
     short lenght = [dicData count];
-    
     for (int i = 0; i < lenght; i++) {
         [createNameData addObject:[[dicData objectAtIndex:i] valueForKey:@"Name"]];
         [createWidthData addObject:[[dicData objectAtIndex:i] valueForKey:@"Width"]];
@@ -349,6 +376,6 @@
     [ourData setNameColom:createNameData];
     [ourData setWidthColom:createWidthData];
     [ourData setHightColom:createHeightData];
-    NSLog(@"updateSubTabile Item:%@",[ourData myData]);
+ //   NSLog(@"updateSubTabile Item:%@",[ourData myData]);
 }
 @end

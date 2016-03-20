@@ -19,12 +19,14 @@
 @property(nonatomic,retain) NSString *titeName;
 @property(nonatomic) float width;
 @property(nonatomic) float height;
+//@property(nonatomic) BOOL updateData;
 //end delaget
 
-@property (weak) IBOutlet NSTextField *nameOutet;
-@property (weak) IBOutlet NSTextField *widthOutlet;
-@property (weak) IBOutlet NSTextField *heightOutlet;
+@property (nonatomic,assign) IBOutlet NSTextField *nameOutet;
+@property (nonatomic,assign) IBOutlet NSTextField *widthOutlet;
+@property (nonatomic,assign) IBOutlet NSTextField *heightOutlet;
 
 - (IBAction)addAction:(id)sender;
+//- (void)updateRowName:(NSString*)rowString width:(float)width height:(float)height;
 
 @end

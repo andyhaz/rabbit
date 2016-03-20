@@ -15,9 +15,13 @@
 
 @synthesize delegate;
 @synthesize nameOutet,widthOutlet,heightOutlet;
+@synthesize titeName,width,height;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do view setup here.
+//Do view setup here.
+    [nameOutet setStringValue:titeName];//[nameOutet setStringValue:rowString];
+    [widthOutlet setFloatValue:width];
+    [heightOutlet setFloatValue:height];
 }
 
 - (IBAction)addAction:(id)sender {

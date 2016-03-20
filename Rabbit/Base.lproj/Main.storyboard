@@ -262,9 +262,6 @@
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                                        <connections>
-                                                                            <action selector="nameAction:" target="5gI-5U-AMq" id="o0L-Np-Dp6"/>
-                                                                        </connections>
                                                                     </textFieldCell>
                                                                 </textField>
                                                             </subviews>
@@ -299,9 +296,6 @@
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
-                                                                    <connections>
-                                                                        <action selector="widthTableAction:" target="5gI-5U-AMq" id="1jT-G9-NvU"/>
-                                                                    </connections>
                                                                 </textField>
                                                             </subviews>
                                                             <connections>
@@ -335,9 +329,6 @@
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
-                                                                    <connections>
-                                                                        <action selector="heightTableAction:" target="5gI-5U-AMq" id="HwP-O2-gxU"/>
-                                                                    </connections>
                                                                 </textField>
                                                             </subviews>
                                                             <connections>
@@ -419,6 +410,7 @@
                     <connections>
                         <outlet property="myView" destination="0y7-xA-6Me" id="qfX-1D-Z1a"/>
                         <outlet property="profileSelectionOutlet" destination="auc-SN-UQh" id="jgE-32-FUF"/>
+                        <outlet property="table" destination="fcX-Nc-14v" id="zhW-um-UT0"/>
                         <outlet property="tableView" destination="fcX-Nc-14v" id="xGK-37-A7I"/>
                         <segue destination="qUG-2D-WFe" kind="sheet" identifier="addSegue" id="j7o-RO-Qzo"/>
                         <segue destination="iEc-G2-U29" kind="sheet" identifier="imageSegue" id="vMn-e4-fja"/>
@@ -577,7 +569,7 @@
                             <textField verticalHuggingPriority="750" id="WfK-N8-unW">
                                 <rect key="frame" x="74" y="35" width="70" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="120" placeholderString="120" drawsBackground="YES" id="H8F-L1-8Fh">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="120" drawsBackground="YES" id="H8F-L1-8Fh">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -586,7 +578,7 @@
                             <textField verticalHuggingPriority="750" id="fOZ-0E-SWB">
                                 <rect key="frame" x="74" y="57" width="70" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="120" placeholderString="120" drawsBackground="YES" id="IuC-Gx-90t">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="120" drawsBackground="YES" id="IuC-Gx-90t">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

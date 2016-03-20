@@ -17,12 +17,14 @@
 
 @interface ViewController : NSViewController<popOverControllerDelegate,addTableControllerDelegate> {
     BOOL popMenu;
+    BOOL updateTable;
     NSImage *imageData;
     int rowSelection;
     DataArray *ourData;
     NSString *popTitle;
     NSString *curentName;
     float curentWidth,curentHeight;
+    IBOutlet id table;
 }
 
 @property (strong) NSWindow *detachedWindow;

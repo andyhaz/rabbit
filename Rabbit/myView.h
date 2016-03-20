@@ -18,6 +18,6 @@
 
 -(void)setFrameSize:(NSSize)newSize;
 -(void)updateDisplay;
--(void) imageSize:(float)newSize;
+-(void)imageSize:(float)newSize;
 
 @end
