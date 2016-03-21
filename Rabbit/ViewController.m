@@ -49,12 +49,13 @@
 - (IBAction)openProject:(id)sender{
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
     NSMutableDictionary *loadFileData = [[NSMutableDictionary alloc] initWithDictionary:[lsi loadFileData]];
+    NSLog(@"open%@",loadFileData);
     //get version info
     float versionInfo = [[loadFileData valueForKey:@"version"] floatValue];
     if (versionInfo == 1) {
         NSMutableDictionary *usrDic = [[NSMutableDictionary alloc] initWithDictionary:[loadFileData valueForKey:@"Main"]];
         [ourData setMyData:usrDic];
-        //load image
+//set up image
         imageData = [[NSImage alloc] initWithData:[loadFileData valueForKey:@"image"]];
         if (imageData) {
             float newSize = (curentWidth/2)+(curentHeight/2);
@@ -64,13 +65,16 @@
         }//end if imageData
 //set up popup menu
         NSString *setTitle = [[usrDic allKeys] objectAtIndex:0];
-        [self titleLabel:popTitle ourTitleAry:NULL];
-        [profileSelectionOutlet selectItemWithTitle:setTitle];
-        [self updateSubTabile];
-        [self updateDisplayView];
-        [tableView reloadData];
+        popTitle = setTitle;
+        if (setTitle) {
+//NSLog(@"getTitle");
+            [profileSelectionOutlet addItemsWithTitles:[ourData getDictionaryKeyNames]];
+            [profileSelectionOutlet selectItemWithTitle:popTitle];
+            [self updateSubTabile];
+            [self updateDisplayView];
+            [tableView reloadData];
+        }//end if setTitle
     }//end imageData
-   //  NSLog(@"open%@",loadFileData);
 }
 
 - (IBAction)SaveProject:(id)sender{
@@ -121,7 +125,7 @@
     [self updateSubTabile];
     [self updateDisplayView];
     [tableView reloadData];
-  //  NSLog(@"import settings:%@",importData);
+//NSLog(@"import settings:%@",importData);
 }
 
 - (IBAction)exportItem:(id)sender{
@@ -130,7 +134,7 @@
     NSMutableDictionary *exportData = [[NSMutableDictionary alloc] init];
     [exportData setObject:[[ourData myData] valueForKey:popTitle] forKey:popTitle];
     [lsi exportProfile:exportData];
-   // NSLog(@"export settings:%@",[[ourData myData] valueForKey:popTitle]);
+//NSLog(@"export settings:%@",[[ourData myData] valueForKey:popTitle]);
 }
 
 #pragma mark - tableView setup
@@ -183,7 +187,7 @@
     curentName = [[dicData objectAtIndex:[table clickedRow]] valueForKey:@"Name"];
     curentWidth = [[[dicData objectAtIndex:[table clickedRow]] valueForKey:@"Width"] floatValue];
     curentHeight = [[[dicData objectAtIndex:[table clickedRow]] valueForKey:@"Height"] floatValue];
-    NSLog(@"get current name:%@",curentName);
+  //  NSLog(@"get current name:%@",curentName);
     updateTable = YES;
     [self performSegueWithIdentifier:@"addSegue" sender:self];
 }
@@ -194,10 +198,8 @@
     if (imageData) {
         float w = curentWidth;
         float h = curentHeight;
-
         NSSize newSize = NSMakeSize(w, h);
         float newScale = (w/2)+(h/2);
-        
         [self.myView imageSize:newScale];
         [self.myView setFrameSize:newSize];
         [self.myView updateDisplay];
@@ -257,7 +259,6 @@
             [atv setTiteName:curentName];
             [atv setWidth:curentWidth];
             [atv setHeight:curentHeight];
-            updateTable = NO;
       } else {
           [atv setTiteName:@"Icon"];
           [atv setWidth:40];
@@ -289,10 +290,11 @@
         popTitle = ourTitleString;
         [self updateDisplayView];
         [tableView reloadData];
-       // NSLog(@"titleLabel ourData:%@",[ourData myData]);
-    }
+      //  NSLog(@"titleLabel ourData:%@",[ourData myData]);
+    }//end outTitle
 }
-//end handly delgate
+
+#pragma mark - handly delgate
 -(void)createPopup:(NSArray*)popupTitle{
     NSDictionary *oldMyData = [ourData myData];
     NSMutableDictionary *rootDic = [[NSMutableDictionary alloc] initWithDictionary:[ourData createMainData:popupTitle oldData:oldMyData]];
@@ -301,7 +303,6 @@
     [ourData setMyData:rootDic];
     [profileSelectionOutlet addItemsWithTitles:[ourData getDictionaryKeyNames]];
     [profileSelectionOutlet selectItemWithTitle:popTitle];
-    
     [self updateSubTabile];
     [tableView reloadData];
   //  NSLog(@"createPopup ourData:%@",[ourData myData]);
@@ -323,10 +324,17 @@
     NSMutableArray *tempArray = [[NSMutableArray alloc]initWithArray:[[ourData myData] valueForKey:popTitle]];
     NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
     //add to array
-    [tempArray addObject:[ourData newTableData]];
-    [[tempArray lastObject] setObject:titleName forKey:@"Name"];
-    [[tempArray lastObject] setObject:[NSNumber numberWithFloat:width] forKey:@"Width"];
-    [[tempArray lastObject] setObject:[NSNumber numberWithFloat:height] forKey:@"Height"];
+    if (updateTable == YES) {
+        [[tempArray lastObject] setObject:titleName forKey:@"Name"];
+        [[tempArray lastObject] setObject:[NSNumber numberWithFloat:width] forKey:@"Width"];
+        [[tempArray lastObject] setObject:[NSNumber numberWithFloat:height] forKey:@"Height"];
+        updateTable = NO;
+    } else {
+        [tempArray addObject:[ourData newTableData]];
+        [[tempArray lastObject] setObject:titleName forKey:@"Name"];
+        [[tempArray lastObject] setObject:[NSNumber numberWithFloat:width] forKey:@"Width"];
+        [[tempArray lastObject] setObject:[NSNumber numberWithFloat:height] forKey:@"Height"];
+    }
     [tempDic setObject:tempArray forKey:popTitle];
     [ourData setMyData:tempDic];
     [self updateSubTabile];
@@ -334,6 +342,7 @@
     [tableView reloadData];
  //    NSLog(@"addTableName:%@",tempArray);
 }
+
 #pragma mark - Remove data
 -(void)removeItemFormTable{
    // NSLog(@"remove");
@@ -354,11 +363,6 @@
         [self updateDisplayView];
         [tableView reloadData];
     }//error handyling
-}
-
-#pragma mark - update table
--(void)updateTable:(NSString*)titleName width:(float)width height:(float)height{
-    NSLog(@"update table");
 }
 
 #pragma mark - update subtable

@@ -27,7 +27,7 @@
 }
 
 -(void)popOverData:(NSArray*)popAry{
-  //  NSLog(@"popover Dara:%@",popAry);
+    NSLog(@"popover Data:%@",popAry);
     profileTitle = [[NSMutableArray alloc] initWithArray:popAry];
     if (!popAry)[profileTitle addObject:@"Empty Title"];
     [tableView reloadData];
@@ -96,6 +96,6 @@
 - (IBAction)nameAction:(id)sender {
     NSString *updateTitleName = [sender stringValue];
     [profileTitle replaceObjectAtIndex:rowSelectionTable withObject:updateTitleName];
-   // NSLog(@"profile title:%@",profileTitle);
+ //   NSLog(@"profile title:%@",profileTitle);
 }
 @end

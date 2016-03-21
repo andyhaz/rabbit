@@ -102,7 +102,7 @@
 #pragma mark image handling
 -(NSImage*)loadFileImage{
     NSOpenPanel * zOpenPanel = [NSOpenPanel openPanel];
-    NSArray * zAryOfExtensions = [NSArray arrayWithObjects:@"png",@"jpg",@"psd",@"tiff",@"tif",@"bmp",nil];
+    NSArray * zAryOfExtensions = [NSArray arrayWithObjects:@"png",@"jpg",@"psd",@"tiff",@"tif",@"bmp",@"esp",nil];
     [zOpenPanel setAllowedFileTypes:zAryOfExtensions];
     
     NSInteger zIntResult = [zOpenPanel runModal];
@@ -122,6 +122,41 @@
     // get the file
     NSSavePanel *SavePanel = [NSSavePanel savePanel];
     NSInteger Result = [SavePanel runModal];
+    
+ /* 
+   NSFileManager *filemgr;
+    NSString *currentPath;
+    
+ filemgr =[NSFileManager defaultManager];
+    currentPath = [filemgr currentDirectoryPath];
+    NSLog(@"current path:%@",currentPath);
+
+  //  NSFileManager *filemgr;
+    NSArray *dirPaths;
+    NSString *docsDir;
+    NSString *newDir;
+    
+    filemgr =[NSFileManager defaultManager];
+    
+    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                   NSUserDomainMask, YES);
+    
+    docsDir = [dirPaths objectAtIndex:0];
+    
+    newDir = [docsDir stringByAppendingPathComponent:@"png"];
+    
+    NSLog(@"newDir:%@",newDir);
+    if ([filemgr createDirectoryAtPath:newDir attributes:nil] == NO)
+    {
+        // Failed to create directory
+    }
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+    NSLog(@"path:%@",documentsDirectory);
+    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/png"];
+    NSLog(@"dataPath:%@",dataPath);*/
+//   if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
+  //      [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO //attributes:nil error:nil]; //Create folder
     
     NSInteger imageCont = (aryData.count)/3;
     NSInteger imageNum = 0;

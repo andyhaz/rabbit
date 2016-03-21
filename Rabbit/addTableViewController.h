@@ -10,7 +10,6 @@
 
 @protocol addTableControllerDelegate <NSObject>
     -(void)addTableName:(NSString*)titleName width:(float)width height:(float)height;
-    -(void)updateTable:(NSString*)titleName width:(float)width height:(float)height;
 @end
 
 @interface addTableViewController : NSViewController
