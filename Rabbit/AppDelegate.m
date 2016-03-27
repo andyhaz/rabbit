@@ -16,10 +16,16 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    //not working
+    NSColor *color = [NSColor colorWithDeviceRed:0.0 green:0.0 blue:0.0 alpha:0.4];
+    NSWindow *window = [[NSWindow alloc] init];
+    [window setOpaque:YES];
+    [window setBackgroundColor:color];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
 }
+
 
 @end

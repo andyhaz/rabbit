@@ -49,12 +49,14 @@
 - (IBAction)openProject:(id)sender{
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
     NSMutableDictionary *loadFileData = [[NSMutableDictionary alloc] initWithDictionary:[lsi loadFileData]];
-    NSLog(@"open%@",loadFileData);
+  //  NSLog(@"open%@",loadFileData);
     //get version info
     float versionInfo = [[loadFileData valueForKey:@"version"] floatValue];
     if (versionInfo == 1) {
         NSMutableDictionary *usrDic = [[NSMutableDictionary alloc] initWithDictionary:[loadFileData valueForKey:@"Main"]];
+        
         [ourData setMyData:usrDic];
+     //   NSLog(@"open ourData:%@",[ourData myData]);
 //set up image
         imageData = [[NSImage alloc] initWithData:[loadFileData valueForKey:@"image"]];
         if (imageData) {
@@ -74,6 +76,7 @@
             [self updateDisplayView];
             [tableView reloadData];
         }//end if setTitle
+        popMenu = YES;
     }//end imageData
 }
 
@@ -248,14 +251,15 @@
         profilesViewControler *pvc = segue.destinationController;
         pvc.delegate = self;
         [pvc popOverData:[ourData getDictionaryKeyNames]];
+      //  NSLog(@"PVC:%@",[ourData getDictionaryKeyNames]);
     }
     
     if ([segue.identifier isEqualToString:@"addSegue"]) {
-        NSLog(@"add Segue");
+       // NSLog(@"add Segue");
         addTableViewController *atv =  segue.destinationController;
         atv.delegate = self;
       if (updateTable == YES) {
-            NSLog(@"updteTable:%@",curentName);
+         //   NSLog(@"updteTable:%@",curentName);
             [atv setTiteName:curentName];
             [atv setWidth:curentWidth];
             [atv setHeight:curentHeight];
@@ -277,30 +281,62 @@
       //  NSLog(@"clean Array:%@",[cda cleanArray:[ourData nameColom] width:[ourData widthColom] height:[ourData hightColom]]);
     }
 }
+#pragma mark - delgate functions
+- (void)titleLabel:(NSString*)ourTitle ourTitleAry:(NSMutableArray*)ourTitleAry {
+   // NSLog(@"title ary:%@",ourTitleAry);
+    NSString *ourTitleString;
+    
+    if ([ourTitleAry count] == [[ourData getDictionaryKeyNames] count] && popMenu == YES) {
+      //  NSLog(@"update the array");
+        NSArray *oldTitle = [[NSArray alloc] initWithArray:[ourData getDictionaryKeyNames]];
+        for(int i =0; i < [oldTitle count]; i++){
+            NSString *oldTitleStr = oldTitle[i];
+            NSString *newTitleStr = ourTitleAry[i];
+            if ([oldTitleStr isNotEqualTo:newTitleStr]) {
+            //    NSLog(@"update me :%@ to ourtitle:%@",oldTitleStr, newTitleStr);
+                NSArray *oldDicData = [[NSArray alloc] initWithArray:[[ourData myData] valueForKey:oldTitleStr]];
+              //  NSLog(@"update oldDicData%@",oldDicData);
+                //add to array
+                [[ourData myData] setObject:oldDicData forKey:newTitleStr];
+               // NSLog(@"add to ourdata:%@",[ourData myData]);
 
-- (void)titleLabel:(NSString*)ourTitle ourTitleAry:(NSArray*)ourTitleAry {
-//NSLog(@"title ary:%@",ourTitleAry);
-    if ([ourTitleAry isNotEqualTo:@""]) {
-        popMenu = YES;
-        NSString *ourTitleString = [ourTitleAry lastObject];
-        NSMutableDictionary *temp = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
-        [temp setValuesForKeysWithDictionary:[ourData newData:ourTitleString]];
-        [ourData setMyData:temp];
-        [self createPopup:ourTitleAry];
-        popTitle = ourTitleString;
-        [self updateDisplayView];
-        [tableView reloadData];
-      //  NSLog(@"titleLabel ourData:%@",[ourData myData]);
-    }//end outTitle
+                //remove old title for array
+                NSString *removeTitle = oldTitleStr;
+                [[ourData myData] removeObjectForKey:removeTitle];
+             //   NSLog(@"remove from title:%@ ourdata:%@",removeTitle,[ourData myData]);
+             //   NSLog(@"key are:%@",[ourData getDictionaryKeyNames]);
+            }
+            popTitle = ourTitleAry[0];
+        }//end for loop
+    } else {
+        if ([ourTitleAry isNotEqualTo:@""]) {
+            popMenu = YES;
+            ourTitleString = [ourTitleAry lastObject];
+            NSMutableDictionary *temp = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
+            [temp setValuesForKeysWithDictionary:[ourData newData:ourTitleString]];
+            [ourData setMyData:temp];
+            popTitle = ourTitleString;
+            //  NSLog(@"titleLabel ourData:%@",[ourData myData]);
+        }//end outTitle
+    }
+    //update pulldown tite array
+    [ourTitleAry removeAllObjects];
+    [ourTitleAry arrayByAddingObjectsFromArray:[ourData getDictionaryKeyNames]];
+    
+    [self createPopup:ourTitleAry];
+
+    [self updateDisplayView];
+    [tableView reloadData];
 }
 
-#pragma mark - handly delgate
+
 -(void)createPopup:(NSArray*)popupTitle{
-    NSDictionary *oldMyData = [ourData myData];
-    NSMutableDictionary *rootDic = [[NSMutableDictionary alloc] initWithDictionary:[ourData createMainData:popupTitle oldData:oldMyData]];
-    popTitle = [[ourData getDictionaryKeyNames] objectAtIndex:0];
+    //NSDictionary *oldMyData = [ourData myData];
+    //NSMutableDictionary *rootDic = [[NSMutableDictionary alloc] initWithDictionary:[ourData createMainData:popupTitle oldData:oldMyData]];
+  //  popTitle = [[ourData getDictionaryKeyNames] objectAtIndex:0];
     //creat new root
-    [ourData setMyData:rootDic];
+    //[ourData setMyData:rootDic];
+    [profileSelectionOutlet removeAllItems];
     [profileSelectionOutlet addItemsWithTitles:[ourData getDictionaryKeyNames]];
     [profileSelectionOutlet selectItemWithTitle:popTitle];
     [self updateSubTabile];
@@ -319,7 +355,7 @@
 
 #pragma mark - Add data to tableView
 - (void)addTableName:(NSString*)titleName width:(float)width height:(float)height{
-    NSLog(@"add table name %@ %f %f",titleName,width,height);
+ //   NSLog(@"add table name %@ %f %f",titleName,width,height);
     //get old add to add
     NSMutableArray *tempArray = [[NSMutableArray alloc]initWithArray:[[ourData myData] valueForKey:popTitle]];
     NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
