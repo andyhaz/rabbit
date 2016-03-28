@@ -56,9 +56,8 @@
     float versionInfo = [[loadFileData valueForKey:@"version"] floatValue];
     if (versionInfo == 1) {
         NSMutableDictionary *usrDic = [[NSMutableDictionary alloc] initWithDictionary:[loadFileData valueForKey:@"Main"]];
-        
         [ourData setMyData:usrDic];
-     //   NSLog(@"open ourData:%@",[ourData myData]);
+//NSLog(@"open ourData:%@",[ourData myData]);
 //set up image
         imageData = [[NSImage alloc] initWithData:[loadFileData valueForKey:@"image"]];
         if (imageData) {
@@ -104,13 +103,9 @@
     
     [NSGraphicsContext saveGraphicsState];
     [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:rep]];
-    
     [imageData drawInRect:NSMakeRect(0, 0, sizeX, sizeY) fromRect:NSZeroRect operation:NSCompositeCopy fraction:1.0];
-    
     [NSGraphicsContext restoreGraphicsState];
-    
     NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
-    
     NSData *iData = [rep representationUsingType:NSPNGFileType properties:options];
     [saveData setObject:iData forKey:@"image"];
     [saveData setObject:[ourData myData] forKey:@"Main"];
@@ -215,6 +210,8 @@
 - (IBAction)segmentedAction:(id)sender {
     NSInteger clickedSegment = [sender selectedSegment];
     NSInteger clickedSegmentTag = [[sender cell] tagForSegment:clickedSegment];
+    alertInfo *ai = [[alertInfo alloc]init];
+#pragma add/subtract table
     if (popMenu ==YES) {
         if (clickedSegmentTag == 0) {
             [self performSegueWithIdentifier:@"addSegue" sender:self];
@@ -223,8 +220,10 @@
         if (clickedSegmentTag == 1 ) {
             [self  removeItemFormTable];
         }
+    } else {
+        [self performSegueWithIdentifier:@"pvcSegue" sender:self];
     }//end if popMenu
-    
+#pragma import image
     if (clickedSegmentTag == 2) {
         imageData = [[NSImage alloc]init];
         LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
@@ -233,12 +232,11 @@
         [self updateDisplayView];
         imageEmpty = NO;
     }
-    
+#pragma export image
     if (clickedSegmentTag == 3) {
         if (imageEmpty == NO ) {
             [self performSegueWithIdentifier:@"imageSegue" sender:self];
         } else{
-            alertInfo *ai = [[alertInfo alloc]init];
             [ai showAlert:@"No Image to export" Massage:@"Need to import an image"];
         }
     }
@@ -255,7 +253,6 @@
 #pragma mark Delegat functions
 -(void)prepareForSegue:(NSStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"pvcSegue"]) {
-        //NSLog(@"todo");
         profilesViewControler *pvc = segue.destinationController;
         pvc.delegate = self;
         [pvc popOverData:[ourData getDictionaryKeyNames]];
@@ -263,14 +260,14 @@
     }
     
     if ([segue.identifier isEqualToString:@"addSegue"]) {
-       // NSLog(@"add Segue");
+       //NSLog(@"add Segue");
         addTableViewController *atv =  segue.destinationController;
         atv.delegate = self;
       if (updateTable == YES) {
          //   NSLog(@"updteTable:%@",curentName);
-            [atv setTiteName:curentName];
-            [atv setWidth:curentWidth];
-            [atv setHeight:curentHeight];
+          [atv setTiteName:curentName];
+          [atv setWidth:curentWidth];
+          [atv setHeight:curentHeight];
       } else {
           [atv setTiteName:@"Icon"];
           [atv setWidth:40];
@@ -338,9 +335,7 @@
     //update pulldown tite array
     [ourTitleAry removeAllObjects];
     [ourTitleAry arrayByAddingObjectsFromArray:[ourData getDictionaryKeyNames]];
-    
     [self createPopup:ourTitleAry];
-
     [self updateDisplayView];
     [tableView reloadData];
 }
