@@ -211,18 +211,18 @@
     NSInteger clickedSegment = [sender selectedSegment];
     NSInteger clickedSegmentTag = [[sender cell] tagForSegment:clickedSegment];
     alertInfo *ai = [[alertInfo alloc]init];
+    
 #pragma add/subtract table
     if (popMenu ==YES) {
         if (clickedSegmentTag == 0) {
             [self performSegueWithIdentifier:@"addSegue" sender:self];
         }//end clicked Segment Tag
-        
+
         if (clickedSegmentTag == 1 ) {
             [self  removeItemFormTable];
-        }
-    } else {
-        [self performSegueWithIdentifier:@"pvcSegue" sender:self];
-    }//end if popMenu
+        } 
+    }//end if pop
+    
 #pragma import image
     if (clickedSegmentTag == 2) {
         imageData = [[NSImage alloc]init];
@@ -342,11 +342,6 @@
 
 
 -(void)createPopup:(NSArray*)popupTitle{
-    //NSDictionary *oldMyData = [ourData myData];
-    //NSMutableDictionary *rootDic = [[NSMutableDictionary alloc] initWithDictionary:[ourData createMainData:popupTitle oldData:oldMyData]];
-  //  popTitle = [[ourData getDictionaryKeyNames] objectAtIndex:0];
-    //creat new root
-    //[ourData setMyData:rootDic];
     [profileSelectionOutlet removeAllItems];
     [profileSelectionOutlet addItemsWithTitles:[ourData getDictionaryKeyNames]];
     [profileSelectionOutlet selectItemWithTitle:popTitle];
