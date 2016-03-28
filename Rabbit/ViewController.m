@@ -23,8 +23,10 @@
 
 #pragma mark - initz vaules
 -(void)initz {
+    [self.window setBackgroundColor: NSColor.whiteColor];
     popMenu = NO;
     updateTable = NO;
+    imageEmpty = YES;
     popTitle = @"";
     [self titleLabel:popTitle ourTitleAry:NULL];
     [profileSelectionOutlet removeAllItems];
@@ -195,7 +197,7 @@
     [self performSegueWithIdentifier:@"addSegue" sender:self];
 }
 
-#pragma mark-update Display
+#pragma mark - update Display
 -(void)updateDisplayView {
 //NSLog(@"update Display View");
     if (imageData) {
@@ -229,10 +231,16 @@
         imageData = [lsi loadFileImage];
         [self.myView setMyImage:imageData];
         [self updateDisplayView];
+        imageEmpty = NO;
     }
     
     if (clickedSegmentTag == 3) {
-          [self performSegueWithIdentifier:@"imageSegue" sender:self];
+        if (imageEmpty == NO ) {
+            [self performSegueWithIdentifier:@"imageSegue" sender:self];
+        } else{
+            alertInfo *ai = [[alertInfo alloc]init];
+            [ai showAlert:@"No Image to export" Massage:@"Need to import an image"];
+        }
     }
 //NSLog(@"myDate%@",[ourData myData]);
 }//end srgmentedAction
@@ -281,7 +289,7 @@
       //  NSLog(@"clean Array:%@",[cda cleanArray:[ourData nameColom] width:[ourData widthColom] height:[ourData hightColom]]);
     }
 }
-#pragma mark - delgate functions
+
 - (void)titleLabel:(NSString*)ourTitle ourTitleAry:(NSMutableArray*)ourTitleAry {
    // NSLog(@"title ary:%@",ourTitleAry);
     NSString *ourTitleString;

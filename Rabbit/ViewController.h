@@ -17,6 +17,7 @@
 @interface ViewController : NSViewController<popOverControllerDelegate,addTableControllerDelegate> {
     BOOL popMenu;
     BOOL updateTable;
+    BOOL imageEmpty;
     NSImage *imageData;
     int rowSelection;
     DataArray *ourData;
@@ -25,6 +26,8 @@
     float curentWidth,curentHeight;
     IBOutlet id table;
 }
+
+@property IBOutlet NSWindow *window;
 
 @property (strong) NSWindow *detachedWindow;
 @property (strong) NSPanel *detachedHUDWindow;
