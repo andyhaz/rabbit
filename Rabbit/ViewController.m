@@ -295,16 +295,24 @@
             if ([oldTitleStr isNotEqualTo:newTitleStr]) {
             //    NSLog(@"update me :%@ to ourtitle:%@",oldTitleStr, newTitleStr);
                 NSArray *oldDicData = [[NSArray alloc] initWithArray:[[ourData myData] valueForKey:oldTitleStr]];
-              //  NSLog(@"update oldDicData%@",oldDicData);
                 //add to array
                 [[ourData myData] setObject:oldDicData forKey:newTitleStr];
-               // NSLog(@"add to ourdata:%@",[ourData myData]);
-
                 //remove old title for array
                 NSString *removeTitle = oldTitleStr;
                 [[ourData myData] removeObjectForKey:removeTitle];
-             //   NSLog(@"remove from title:%@ ourdata:%@",removeTitle,[ourData myData]);
-             //   NSLog(@"key are:%@",[ourData getDictionaryKeyNames]);
+            }
+            popTitle = ourTitleAry[0];
+        }//end for loop
+    } else if ([ourTitleAry count] <= [[ourData getDictionaryKeyNames] count] && popMenu == YES){
+      //  NSLog(@"remove file");
+        NSArray *oldTitle = [[NSArray alloc] initWithArray:[ourData getDictionaryKeyNames]];
+        for(int i =0; i < [oldTitle count]; i++){
+            NSString *oldTitleStr = oldTitle[i];
+            NSString *newTitleStr = ourTitleAry[i];
+            if ([oldTitleStr isNotEqualTo:newTitleStr]) {
+                //remove old title for array
+                NSString *removeTitle = oldTitleStr;
+                [[ourData myData] removeObjectForKey:removeTitle];
             }
             popTitle = ourTitleAry[0];
         }//end for loop

@@ -619,7 +619,7 @@
                                         <segment label="+"/>
                                         <segment label="-" tag="1"/>
                                         <segment label="Done" width="114" tag="3"/>
-                                        <segment label="Cancel" width="115" tag="3"/>
+                                        <segment label="Cancel" width="115" tag="4"/>
                                     </segments>
                                 </segmentedCell>
                                 <connections>

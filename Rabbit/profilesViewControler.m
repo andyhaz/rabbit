@@ -58,7 +58,7 @@
     }
 
     if (clickedSegmentTag == 4) {
-       // NSLog(@"cancle");
+        NSLog(@"cancle");
         [self dismissViewController:self];
     }
 }//end srgmentedAction
