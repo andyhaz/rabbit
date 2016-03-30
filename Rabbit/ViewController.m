@@ -78,6 +78,7 @@
             [tableView reloadData];
         }//end if setTitle
         popMenu = YES;
+        imageEmpty = NO;
     }//end imageData
 }
 

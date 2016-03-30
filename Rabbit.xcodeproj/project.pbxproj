@@ -43,7 +43,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		97427CED1C9A753C00883527 /* Rabbit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Rabbit.entitlements; sourceTree = "<group>"; };
 		97427CEE1C9C548F00883527 /* alertInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = alertInfo.h; sourceTree = "<group>"; };
 		97427CEF1C9C548F00883527 /* alertInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = alertInfo.m; sourceTree = "<group>"; };
 		97427CF11C9CD7EA00883527 /* imageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imageViewController.h; sourceTree = "<group>"; };
@@ -74,6 +73,7 @@
 		9744D7E91C58C25F0065DBAE /* RBResize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBResize.m; sourceTree = "<group>"; };
 		97A88D9F1C6C6F96004A0712 /* libsharedObjectUtile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsharedObjectUtile.a; sourceTree = "<group>"; };
 		97A88DA01C6C6F96004A0712 /* sharedObjectUtile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sharedObjectUtile.h; sourceTree = "<group>"; };
+		97B1A3411CA8E3A800B40918 /* Rabbit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Rabbit.entitlements; sourceTree = "<group>"; };
 		97DB4D491C90F2AC0091D45C /* DataArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataArray.h; sourceTree = "<group>"; };
 		97DB4D4A1C90F2AC0091D45C /* DataArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataArray.m; sourceTree = "<group>"; };
 		97FD58AC1C88F6FE0059C87C /* profilesViewControler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = profilesViewControler.h; sourceTree = "<group>"; };
@@ -128,7 +128,7 @@
 		9744D7961C58519B0065DBAE /* Rabbit */ = {
 			isa = PBXGroup;
 			children = (
-				97427CED1C9A753C00883527 /* Rabbit.entitlements */,
+				97B1A3411CA8E3A800B40918 /* Rabbit.entitlements */,
 				9744D7DA1C58973D0065DBAE /* viewControle */,
 				9744D7DB1C5897570065DBAE /* storeboard */,
 				9744D7DC1C5897700065DBAE /* class */,
@@ -296,7 +296,7 @@
 						DevelopmentTeam = 7QPZTLEJ7L;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -502,6 +502,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Rabbit/Rabbit.entitlements;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Rabbit/Info.plist;
@@ -516,6 +517,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Rabbit/Rabbit.entitlements;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Rabbit/Info.plist;

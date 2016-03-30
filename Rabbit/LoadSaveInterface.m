@@ -75,12 +75,12 @@
 -(void)exportProfile:(NSDictionary*)repData{
     // get the file url
     NSSavePanel * SavePanel = [NSSavePanel savePanel];
-    NSArray * zAryOfExtensions = [NSArray arrayWithObject:@"rep"];
-    [SavePanel setAllowedFileTypes:zAryOfExtensions];
+    NSArray * AryOfExtensions = [NSArray arrayWithObject:@"rep"];
+    [SavePanel setAllowedFileTypes:AryOfExtensions];
     
-    NSInteger zResult = [SavePanel runModal];
+    NSInteger Result = [SavePanel runModal];
     
-    if (zResult == NSFileHandlingPanelCancelButton) {
+    if (Result == NSFileHandlingPanelCancelButton) {
         NSLog(@"writeUsingSavePanel cancelled");
         return;
     }
@@ -101,73 +101,46 @@
 
 #pragma mark image handling
 -(NSImage*)loadFileImage{
-    NSOpenPanel * zOpenPanel = [NSOpenPanel openPanel];
-    NSArray * zAryOfExtensions = [NSArray arrayWithObjects:@"png",@"jpg",@"psd",@"tiff",@"tif",@"bmp",@"esp",nil];
-    [zOpenPanel setAllowedFileTypes:zAryOfExtensions];
+    NSOpenPanel * OpenPanel = [NSOpenPanel openPanel];
+    NSArray * AryOfExtensions = [NSArray arrayWithObjects:@"png",@"jpg",@"psd",@"tiff",@"tif",@"bmp",@"esp",nil];
+    [OpenPanel setAllowedFileTypes:AryOfExtensions];
     
-    NSInteger zIntResult = [zOpenPanel runModal];
-    if (zIntResult == NSFileHandlingPanelCancelButton) {
+    NSInteger IntResult = [OpenPanel runModal];
+    if (IntResult == NSFileHandlingPanelCancelButton) {
         NSLog(@"readUsingOpenPanel cancelled");
-    }
-    NSURL *zUrl = [zOpenPanel URL];
+    }//end url
+    NSURL *path = [OpenPanel URL];
     
     // read the file
-    NSImage *image = [[NSImage alloc] initWithContentsOfURL:zUrl];
+    NSImage *image = [[NSImage alloc] initWithContentsOfURL:path];
     
     return image;
 }
 
 //export image
 -(void)exportFileImages :(NSImage *)image :(NSArray*)aryData{
-    // get the file
+    BOOL        success;
+    NSError *   error;
+//get the file
     NSSavePanel *SavePanel = [NSSavePanel savePanel];
+   // [save setAllowedFileTypes:[NSArray arrayWithObject:@"dat"]];
+    [SavePanel setAllowsOtherFileTypes:NO];
+    
     NSInteger Result = [SavePanel runModal];
     
- /* 
-   NSFileManager *filemgr;
-    NSString *currentPath;
-    
- filemgr =[NSFileManager defaultManager];
-    currentPath = [filemgr currentDirectoryPath];
-    NSLog(@"current path:%@",currentPath);
-
-  //  NSFileManager *filemgr;
-    NSArray *dirPaths;
-    NSString *docsDir;
-    NSString *newDir;
-    
-    filemgr =[NSFileManager defaultManager];
-    
-    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                                   NSUserDomainMask, YES);
-    
-    docsDir = [dirPaths objectAtIndex:0];
-    
-    newDir = [docsDir stringByAppendingPathComponent:@"png"];
-    
-    NSLog(@"newDir:%@",newDir);
-    if ([filemgr createDirectoryAtPath:newDir attributes:nil] == NO)
-    {
-        // Failed to create directory
-    }
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-    NSLog(@"path:%@",documentsDirectory);
-    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/png"];
-    NSLog(@"dataPath:%@",dataPath);*/
-//   if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
-  //      [[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO //attributes:nil error:nil]; //Create folder
+    NSURL *pathURL = [SavePanel URL];
+    NSLog(@"path:%@",pathURL);
+    success = [[NSFileManager defaultManager] createDirectoryAtURL:pathURL withIntermediateDirectories:NO attributes:nil error:&error];
     
     NSInteger imageCont = (aryData.count)/3;
     NSInteger imageNum = 0;
-  //  NSLog(@"%@:%ld",aryData,(long)imageCont);
     if (Result == NSFileHandlingPanelCancelButton) {
         NSLog(@"writeUsingSavePanel cancelled");
         return;
     }
 //
-    NSString *path = [[SavePanel URL] path];
-//
+  //delet  NSString *path = [[SavePanel URL] path];
+//NSLog(@"path:%@",path);
     for (int i = 0; i < imageCont; i++) {
         imageNum ++;
         NSInteger sizeY = [aryData[imageNum] floatValue];
@@ -175,7 +148,7 @@
         NSInteger sizeX = [aryData[imageNum] floatValue];
         imageNum ++;
 //create image
-       //NSLog(@"save pale:%@",SavePanel.nameFieldStringValue);
+//NSLog(@"save pale:%@",SavePanel.nameFieldStringValue);
         NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
                                  initWithBitmapDataPlanes:NULL
                                  pixelsWide:sizeY
@@ -201,32 +174,37 @@
         NSData *pngData,*jpgData,*tiffData;
         NSString *newFileNamePng,*newFileNameJpg,*newFileNameTiff;
         NSError *error = nil;
+        //
+        BOOL BoolResult = '\0';
         //set filename
         if (png == true) {
-            newFileNamePng = [NSString stringWithFormat:@"%@(%ldx%ld).png",path,(long)sizeX,(long)sizeY];
+            newFileNamePng = [NSString stringWithFormat:@"(%ldx%ld)",(long)sizeX,(long)sizeY];
+            NSURL * fileURL = [[pathURL URLByAppendingPathComponent:newFileNamePng] URLByAppendingPathExtension:@"png"];
             pngData = [rep representationUsingType:NSPNGFileType properties:options];
+            
+            BoolResult = [pngData writeToURL:fileURL options:NSDataWritingAtomic error:&error];
         }
         
         if (jpg == true) {
-            newFileNameJpg = [NSString stringWithFormat:@"%@(%ldx%ld).jpg",path,(long)sizeX,(long)sizeY];
+            newFileNameJpg = [NSString stringWithFormat:@"(%ldx%ld)",(long)sizeX,(long)sizeY];
+            NSURL * fileURL = [[pathURL URLByAppendingPathComponent:newFileNameJpg] URLByAppendingPathExtension:@"jpg"];
             jpgData = [rep representationUsingType:NSJPEGFileType properties:options];
+            
+            BoolResult = [jpgData writeToURL:fileURL options:NSDataWritingAtomic error:&error];
         }
         
         if (tiff == true) {
-             newFileNameTiff = [NSString stringWithFormat:@"%@(%ldx%ld).tiff",path,(long)sizeX,(long)sizeY];
+             newFileNameTiff = [NSString stringWithFormat:@"(%ldx%ld)",(long)sizeX,(long)sizeY];
+             NSURL * fileURL = [[pathURL URLByAppendingPathComponent:newFileNameTiff] URLByAppendingPathExtension:@"tiff"];
+
              tiffData = [rep representationUsingType:NSTIFFFileType properties:options];
+             BoolResult = [tiffData writeToURL:fileURL options:NSDataWritingAtomic error:&error];
         }
         
-        BOOL BoolResult;
-        BoolResult = [pngData writeToFile:newFileNamePng options:NSDataWritingAtomic error:&error];
-        BoolResult = [jpgData writeToFile:newFileNameJpg options:NSDataWritingAtomic error:&error];
-        BoolResult = [tiffData writeToFile:newFileNameTiff options:NSDataWritingAtomic error:&error];
-     //   NSLog(@"artData:%@ - path:%@",aryData,newFileName);
         if (!BoolResult) {
             NSLog(@"writeUsingSavePanel failed");
             NSLog(@"Write returned error: %@", [error localizedDescription]);
         }//end if
     }//end for loop
 }
-
 @end
