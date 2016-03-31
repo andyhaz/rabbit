@@ -123,13 +123,12 @@
     NSError *   error;
 //get the file
     NSSavePanel *SavePanel = [NSSavePanel savePanel];
-   // [save setAllowedFileTypes:[NSArray arrayWithObject:@"dat"]];
     [SavePanel setAllowsOtherFileTypes:NO];
     
     NSInteger Result = [SavePanel runModal];
     
     NSURL *pathURL = [SavePanel URL];
-    NSLog(@"path:%@",pathURL);
+ //   NSLog(@"path:%@",pathURL);
     success = [[NSFileManager defaultManager] createDirectoryAtURL:pathURL withIntermediateDirectories:NO attributes:nil error:&error];
     
     NSInteger imageCont = (aryData.count)/3;
@@ -139,9 +138,9 @@
         return;
     }
 //
-  //delet  NSString *path = [[SavePanel URL] path];
-//NSLog(@"path:%@",path);
+//NSLog(@"aryData:%@",aryData);
     for (int i = 0; i < imageCont; i++) {
+        NSString *tableName = aryData[imageNum];
         imageNum ++;
         NSInteger sizeY = [aryData[imageNum] floatValue];
         imageNum ++;
@@ -178,7 +177,7 @@
         BOOL BoolResult = '\0';
         //set filename
         if (png == true) {
-            newFileNamePng = [NSString stringWithFormat:@"(%ldx%ld)",(long)sizeX,(long)sizeY];
+            newFileNamePng = [NSString stringWithFormat:@"%@(%ldx%ld)",tableName,(long)sizeX,(long)sizeY];
             NSURL * fileURL = [[pathURL URLByAppendingPathComponent:newFileNamePng] URLByAppendingPathExtension:@"png"];
             pngData = [rep representationUsingType:NSPNGFileType properties:options];
             
@@ -186,7 +185,7 @@
         }
         
         if (jpg == true) {
-            newFileNameJpg = [NSString stringWithFormat:@"(%ldx%ld)",(long)sizeX,(long)sizeY];
+            newFileNameJpg = [NSString stringWithFormat:@"%@(%ldx%ld)",tableName,(long)sizeX,(long)sizeY];
             NSURL * fileURL = [[pathURL URLByAppendingPathComponent:newFileNameJpg] URLByAppendingPathExtension:@"jpg"];
             jpgData = [rep representationUsingType:NSJPEGFileType properties:options];
             
@@ -194,7 +193,7 @@
         }
         
         if (tiff == true) {
-             newFileNameTiff = [NSString stringWithFormat:@"(%ldx%ld)",(long)sizeX,(long)sizeY];
+             newFileNameTiff = [NSString stringWithFormat:@"%@(%ldx%ld)",tableName,(long)sizeX,(long)sizeY];
              NSURL * fileURL = [[pathURL URLByAppendingPathComponent:newFileNameTiff] URLByAppendingPathExtension:@"tiff"];
 
              tiffData = [rep representationUsingType:NSTIFFFileType properties:options];
