@@ -390,7 +390,7 @@
                                             </connections>
                                         </tableView>
                                     </subviews>
-                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="0.45146365273211586" horizontal="YES" id="a1X-FR-1JX">
                                     <rect key="frame" x="1" y="388" width="250" height="16"/>
@@ -700,7 +700,7 @@
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="716" y="798.5"/>
+            <point key="canvasLocation" x="727" y="791.5"/>
         </scene>
     </scenes>
 </document>
