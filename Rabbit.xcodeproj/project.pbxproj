@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9733BBD21CBF49E300857B1E /* downloadInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9733BBD11CBF49E300857B1E /* downloadInterface.m */; };
 		97427CF01C9C548F00883527 /* alertInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97427CEF1C9C548F00883527 /* alertInfo.m */; };
 		97427CF31C9CD7EA00883527 /* imageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97427CF21C9CD7EA00883527 /* imageViewController.m */; };
 		97427D011C9E804A00883527 /* addTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97427D001C9E804A00883527 /* addTableViewController.m */; };
@@ -43,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9733BBD01CBF49E300857B1E /* downloadInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = downloadInterface.h; sourceTree = "<group>"; };
+		9733BBD11CBF49E300857B1E /* downloadInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = downloadInterface.m; sourceTree = "<group>"; };
 		97427CEE1C9C548F00883527 /* alertInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = alertInfo.h; sourceTree = "<group>"; };
 		97427CEF1C9C548F00883527 /* alertInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = alertInfo.m; sourceTree = "<group>"; };
 		97427CF11C9CD7EA00883527 /* imageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imageViewController.h; sourceTree = "<group>"; };
@@ -205,6 +208,8 @@
 				97DB4D4A1C90F2AC0091D45C /* DataArray.m */,
 				97427CEE1C9C548F00883527 /* alertInfo.h */,
 				97427CEF1C9C548F00883527 /* alertInfo.m */,
+				9733BBD01CBF49E300857B1E /* downloadInterface.h */,
+				9733BBD11CBF49E300857B1E /* downloadInterface.m */,
 			);
 			name = class;
 			sourceTree = "<group>";
@@ -370,6 +375,7 @@
 				9744D79C1C58519B0065DBAE /* main.m in Sources */,
 				9744D7A51C58519B0065DBAE /* Document.xcdatamodeld in Sources */,
 				9744D7991C58519B0065DBAE /* AppDelegate.m in Sources */,
+				9733BBD21CBF49E300857B1E /* downloadInterface.m in Sources */,
 				9744D7E71C58C1CC0065DBAE /* LoadSaveInterface.m in Sources */,
 				97427CF01C9C548F00883527 /* alertInfo.m in Sources */,
 				97427D011C9E804A00883527 /* addTableViewController.m in Sources */,
