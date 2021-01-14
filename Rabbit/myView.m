@@ -17,11 +17,19 @@
     NSLog(@"updateDisplay:%@",myImage);
     [self setNeedsDisplay:YES];
 }
-
--(void) imageSize:(float)newSize{
+-(void) imageScale:(float)newSize{
     xScale = newSize;
     yScale = newSize;
     [self setNeedsDisplay:YES];
+}
+-(void) imageSize:(float)newSize{
+    NSSize mySize = NSMakeSize(newSize, newSize);
+    xScale = newSize;
+    yScale = newSize;
+    [self setFrameSize:mySize];
+    [self setNeedsDisplay:YES];
+    //
+    NSLog(@"new size:%f",newSize);
 }
 
 - (void) setFrameSize:(NSSize)newSize {
@@ -37,18 +45,18 @@
     } else {
         [self setNeedsDisplay:YES];
     }
-//  move nsview to center 520x450
-    float locX = (520/2)-(newSize.width/2);
-    float locY = (450/2)-(newSize.height/2);
+//move nsview to center 520x450
+    float locX = (318/2)-(newSize.width/2);
+    float locY = (275/2)-(newSize.height/2);
     NSPoint newLocation = NSMakePoint(locX,locY);
     [self setFrameOrigin:newLocation];
+  //  NSLog(@"move");
 }
-
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     // Drawing code here.
-    [[NSColor darkGrayColor]setFill];
+//    [[NSColor blackColor]setFill];
     NSRectFill(dirtyRect);
     //
     [[NSGraphicsContext currentContext]
@@ -71,8 +79,9 @@
     
     [myImage drawInRect: destRect
              fromRect: NSZeroRect
-            operation: NSCompositeSourceOver
+              operation: NSCompositingOperationSourceOver
              fraction: 1.0];
- //   NSLog(@"draw");
+
+// NSLog(@"update image");
 }
 @end

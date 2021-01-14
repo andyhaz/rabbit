@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9700836E2426B3D1002F6225 /* profileClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 9700836D2426B3D1002F6225 /* profileClass.m */; };
+		9715FEB824425AAB00475F25 /* VCWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9715FEB724425AAB00475F25 /* VCWindowController.m */; };
 		9733BBD21CBF49E300857B1E /* downloadInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 9733BBD11CBF49E300857B1E /* downloadInterface.m */; };
 		97427CF01C9C548F00883527 /* alertInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97427CEF1C9C548F00883527 /* alertInfo.m */; };
 		97427CF31C9CD7EA00883527 /* imageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97427CF21C9CD7EA00883527 /* imageViewController.m */; };
@@ -44,6 +46,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9700836C2426B3D1002F6225 /* profileClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = profileClass.h; sourceTree = "<group>"; };
+		9700836D2426B3D1002F6225 /* profileClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = profileClass.m; sourceTree = "<group>"; };
+		9715FEB624425AAB00475F25 /* VCWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VCWindowController.h; sourceTree = "<group>"; };
+		9715FEB724425AAB00475F25 /* VCWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VCWindowController.m; sourceTree = "<group>"; };
 		9733BBD01CBF49E300857B1E /* downloadInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = downloadInterface.h; sourceTree = "<group>"; };
 		9733BBD11CBF49E300857B1E /* downloadInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = downloadInterface.m; sourceTree = "<group>"; };
 		97427CEE1C9C548F00883527 /* alertInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = alertInfo.h; sourceTree = "<group>"; };
@@ -177,6 +183,8 @@
 			children = (
 				9744D79D1C58519B0065DBAE /* ViewController.h */,
 				9744D79E1C58519B0065DBAE /* ViewController.m */,
+				9700836C2426B3D1002F6225 /* profileClass.h */,
+				9700836D2426B3D1002F6225 /* profileClass.m */,
 				97FD58AC1C88F6FE0059C87C /* profilesViewControler.h */,
 				97FD58AD1C88F6FE0059C87C /* profilesViewControler.m */,
 				97427CFF1C9E804A00883527 /* addTableViewController.h */,
@@ -193,6 +201,8 @@
 			isa = PBXGroup;
 			children = (
 				9744D7A81C58519B0065DBAE /* Main.storyboard */,
+				9715FEB624425AAB00475F25 /* VCWindowController.h */,
+				9715FEB724425AAB00475F25 /* VCWindowController.m */,
 			);
 			name = storeboard;
 			sourceTree = "<group>";
@@ -293,12 +303,13 @@
 		9744D78C1C58519B0065DBAE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "andrew hazlett";
 				TargetAttributes = {
 					9744D7931C58519B0065DBAE = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 7QPZTLEJ7L;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 1;
@@ -317,7 +328,7 @@
 			};
 			buildConfigurationList = 9744D78F1C58519B0065DBAE /* Build configuration list for PBXProject "Rabbit" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -370,8 +381,10 @@
 				97DB4D4B1C90F2AC0091D45C /* DataArray.m in Sources */,
 				9744D7D41C5859D60065DBAE /* myView.m in Sources */,
 				9744D7EA1C58C25F0065DBAE /* RBResize.m in Sources */,
+				9700836E2426B3D1002F6225 /* profileClass.m in Sources */,
 				97427CF31C9CD7EA00883527 /* imageViewController.m in Sources */,
 				97FD58AE1C88F6FE0059C87C /* profilesViewControler.m in Sources */,
+				9715FEB824425AAB00475F25 /* VCWindowController.m in Sources */,
 				9744D79C1C58519B0065DBAE /* main.m in Sources */,
 				9744D7A51C58519B0065DBAE /* Document.xcdatamodeld in Sources */,
 				9744D7991C58519B0065DBAE /* AppDelegate.m in Sources */,
@@ -429,17 +442,28 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -472,17 +496,28 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -509,13 +544,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Rabbit/Rabbit.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 22;
+				DEVELOPMENT_TEAM = 7QPZTLEJ7L;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Rabbit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gamerocketstudio.rabbit;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 2.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gamerocketstudio.1rabbit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -524,13 +567,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Rabbit/Rabbit.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 22;
+				DEVELOPMENT_TEAM = 7QPZTLEJ7L;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Rabbit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gamerocketstudio.rabbit;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 2.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gamerocketstudio.1rabbit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

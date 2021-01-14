@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "downloadInterface.h"
 
 @protocol popOverControllerDelegate <NSObject>
     - (void)titleLabel:(NSString*)ourTitle ourTitleAry:(NSArray*)ourTitleAry;

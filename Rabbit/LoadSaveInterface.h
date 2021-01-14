@@ -22,6 +22,8 @@
 -(void)exportFileImages :(NSImage *)image :(NSArray*)aryData;
 //-(void)saveImage:(NSImage *)image :(NSInteger)size;
 
+-(void)saveSngleImage :(NSImage *)image :(NSArray*)aryData;
+
 -(NSMutableDictionary*)importProfile;
 -(void)exportProfile:(NSDictionary*)repData;
 

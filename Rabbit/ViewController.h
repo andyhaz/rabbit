@@ -9,22 +9,23 @@
 #import "LoadSaveInterface.h"
 #import "myView.h"
 #import "DataArray.h"
-#import "profilesViewControler.h"
 #import "imageViewController.h"
 #import "alertInfo.h"
-#import "addTableViewController.h"
-
-@interface ViewController : NSViewController<popOverControllerDelegate,addTableControllerDelegate> {
+#import "profileClass.h"
+//profileViewController - popOverControllerDelegate
+@interface ViewController : NSViewController {
     BOOL popMenu;
     BOOL updateTable;
     BOOL imageEmpty;
+    BOOL pngSetting,jpgSetting,tiffSetting;
     NSImage *imageData;
     int rowSelection;
     DataArray *ourData;
     NSString *popTitle;
+  //  NSArray *popup;
     NSString *curentName;
     float curentWidth,curentHeight;
-    IBOutlet id table;
+    NSArray *popListData;//???
 }
 
 @property IBOutlet NSWindow *window;
@@ -35,19 +36,17 @@
 
 //new project
 - (IBAction)newProject:(id)sender;
-//open and Save
-- (IBAction)openProject:(id)sender;
-- (IBAction)SaveProject:(id)sender;
-
 //menu items
-- (IBAction)importItem:(id)sender;
-- (IBAction)exportItem:(id)sender;
+- (IBAction)openImageAction:(id)sender;
+- (IBAction)saveImageAction:(id)sender;
+- (IBAction)saveScreenAction:(id)sender;
+
+
+- (IBAction)pngAction:(id)sender;
+- (IBAction)jpgeAction:(id)sender;
+- (IBAction)tiffAction:(id)sender;
 
 @property (weak) IBOutlet NSPopUpButton *profileSelectionOutlet;
 - (IBAction)profileSelectionAction:(id)sender;
 //table information
-@property (weak) IBOutlet NSTableView *tableView;
-
-- (IBAction)segmentedAction:(id)sender;
-//
 @end

@@ -20,7 +20,7 @@
     
     NSInteger zResult = [SavePanel runModal];
     
-    if (zResult == NSFileHandlingPanelCancelButton) {
+    if (zResult == NSModalResponseCancel) {
         NSLog(@"writeUsingSavePanel cancelled");
         return;
     }
@@ -45,7 +45,7 @@
     [zOpenPanel setAllowedFileTypes:zAryOfExtensions];
     
     NSInteger zIntResult = [zOpenPanel runModal];
-    if (zIntResult == NSFileHandlingPanelCancelButton) {
+    if (zIntResult == NSModalResponseCancel) {
         NSLog(@"readUsingOpenPanel cancelled");
     }
     NSURL *zUrl = [zOpenPanel URL];
@@ -62,7 +62,7 @@
     [zOpenPanel setAllowedFileTypes:zAryOfExtensions];
     
     NSInteger zIntResult = [zOpenPanel runModal];
-    if (zIntResult == NSFileHandlingPanelCancelButton) {
+    if (zIntResult == NSModalResponseCancel) {
         NSLog(@"readUsingOpenPanel cancelled");
     }
     NSURL *zUrl = [zOpenPanel URL];
@@ -80,7 +80,7 @@
     
     NSInteger Result = [SavePanel runModal];
     
-    if (Result == NSFileHandlingPanelCancelButton) {
+    if (Result == NSModalResponseCancel) {
         NSLog(@"writeUsingSavePanel cancelled");
         return;
     }
@@ -106,7 +106,7 @@
     [OpenPanel setAllowedFileTypes:AryOfExtensions];
     
     NSInteger IntResult = [OpenPanel runModal];
-    if (IntResult == NSFileHandlingPanelCancelButton) {
+    if (IntResult == NSModalResponseCancel) {
         NSLog(@"readUsingOpenPanel cancelled");
     }//end url
     NSURL *path = [OpenPanel URL];
@@ -116,8 +116,84 @@
     
     return image;
 }
+//save singleimage
+-(void)saveSngleImage :(NSImage *)image :(NSArray*)aryData {
+    NSLog(@"SSI");
+    BOOL        success;
+    NSError *   error;
+    
+    NSSavePanel *SavePanel = [NSSavePanel savePanel];
+    [SavePanel setAllowsOtherFileTypes:NO];
+       
+    NSInteger Result = [SavePanel runModal];
+    
+    NSURL *pathURL = [SavePanel URL];
+      // NSLog(@"path:%@",pathURL);
+       success = [[NSFileManager defaultManager] createDirectoryAtURL:pathURL withIntermediateDirectories:NO attributes:nil error:&error];
 
-//export image
+    if (Result == NSModalResponseCancel) {
+        NSLog(@"writeUsingSavePanel cancelled");
+        return;
+    }
+    
+    NSInteger width = [aryData[0] floatValue];
+    NSInteger height = [aryData[1] floatValue];
+    NSLog(@"W:%ld h:%ld",(long)width,(long)height);
+    
+    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
+                                    initWithBitmapDataPlanes:NULL
+                                    pixelsWide:width
+                                    pixelsHigh:height
+                                    bitsPerSample:8
+                                    samplesPerPixel:4
+                                    hasAlpha:YES
+                                    isPlanar:NO
+                                    colorSpaceName:NSCalibratedRGBColorSpace
+                                    bytesPerRow:0
+                                    bitsPerPixel:0];
+           [rep setSize:NSMakeSize(width, height)];
+           
+           [NSGraphicsContext saveGraphicsState];
+           [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:rep]];
+           
+           [image drawInRect:NSMakeRect(0, 0, width, height) fromRect:NSZeroRect operation:NSCompositingOperationCopy fraction:1.0];
+           
+           [NSGraphicsContext restoreGraphicsState];
+           
+           NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
+           
+           NSData *pngData,*jpgData,*tiffData;
+           NSString *newFileNamePng,*newFileNameJpg,*newFileNameTiff;
+           //
+           BOOL BoolResult = '\0';
+//set filename
+           if (png == true) {
+               newFileNamePng = [NSString stringWithFormat:@"ScreenShot(%ldx%ld)",(long)width,(long)height];
+               NSURL * fileURL = [[pathURL URLByAppendingPathComponent:newFileNamePng] URLByAppendingPathExtension:@"png"];
+               pngData = [rep representationUsingType:NSBitmapImageFileTypePNG properties:options];
+               BoolResult = [pngData writeToURL:fileURL options:NSDataWritingAtomic error:&error];
+           }
+           
+           if (jpg == true) {
+               newFileNameJpg = [NSString stringWithFormat:@"ScreenShot(%ldx%ld)",(long)width,(long)height];
+               NSURL * fileURL = [[pathURL URLByAppendingPathComponent:newFileNameJpg] URLByAppendingPathExtension:@"jpg"];
+               jpgData = [rep representationUsingType:NSBitmapImageFileTypeJPEG properties:options];
+               BoolResult = [jpgData writeToURL:fileURL options:NSDataWritingAtomic error:&error];
+           }
+           
+           if (tiff == true) {
+                newFileNameTiff = [NSString stringWithFormat:@"ScreenShot(%ldx%ld)",(long)width,(long)height];
+                NSURL * fileURL = [[pathURL URLByAppendingPathComponent:newFileNameTiff] URLByAppendingPathExtension:@"tiff"];
+                tiffData = [rep representationUsingType:NSBitmapImageFileTypeTIFF properties:options];
+                BoolResult = [tiffData writeToURL:fileURL options:NSDataWritingAtomic error:&error];
+           }
+           
+           if (!BoolResult) {
+               NSLog(@"writeUsingSavePanel failed");
+               NSLog(@"Write returned error: %@", [error localizedDescription]);
+           }//end if
+}
+//export images
 -(void)exportFileImages :(NSImage *)image :(NSArray*)aryData{
     BOOL        success;
     NSError *   error;
@@ -128,30 +204,29 @@
     NSInteger Result = [SavePanel runModal];
     
     NSURL *pathURL = [SavePanel URL];
- //   NSLog(@"path:%@",pathURL);
+   // NSLog(@"path:%@",pathURL);
     success = [[NSFileManager defaultManager] createDirectoryAtURL:pathURL withIntermediateDirectories:NO attributes:nil error:&error];
     
-    NSInteger imageCont = (aryData.count)/3;
+    NSInteger imageCont = (aryData.count);
     NSInteger imageNum = 0;
-    if (Result == NSFileHandlingPanelCancelButton) {
+    if (Result == NSModalResponseCancel) {
         NSLog(@"writeUsingSavePanel cancelled");
         return;
     }
 //
 //NSLog(@"aryData:%@",aryData);
     for (int i = 0; i < imageCont; i++) {
-        NSString *tableName = aryData[imageNum];
-        imageNum ++;
-        NSInteger sizeY = [aryData[imageNum] floatValue];
-        imageNum ++;
-        NSInteger sizeX = [aryData[imageNum] floatValue];
+        NSString *tableName = @"Icon";//aryData[imageNum];
+      //  imageNum ++;
+        NSInteger width = [aryData[imageNum] floatValue];
+        NSInteger height = [aryData[imageNum] floatValue];
         imageNum ++;
 //create image
 //NSLog(@"save pale:%@",SavePanel.nameFieldStringValue);
         NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
                                  initWithBitmapDataPlanes:NULL
-                                 pixelsWide:sizeY
-                                 pixelsHigh:sizeX
+                                 pixelsWide:width
+                                 pixelsHigh:height
                                  bitsPerSample:8
                                  samplesPerPixel:4
                                  hasAlpha:YES
@@ -159,12 +234,12 @@
                                  colorSpaceName:NSCalibratedRGBColorSpace
                                  bytesPerRow:0
                                  bitsPerPixel:0];
-        [rep setSize:NSMakeSize(sizeX, sizeY)];
+        [rep setSize:NSMakeSize(width, height)];
         
         [NSGraphicsContext saveGraphicsState];
         [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:rep]];
         
-        [image drawInRect:NSMakeRect(0, 0, sizeX, sizeY) fromRect:NSZeroRect operation:NSCompositeCopy fraction:1.0];
+        [image drawInRect:NSMakeRect(0, 0, width, height) fromRect:NSZeroRect operation:NSCompositingOperationCopy fraction:1.0];
         
         [NSGraphicsContext restoreGraphicsState];
         
@@ -177,26 +252,26 @@
         BOOL BoolResult = '\0';
         //set filename
         if (png == true) {
-            newFileNamePng = [NSString stringWithFormat:@"%@(%ldx%ld)",tableName,(long)sizeX,(long)sizeY];
+            newFileNamePng = [NSString stringWithFormat:@"%@(%ldx%ld)",tableName,(long)width,(long)height];
             NSURL * fileURL = [[pathURL URLByAppendingPathComponent:newFileNamePng] URLByAppendingPathExtension:@"png"];
-            pngData = [rep representationUsingType:NSPNGFileType properties:options];
+            pngData = [rep representationUsingType:NSBitmapImageFileTypePNG properties:options];
             
             BoolResult = [pngData writeToURL:fileURL options:NSDataWritingAtomic error:&error];
         }
         
         if (jpg == true) {
-            newFileNameJpg = [NSString stringWithFormat:@"%@(%ldx%ld)",tableName,(long)sizeX,(long)sizeY];
+            newFileNameJpg = [NSString stringWithFormat:@"%@(%ldx%ld)",tableName,(long)width,(long)height];
             NSURL * fileURL = [[pathURL URLByAppendingPathComponent:newFileNameJpg] URLByAppendingPathExtension:@"jpg"];
-            jpgData = [rep representationUsingType:NSJPEGFileType properties:options];
+            jpgData = [rep representationUsingType:NSBitmapImageFileTypeJPEG properties:options];
             
             BoolResult = [jpgData writeToURL:fileURL options:NSDataWritingAtomic error:&error];
         }
         
         if (tiff == true) {
-             newFileNameTiff = [NSString stringWithFormat:@"%@(%ldx%ld)",tableName,(long)sizeX,(long)sizeY];
+             newFileNameTiff = [NSString stringWithFormat:@"%@(%ldx%ld)",tableName,(long)width,(long)height];
              NSURL * fileURL = [[pathURL URLByAppendingPathComponent:newFileNameTiff] URLByAppendingPathExtension:@"tiff"];
 
-             tiffData = [rep representationUsingType:NSTIFFFileType properties:options];
+            tiffData = [rep representationUsingType:NSBitmapImageFileTypeTIFF properties:options];
              BoolResult = [tiffData writeToURL:fileURL options:NSDataWritingAtomic error:&error];
         }
         

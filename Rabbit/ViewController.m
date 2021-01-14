@@ -11,191 +11,121 @@
 @implementation ViewController
 
 @synthesize profileSelectionOutlet;
-@synthesize tableView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [table setTarget:self];
-    [table setDoubleAction:@selector(doubleClick:)];
     [self initz];
 }
 
 #pragma mark - initz vaules
 -(void)initz {
     [self.window setBackgroundColor: NSColor.whiteColor];
-    popMenu = NO;
-    updateTable = NO;
+
     imageEmpty = YES;
-    popTitle = @"";
-    [self titleLabel:popTitle ourTitleAry:NULL];
-    [profileSelectionOutlet removeAllItems];
-    NSArray *popup = [[NSArray alloc] initWithObjects:@"None", nil];
-    [profileSelectionOutlet addItemsWithTitles:popup];
-    rowSelection = 0;
-    curentWidth = 510;
-    curentHeight = 440;
-    imageData = [[NSImage alloc]init];
-    [self.myView setMyImage:imageData];
+    pngSetting = YES;
+    jpgSetting = YES;
+    tiffSetting = YES;
+    
+    profileClass *pc = [[profileClass alloc]init];
+    NSArray *popup = [[NSArray alloc] initWithArray:[pc listSizeData]];
+  //  NSLog(@"popup:%@",popup);
+    [self createPopup:popup];
+    
     ourData = [[DataArray alloc]init];
-    [tableView reloadData];
-    [self updateDisplayView];
+    imageData = [[NSImage alloc]init];
+    
+    [self.myView setMyImage:imageData];
+    [self.myView imageSize:[[popup objectAtIndex:6] floatValue]];
+ //   [self updateDisplayView];
 }
 
 #pragma mark - new project
 - (IBAction)newProject:(id)sender{
-    [self initz];
+    //test has image
+    NSAlert *alert = [[NSAlert alloc] init];
+    [alert setMessageText:@"Delete this project?"];
+    [alert setInformativeText:@"Deleted projects cannot be restored"];
+    [alert addButtonWithTitle:@"OK"];
+    [alert addButtonWithTitle:@"Cancel"];
+    [alert setAlertStyle:NSAlertStyleWarning];
+      [alert beginSheetModalForWindow:[self.view window] completionHandler:^(NSInteger result) {
+          NSLog(@"Success:");
+          if (result == NSAlertSecondButtonReturn) {
+              NSLog(@"Delete was cancelled!");
+              return;
+          }
+          NSLog(@"This project was deleted!");
+          if (self->imageEmpty == NO) {
+                     [self initz];
+              [self.myView setMyImage:self->imageData];
+                     [self.myView setNeedsDisplay:YES];
+                 }
+      }];
+    //[alert runModal];
+    NSLog(@"new:%@",imageData);
 }
 
-#pragma mark - open & saveproject
-- (IBAction)openProject:(id)sender{
+#pragma mark - open image
+
+- (IBAction)openImageAction:(id)sender{
+   // NSLog(@"open image");
+    imageData = [[NSImage alloc]init];
     LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
-    NSMutableDictionary *loadFileData = [[NSMutableDictionary alloc] initWithDictionary:[lsi loadFileData]];
-  //  NSLog(@"open%@",loadFileData);
-    //get version info
-    float versionInfo = [[loadFileData valueForKey:@"version"] floatValue];
-    if (versionInfo == 1) {
-        NSMutableDictionary *usrDic = [[NSMutableDictionary alloc] initWithDictionary:[loadFileData valueForKey:@"Main"]];
-        [ourData setMyData:usrDic];
-//NSLog(@"open ourData:%@",[ourData myData]);
-//set up image
-        imageData = [[NSImage alloc] initWithData:[loadFileData valueForKey:@"image"]];
-        if (imageData) {
-            float newSize = (curentWidth/2)+(curentHeight/2);
-            [self.myView setMyImage:imageData];
-            [self.myView imageSize:newSize];
-            [self.myView updateDisplay];
-        }//end if imageData
-//set up popup menu
-        NSString *setTitle = [[usrDic allKeys] objectAtIndex:0];
-        popTitle = setTitle;
-        if (setTitle) {
-//NSLog(@"getTitle");
-            [profileSelectionOutlet addItemsWithTitles:[ourData getDictionaryKeyNames]];
-            [profileSelectionOutlet selectItemWithTitle:popTitle];
-            [self updateSubTabile];
-            [self updateDisplayView];
-            [tableView reloadData];
-        }//end if setTitle
-        popMenu = YES;
-        imageEmpty = NO;
-    }//end imageData
+    imageData = [lsi loadFileImage];
+  //  NSLog(@"image data:%@",imageData);
+
+    [self.myView setMyImage:imageData];
+    [self.myView setNeedsDisplay:YES];
+    imageEmpty = NO;
 }
 
-- (IBAction)SaveProject:(id)sender{
-    NSMutableDictionary *saveData = [[NSMutableDictionary alloc] init];
-    [saveData setObject:[NSNumber numberWithFloat:1.0] forKey:@"version"];
-    //save image data
-    NSInteger sizeY = 100;
-    NSInteger sizeX = 100;
-    //create image
-    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
-                             initWithBitmapDataPlanes:NULL
-                             pixelsWide:sizeY
-                             pixelsHigh:sizeX
-                             bitsPerSample:8
-                             samplesPerPixel:4
-                             hasAlpha:YES
-                             isPlanar:NO
-                             colorSpaceName:NSCalibratedRGBColorSpace
-                             bytesPerRow:0
-                             bitsPerPixel:0];
-                            [rep setSize:NSMakeSize(sizeX, sizeY)];
+- (IBAction)saveImageAction:(id)sender{
+  
+    LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
+    [lsi setPng:pngSetting];
+    [lsi setJpg:jpgSetting];
+    [lsi setTiff:tiffSetting];
+    //  NSLog(@"rowDataWidth:%@f %@f",[ourData widthColom],[ourData hightColom]);
+    profileClass *pc = [[profileClass alloc]init];
+    NSArray *arraySize = [[NSArray alloc] initWithArray:[pc listSizeData]];
     
-    [NSGraphicsContext saveGraphicsState];
-    [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:rep]];
-    [imageData drawInRect:NSMakeRect(0, 0, sizeX, sizeY) fromRect:NSZeroRect operation:NSCompositeCopy fraction:1.0];
-    [NSGraphicsContext restoreGraphicsState];
-    NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
-    NSData *iData = [rep representationUsingType:NSPNGFileType properties:options];
-    [saveData setObject:iData forKey:@"image"];
-    [saveData setObject:[ourData myData] forKey:@"Main"];
-    LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
-    [lsi saveFileData:saveData];
-  //  NSLog(@"save:%@",saveData);
-}
-
-#pragma mark - import & export
-- (IBAction)importItem:(id)sender{
-    LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
-    NSMutableDictionary *importData = [[NSMutableDictionary alloc] initWithDictionary:[lsi importProfile]];
-    [ourData setMyData:importData];
-    popTitle = [[importData allKeys] objectAtIndex:0];
-    [profileSelectionOutlet addItemsWithTitles:[ourData getDictionaryKeyNames]];
-    [profileSelectionOutlet selectItemWithTitle:popTitle];
-    [self updateSubTabile];
-    [self updateDisplayView];
-    [tableView reloadData];
-//NSLog(@"import settings:%@",importData);
-}
-
-- (IBAction)exportItem:(id)sender{
-    LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
-    [self updateSubTabile];
-    NSMutableDictionary *exportData = [[NSMutableDictionary alloc] init];
-    [exportData setObject:[[ourData myData] valueForKey:popTitle] forKey:popTitle];
-    [lsi exportProfile:exportData];
-//NSLog(@"export settings:%@",[[ourData myData] valueForKey:popTitle]);
-}
-
-#pragma mark - tableView setup
-- (NSView *)tableView:(NSTableView *)mytableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    // Get a new ViewCell
-    NSTableCellView *cellView = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
-    //nameID
-    if( [tableColumn.identifier isEqualToString:@"nameID"] )
-    {
-        //  cellView.imageView.image = @"";
-        cellView.textField.stringValue = [ourData getNameAtIndex:row];
-        return cellView;
+    if ([arraySize count] <= 0 || imageData == NULL ) {
+        alertInfo *ai = [[alertInfo alloc]init];
+        [ai showAlert:@"Error" Massage:@"No Image"];
+    } else {
+        NSLog(@"save images;%hhd",pngSetting);
+        if (pngSetting == YES || jpgSetting == YES || tiffSetting == YES) {
+            [lsi exportFileImages:imageData :arraySize];
+        }//end
     }
-    //widthID
-    if( [tableColumn.identifier isEqualToString:@"widthID"] )
-    {
-        cellView.textField.stringValue =[ourData getWidthAtIndex:row];
-        return cellView;
-    }
-    //heightID
-    if( [tableColumn.identifier isEqualToString:@"heightID"] )
-    {
-        cellView.textField.stringValue =[ourData getHeightAtIndex:row];
-     //   [cellView.textField setEditable:YES]; // Make Cell Editable!
-        return cellView;
-    }
-    return cellView;
+        [self dismissController:self];
 }
 
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return [[ourData nameColom] count];
-}
-
-#pragma mark select table item
--(void)tableViewSelectionDidChange:(NSNotification *)notification {
-    short row = [[notification object] selectedRow];
-    NSTextField *textName = [[[notification.object viewAtColumn:0 row:row makeIfNecessary:NO]subviews] lastObject];
-    NSTextField *textWidth = [[[notification.object viewAtColumn:1 row:row makeIfNecessary:NO]subviews] lastObject];
-    NSTextField *textHeight = [[[notification.object viewAtColumn:2 row:row makeIfNecessary:NO]subviews] lastObject];
-    [textName selectText:textName.stringValue];
-    [textWidth selectText:textWidth.stringValue];
-    [textHeight selectText:textHeight.stringValue];
-    rowSelection = row;
-}
-
-#pragma mark - double click
-- (void)doubleClick:(id)sender {
-//NSLog(@"double-click in row %ld col %ld", (long)[table clickedRow], (long)[table clickedColumn]);
-    NSArray *dicData = [[NSArray alloc] initWithArray:[[ourData myData] valueForKey:popTitle]];
-    curentName = [[dicData objectAtIndex:[table clickedRow]] valueForKey:@"Name"];
-    curentWidth = [[[dicData objectAtIndex:[table clickedRow]] valueForKey:@"Width"] floatValue];
-    curentHeight = [[[dicData objectAtIndex:[table clickedRow]] valueForKey:@"Height"] floatValue];
-  //  NSLog(@"get current name:%@",curentName);
-    updateTable = YES;
-    [self performSegueWithIdentifier:@"addSegue" sender:self];
+- (IBAction)saveScreenAction:(id)sender{
+    //screen shot size 1280 x 800
+    NSLog(@"save screen shot%@",imageData);
+    LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
+    [lsi setPng:pngSetting];
+    [lsi setJpg:jpgSetting];
+    [lsi setTiff:tiffSetting];
+    
+    NSArray *arraySize = [[NSArray alloc] initWithObjects:[NSNumber numberWithFloat:1280],[NSNumber numberWithFloat:800], nil];
+     
+    if ([arraySize count] <= 0 || imageData == NULL ) {
+          alertInfo *ai = [[alertInfo alloc]init];
+          [ai showAlert:@"Error" Massage:@"no image"];
+      } else {
+       //   NSLog(@"save images;%hhd",pngSetting);
+          if (pngSetting == YES || jpgSetting == YES || tiffSetting == YES) {
+              [lsi saveSngleImage:imageData :arraySize];
+          }//end
+      }
 }
 
 #pragma mark - update Display
 -(void)updateDisplayView {
-//NSLog(@"update Display View");
+NSLog(@"update Display View");
     if (imageData) {
         float w = curentWidth;
         float h = curentHeight;
@@ -207,222 +137,47 @@
     }//end image data
 }//end updateDusplayView
 
-#pragma mark handly table manubar
-- (IBAction)segmentedAction:(id)sender {
-    NSInteger clickedSegment = [sender selectedSegment];
-    NSInteger clickedSegmentTag = [[sender cell] tagForSegment:clickedSegment];
-    alertInfo *ai = [[alertInfo alloc]init];
-    
-#pragma add/subtract table
-    if (popMenu ==YES) {
-        if (clickedSegmentTag == 0) {
-            [self performSegueWithIdentifier:@"addSegue" sender:self];
-        }//end clicked Segment Tag
-
-        if (clickedSegmentTag == 1 ) {
-            [self  removeItemFormTable];
-        } 
-    }//end if pop
-    
-#pragma import image
-    if (clickedSegmentTag == 2) {
-        imageData = [[NSImage alloc]init];
-        LoadSaveInterface *lsi = [[LoadSaveInterface alloc]init];
-        imageData = [lsi loadFileImage];
-        [self.myView setMyImage:imageData];
-        [self updateDisplayView];
-        imageEmpty = NO;
-    }
-#pragma export image
-    if (clickedSegmentTag == 3) {
-        if (imageEmpty == NO ) {
-            [self performSegueWithIdentifier:@"imageSegue" sender:self];
-        } else{
-            [ai showAlert:@"No Image to export" Massage:@"Need to import an image"];
-        }
-    }
-//NSLog(@"myDate%@",[ourData myData]);
-}//end srgmentedAction
-
-- (IBAction)sacleAction:(id)sender {
-    float imageScale = [sender floatValue];
-    [self.myView imageSize:imageScale];
-  //  NSLog(@"sacle:%f",imageScale);
-}
-
 //handly delegat
-#pragma mark Delegat functions
--(void)prepareForSegue:(NSStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"pvcSegue"]) {
-        profilesViewControler *pvc = segue.destinationController;
-        pvc.delegate = self;
-        [pvc popOverData:[ourData getDictionaryKeyNames]];
-      //  NSLog(@"PVC:%@",[ourData getDictionaryKeyNames]);
-    }
-    
-    if ([segue.identifier isEqualToString:@"addSegue"]) {
-       //NSLog(@"add Segue");
-        addTableViewController *atv =  segue.destinationController;
-        atv.delegate = self;
-      if (updateTable == YES) {
-         //   NSLog(@"updteTable:%@",curentName);
-          [atv setTiteName:curentName];
-          [atv setWidth:curentWidth];
-          [atv setHeight:curentHeight];
-      } else {
-          [atv setTiteName:@"Icon"];
-          [atv setWidth:40];
-          [atv setHeight:40];
-      }//end
-    }
-    
-    if ([segue.identifier isEqualToString:@"imageSegue"]) {
-       // NSLog(@"imageSegue");
-        DataArray *cda = [[DataArray alloc]init];
-        imageViewController *ivc = segue.destinationController;
-        NSInteger aryLenght = (long)[[ourData myData] count];
-        [ivc setImageData:imageData];
-        [ivc setArraySize:aryLenght];
-        [ivc setDataAray:[cda cleanArray:[ourData nameColom] width:[ourData widthColom] height:[ourData hightColom]]];
-      //  NSLog(@"clean Array:%@",[cda cleanArray:[ourData nameColom] width:[ourData widthColom] height:[ourData hightColom]]);
-    }
-}
-
-- (void)titleLabel:(NSString*)ourTitle ourTitleAry:(NSMutableArray*)ourTitleAry {
-   // NSLog(@"title ary:%@",ourTitleAry);
-    NSString *ourTitleString;
-    
-    if ([ourTitleAry count] == [[ourData getDictionaryKeyNames] count] && popMenu == YES) {
-      //  NSLog(@"update the array");
-        NSArray *oldTitle = [[NSArray alloc] initWithArray:[ourData getDictionaryKeyNames]];
-        for(int i =0; i < [oldTitle count]; i++){
-            NSString *oldTitleStr = oldTitle[i];
-            NSString *newTitleStr = ourTitleAry[i];
-            if ([oldTitleStr isNotEqualTo:newTitleStr]) {
-            //    NSLog(@"update me :%@ to ourtitle:%@",oldTitleStr, newTitleStr);
-                NSArray *oldDicData = [[NSArray alloc] initWithArray:[[ourData myData] valueForKey:oldTitleStr]];
-                //add to array
-                [[ourData myData] setObject:oldDicData forKey:newTitleStr];
-                //remove old title for array
-                NSString *removeTitle = oldTitleStr;
-                [[ourData myData] removeObjectForKey:removeTitle];
-            }
-            popTitle = ourTitleAry[0];
-        }//end for loop
-    } else if ([ourTitleAry count] <= [[ourData getDictionaryKeyNames] count] && popMenu == YES){
-      //  NSLog(@"remove file");
-        NSArray *oldTitle = [[NSArray alloc] initWithArray:[ourData getDictionaryKeyNames]];
-        for(int i =0; i < [oldTitle count]; i++){
-            NSString *oldTitleStr = oldTitle[i];
-            NSString *newTitleStr = ourTitleAry[i];
-            if ([oldTitleStr isNotEqualTo:newTitleStr]) {
-                //remove old title for array
-                NSString *removeTitle = oldTitleStr;
-                [[ourData myData] removeObjectForKey:removeTitle];
-            }
-            popTitle = ourTitleAry[0];
-        }//end for loop
-    } else {
-        if ([ourTitleAry isNotEqualTo:@""]) {
-            popMenu = YES;
-            ourTitleString = [ourTitleAry lastObject];
-            NSMutableDictionary *temp = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
-            [temp setValuesForKeysWithDictionary:[ourData newData:ourTitleString]];
-            [ourData setMyData:temp];
-            popTitle = ourTitleString;
-            //  NSLog(@"titleLabel ourData:%@",[ourData myData]);
-        }//end outTitle
-    }
-    //update pulldown tite array
-    [ourTitleAry removeAllObjects];
-    [ourTitleAry arrayByAddingObjectsFromArray:[ourData getDictionaryKeyNames]];
-    [self createPopup:ourTitleAry];
-    [self updateDisplayView];
-    [tableView reloadData];
-}
-
-
+#pragma mark popup functions
 -(void)createPopup:(NSArray*)popupTitle{
-    [profileSelectionOutlet removeAllItems];
-    [profileSelectionOutlet addItemsWithTitles:[ourData getDictionaryKeyNames]];
-    [profileSelectionOutlet selectItemWithTitle:popTitle];
-    [self updateSubTabile];
-    [tableView reloadData];
-  //  NSLog(@"createPopup ourData:%@",[ourData myData]);
+  //  [profileSelectionOutlet removeAllItems];
+    [profileSelectionOutlet addItemsWithTitles:popupTitle];
 }
 
 #pragma mark Change PopUp title
 - (IBAction)profileSelectionAction:(id)sender {
-    popTitle = [sender titleOfSelectedItem];
-    //update
-    [self updateSubTabile];
-    [tableView reloadData];
-  //  NSLog(@"profileSelectionAction:%@ root data:%@",popTitle,[ourData myData]);
+    profileClass *pc = [[profileClass alloc]init];
+    NSArray *ary = [[NSArray alloc] initWithArray:[pc getAlliSize]];
+    int aryIndex = [[sender objectValue] intValue]-1;//import -1
+    
+    float imageScale = [[ary objectAtIndex:aryIndex] floatValue];
+    [self.myView imageSize:imageScale];
+    //errror
+ //   NSLog(@"profileSelectionAction:%@ root data:%@",popTitle,[ourData myData]);x
 }
-
-#pragma mark - Add data to tableView
-- (void)addTableName:(NSString*)titleName width:(float)width height:(float)height{
- //   NSLog(@"add table name %@ %f %f",titleName,width,height);
-    //get old add to add
-    NSMutableArray *tempArray = [[NSMutableArray alloc]initWithArray:[[ourData myData] valueForKey:popTitle]];
-    NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
-    //add to array
-    if (updateTable == YES) {
-        [[tempArray lastObject] setObject:titleName forKey:@"Name"];
-        [[tempArray lastObject] setObject:[NSNumber numberWithFloat:width] forKey:@"Width"];
-        [[tempArray lastObject] setObject:[NSNumber numberWithFloat:height] forKey:@"Height"];
-        updateTable = NO;
+#pragma mark impage export setteings
+- (IBAction)pngAction:(id)sender {
+    if (pngSetting == YES) {
+        pngSetting = NO;
     } else {
-        [tempArray addObject:[ourData newTableData]];
-        [[tempArray lastObject] setObject:titleName forKey:@"Name"];
-        [[tempArray lastObject] setObject:[NSNumber numberWithFloat:width] forKey:@"Width"];
-        [[tempArray lastObject] setObject:[NSNumber numberWithFloat:height] forKey:@"Height"];
+        pngSetting = YES;
     }
-    [tempDic setObject:tempArray forKey:popTitle];
-    [ourData setMyData:tempDic];
-    [self updateSubTabile];
-    [self updateDisplayView];
-    [tableView reloadData];
- //    NSLog(@"addTableName:%@",tempArray);
 }
 
-#pragma mark - Remove data
--(void)removeItemFormTable{
-   // NSLog(@"remove");
-    NSMutableDictionary *tempDic = [[NSMutableDictionary alloc] initWithDictionary:[ourData myData]];
-    NSMutableArray *dicDataAry = [[NSMutableArray alloc] initWithArray:[[ourData myData] valueForKey:popTitle]];
-    NSMutableArray *tempName = [[NSMutableArray alloc] initWithArray:[ourData nameColom]];
-    NSMutableArray *tempWidh = [[NSMutableArray alloc] initWithArray:[ourData widthColom]];
-    NSMutableArray *tempHeight = [[NSMutableArray alloc] initWithArray:[ourData hightColom]];
-    if (dicDataAry > 0) {
-        [tempName removeLastObject];
-        [tempWidh removeLastObject];
-        [tempHeight removeLastObject];
-        [dicDataAry removeLastObject];
-        [tempDic setObject:dicDataAry forKey:popTitle];
-        [ourData setMyData:tempDic];
-        // NSLog(@"subtract tempDic:%@",tempDic);
-        [self updateSubTabile];
-        [self updateDisplayView];
-        [tableView reloadData];
-    }//error handyling
+- (IBAction)jpgeAction:(id)sender {
+    if (jpgSetting == YES) {
+        jpgSetting = NO;
+    } else {
+        jpgSetting = YES;
+    }
 }
 
-#pragma mark - update subtable
--(void)updateSubTabile {
-    NSArray *dicData = [[NSArray alloc] initWithArray:[[ourData myData] valueForKey:popTitle]];
-    NSMutableArray *createNameData = [[NSMutableArray alloc]init];
-    NSMutableArray *createWidthData = [[NSMutableArray alloc]init];
-    NSMutableArray *createHeightData = [[NSMutableArray alloc]init];
-    short lenght = [dicData count];
-    for (int i = 0; i < lenght; i++) {
-        [createNameData addObject:[[dicData objectAtIndex:i] valueForKey:@"Name"]];
-        [createWidthData addObject:[[dicData objectAtIndex:i] valueForKey:@"Width"]];
-        [createHeightData addObject:[[dicData objectAtIndex:i] valueForKey:@"Height"]];
-    }//end loop
-    [ourData setNameColom:createNameData];
-    [ourData setWidthColom:createWidthData];
-    [ourData setHightColom:createHeightData];
- //   NSLog(@"updateSubTabile Item:%@",[ourData myData]);
+- (IBAction)tiffAction:(id)sender {
+    if (tiffSetting == YES) {
+        tiffSetting = NO;
+    } else {
+        tiffSetting = YES;
+    }
 }
+
 @end
